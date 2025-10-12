@@ -1,0 +1,44 @@
+{
+  "nav": {
+    "logoTitle":"Taali",
+    "features": "Features",
+    "pricing": "Pricing",
+    "testimonials": "Testimonials",
+    "contact": "Contact",
+    "login": "Login",
+    "signUp": "Sign Up"
+  },
+  "landingPage":{
+    "hero": {
+      "badge": "Trusted by 500+ schools worldwide",
+      "title": "Modern School",
+      "titleHighlight": "Management Made Simple",
+      "description": "Streamline administration, enhance learning, and connect your entire school community with our all-in-one platform.",
+      "ctaPrimary": "Get Started Free",
+      "ctaSecondary": "Schedule a Demo",
+      "features": "No credit card required • 14-day free trial"
+    },
+    "features": {
+      "title": "Everything Your School Needs",
+      "subtitle": "Comprehensive tools designed specifically for modern educational institutions"
+    },
+    "stats": {
+      "schools": "Schools",
+      "students": "Students",
+      "teachers": "Teachers",
+      "uptime": "Uptime"
+    },
+    "cta": {
+      "title": "Ready to Transform Your School?",
+      "description": "Join thousands of schools using our platform to streamline their operations and enhance learning experiences.",
+      "primary": "Create Account",
+      "secondary": "Contact Sales"
+    },
+    "footer": {
+      "brand": "EduManage Pro",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "support": "Support"
+    }
+  }
+}
