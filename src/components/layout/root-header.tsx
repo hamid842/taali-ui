@@ -10,7 +10,7 @@ export default function RootHeader() {
 
   return (
     <>
-      <header className="flex py-2 px-4 items-center justify-between flex-wrap sm:flex-nowrap gap-2">
+      <header className="sticky top-0 z-50 flex py-3 px-4 items-center justify-between flex-wrap sm:flex-nowrap gap-2 bg-white dark:bg-neutral-900 shadow-xs">
         {/* Logo */}
         <div className="flex items-center justify-between w-full sm:w-auto">
           <AppLogo />

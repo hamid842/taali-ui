@@ -7,6 +7,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 const components: { title: string; href: string; description: string }[] = [
@@ -48,11 +49,12 @@ const components: { title: string; href: string; description: string }[] = [
 ];
 
 export default function HeaderMenu() {
+  const { t } = useTranslation();
   return (
     <NavigationMenu viewport={false}>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Features</NavigationMenuTrigger>
+          <NavigationMenuTrigger>{t("nav.features")}</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
@@ -83,7 +85,7 @@ export default function HeaderMenu() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Pricing</NavigationMenuTrigger>
+          <NavigationMenuTrigger>{t("nav.pricing")}</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               {components.map((component) => (
@@ -100,11 +102,11 @@ export default function HeaderMenu() {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link to="/docs">Testimonials</Link>
+            <Link to="/docs">{t("nav.testimonials")}</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Contact</NavigationMenuTrigger>
+          <NavigationMenuTrigger>{t("nav.contact")}</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[300px] gap-4">
               <li>

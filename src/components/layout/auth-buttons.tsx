@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { ButtonGroup } from "../ui/button-group";
+import { useTranslation } from "react-i18next";
 
 export default function AuthButtons() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSignUpClick = () => {
     navigate("/register");
@@ -14,20 +16,20 @@ export default function AuthButtons() {
   };
 
   return (
-    <ButtonGroup>
+    <ButtonGroup dir="ltr">
       <Button
         variant={"secondary"}
         onClick={handleSignUpClick}
         className="w-1/2 border-r-2"
       >
-        Sign up
+        {t("nav.signUp")}
       </Button>
       <Button
         variant={"secondary"}
         onClick={handleLoginClick}
         className="w-1/2"
       >
-        Login
+        {t("nav.login")}
       </Button>
     </ButtonGroup>
   );

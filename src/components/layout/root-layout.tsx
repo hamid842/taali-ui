@@ -3,7 +3,7 @@ import RootHeader from "./root-header";
 
 export default function RootLayout() {
   return (
-    <div>
+    <div className="relative min-h-screen">
       <RootHeader />
       <div className="p-4">
         <Outlet />
