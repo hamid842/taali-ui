@@ -17,7 +17,6 @@ import {
 } from "lucide-react";
 import { useAppStore } from "@/stores/app-store";
 import { useLanguage } from "@/hooks/use-language";
-import { useTranslation } from "react-i18next";
 import dashboardImg from "@/assets/images/dashboard.png";
 import dashFaImage from "@/assets/images/dashboard-fa.png";
 
@@ -34,7 +33,7 @@ interface Features {
 export default function LandingPage() {
   const isRTL = useAppStore((state) => state.isRTL);
   const { currentLanguage } = useLanguage();
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   const featureList = features[currentLanguage.code];
 

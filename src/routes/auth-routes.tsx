@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import type { RouteObject } from "react-router-dom";
 import RootLayout from "@/components/layout/root-layout";
+import ErrorPage from "@/components/error-boundary/error-page";
 
 // Lazy-loaded components
 const LandingPage = lazy(() => import("@/pages/landing-page"));
@@ -19,6 +20,7 @@ export const authRoutes: RouteObject[] = [
             <LandingPage />
           </Suspense>
         ),
+        errorElement: <ErrorPage />,
       },
       {
         path: "/login",
@@ -27,6 +29,7 @@ export const authRoutes: RouteObject[] = [
             <LoginPage />
           </Suspense>
         ),
+        errorElement: <ErrorPage />,
       },
       {
         path: "/register",
@@ -35,6 +38,7 @@ export const authRoutes: RouteObject[] = [
             <RegisterPage />
           </Suspense>
         ),
+        errorElement: <ErrorPage />,
       },
     ],
   },

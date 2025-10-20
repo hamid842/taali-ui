@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { ButtonGroup } from "../ui/button-group";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "@/hooks/use-language";
 
 export default function AuthButtons() {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   const handleSignUpClick = () => {
     navigate("/register");
@@ -16,7 +16,7 @@ export default function AuthButtons() {
   };
 
   return (
-    <ButtonGroup dir="ltr">
+    <ButtonGroup dir={"ltr"}>
       <Button
         variant={"secondary"}
         onClick={handleSignUpClick}

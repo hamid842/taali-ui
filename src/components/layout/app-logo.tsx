@@ -1,8 +1,8 @@
 import logo from "@/assets/images/taali-logo.png";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "@/hooks/use-language";
 
 export default function AppLogo() {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   return (
     <div className="flex items-center space-x-2">
       <img src={logo} alt="App Logo" className="h-8 w-8" />

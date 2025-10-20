@@ -7,19 +7,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { languages } from "@/constants";
-import { useLanguage } from "@/hooks/use-language";
 import { useAppStore } from "@/stores/app-store";
-import { useTranslation } from "react-i18next";
+import { type Language } from "@/contexts/language-context";
+import { useLanguage } from "@/hooks/use-language";
 
 export function LanguageSwitcher() {
-  const { i18n } = useTranslation();
-  const { currentLanguage, setCurrentLanguage } = useLanguage();
-  const appStore = useAppStore();
+  const { currentLanguage, setCurrentLanguage, t } = useLanguage();
+  const setIsRTL = useAppStore((state) => state.setIsRTL);
 
-  const handleLanguageChange = async (language: (typeof languages)[0]) => {
-    // Update react-i18next
-    await i18n.changeLanguage(language.code);
-
+  const handleLanguageChange = (language: Language) => {
     // Update your custom context
     setCurrentLanguage(language);
 
@@ -28,7 +24,10 @@ export function LanguageSwitcher() {
     document.documentElement.lang = language.code;
 
     // Update Zustand store
-    appStore.setIsRTL(language.dir === "rtl");
+    setIsRTL(language.dir === "rtl");
+
+    // Update localStorage
+    localStorage.setItem("selectedLanguage", language.code);
   };
 
   return (

@@ -108,6 +108,8 @@ export const languages = [
   //   dir: "ltr",
   //   countryCodes: ["TR", "CY"], // Turkey, Cyprus
   // },
-];
+] as const;
 
-export const RTL_LANGUAGES = ["fa", "ar"];
+// Regex for alphabets
+export const ENGLISH_REGEX = /^[A-Za-z\s]+$/;
+export const FARSI_REGEX = /^[\u0600-\u06FF\s]+$/;

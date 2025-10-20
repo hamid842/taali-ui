@@ -7,7 +7,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { useTranslation } from "react-i18next";
+import { useLanguage } from "@/hooks/use-language";
 import { Link } from "react-router-dom";
 
 const components: { title: string; href: string; description: string }[] = [
@@ -49,7 +49,7 @@ const components: { title: string; href: string; description: string }[] = [
 ];
 
 export default function HeaderMenu() {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   return (
     <NavigationMenu viewport={false}>
       <NavigationMenuList>
