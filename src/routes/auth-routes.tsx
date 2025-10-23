@@ -14,15 +14,6 @@ export const authRoutes: RouteObject[] = [
     element: <RootLayout />,
     children: [
       {
-        path: "/",
-        element: (
-          <Suspense fallback={<div>Loading...</div>}>
-            <LandingPage />
-          </Suspense>
-        ),
-        errorElement: <ErrorPage />,
-      },
-      {
         path: "/login",
         element: (
           <Suspense fallback={<div>Loading...</div>}>

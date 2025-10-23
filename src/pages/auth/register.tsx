@@ -17,14 +17,22 @@ import { ENGLISH_REGEX, FARSI_REGEX } from "@/constants";
 import { useRegisterMutation } from "@/hooks/use-auth-mutation";
 import type { RegisterRequest } from "@/types/auth";
 import { toast } from "sonner";
+import { OtpVerification } from "@/components/auth/otp-verification";
+import { UserPlus } from "lucide-react";
+import { PasswordStrength } from "@/components/auth/password-strength";
+import { UserRole, type UserRoleType } from "@/types/role";
+import { useRoleRedirect } from "@/hooks/use-role-redirect";
 
 export default function Register() {
   const [step, setStep] = useState<"register" | "verify">("register");
   const [userId, setUserId] = useState<string>("");
   const { t, language } = useLanguage();
   const registerMutation = useRegisterMutation();
+  const { redirectToDashboard } = useRoleRedirect();
 
   const nameRegex = language === "fa" ? FARSI_REGEX : ENGLISH_REGEX;
+  // Password regex - always use English alphabet for passwords
+  const passwordRegex = /^[A-Za-z0-9!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?]*$/;
 
   // Validation schema
   const registerSchema = z
@@ -41,7 +49,19 @@ export default function Register() {
         .regex(nameRegex, t("validation.lastName.regex")),
       phoneNumber: z.string().min(5, t("validation.phone.min")),
       email: z.email(t("validation.email.format")),
-      password: z.string().min(6, t("validation.password.min")),
+      role: z.enum([
+        UserRole.ADMIN,
+        UserRole.SUPERVISOR,
+        UserRole.TEACHER,
+        UserRole.STUDENT,
+        UserRole.PARENT,
+        UserRole.CANTEEN_OPERATOR,
+        UserRole.FINANCE_TEAM,
+      ]),
+      password: z
+        .string()
+        .min(8, t("validation.password.min"))
+        .regex(passwordRegex, t("validation.password.regex")),
       confirmPassword: z.string(),
     })
     .refine((data) => data.password === data.confirmPassword, {
@@ -49,13 +69,15 @@ export default function Register() {
       path: ["confirmPassword"],
     });
 
+  type RegisterSchema = z.infer<typeof registerSchema>;
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     setValue,
     watch,
-  } = useForm({
+  } = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       firstName: "",
@@ -64,15 +86,14 @@ export default function Register() {
       email: "",
       password: "",
       confirmPassword: "",
+      role: UserRole.ADMIN,
     },
   });
+  const passwordValue = watch("password");
 
   const onSubmit = async (data: RegisterRequest) => {
     try {
-      const result = await registerMutation.mutateAsync({
-        ...data,
-        role: "ADMIN",
-      });
+      const result = await registerMutation.mutateAsync(data);
 
       if (result.success && result.userId) {
         setUserId(result.userId);
@@ -89,14 +110,16 @@ export default function Register() {
     }
   };
 
-  const handleVerificationSuccess = () => {
+  const handleVerificationSuccess = (userData: {
+    role: UserRoleType;
+    userId: string;
+  }) => {
     toast.success(t("toast.registerSuccess"), {
-      description: t("toast.redirectingLogin"),
+      description: t("toast.redirectingDashboard"),
     });
 
-    // Redirect to login or dashboard
     setTimeout(() => {
-      window.location.href = "/login";
+      redirectToDashboard(userData.role);
     }, 2000);
   };
 
@@ -106,85 +129,91 @@ export default function Register() {
 
   if (step === "verify") {
     return (
-      <div>OTP</div>
-      // <OtpVerification
-      //   phoneNumber={watch("phone")}
-      //   email={watch("email")}
-      //   userId={userId}
-      //   onSuccess={handleVerificationSuccess}
-      //   onBack={handleBackToRegister}
-      // />
+      <OtpVerification
+        phoneNumber={watch("phoneNumber")}
+        email={watch("email")}
+        userId={userId}
+        onSuccess={handleVerificationSuccess}
+        onBack={handleBackToRegister}
+      />
     );
   }
 
   const isRegisterSubmitting = isSubmitting || registerMutation.isPending;
 
   return (
-    <Card className="w-full max-w-md m-auto mt-6">
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold">
-          {t("register.title")}
-        </CardTitle>
-        <CardDescription>{t("register.subtitle")}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div className="grid gap-4 grid-cols-2">
-            <AppTextField
-              label={t("register.form.firstName")}
-              error={errors.firstName?.message}
-              required
-              {...register("firstName")}
-            />
-            <AppTextField
-              label={t("register.form.lastName")}
-              error={errors.lastName?.message}
-              required
-              {...register("lastName")}
-            />
-          </div>
+    <div className="flex justify-center items-center min-h-[calc(100vh-110px)]">
+      <Card className="w-full max-w-md">
+        <CardHeader className="space-y-1">
+          <UserPlus size={"70px"} />
+          <CardTitle className="text-2xl font-bold">
+            {t("register.title")}
+          </CardTitle>
+          <CardDescription>{t("register.subtitle")}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div className="grid gap-4 grid-cols-2">
+              <AppTextField
+                label={t("register.form.firstName")}
+                error={errors.firstName?.message}
+                required
+                {...register("firstName")}
+              />
+              <AppTextField
+                label={t("register.form.lastName")}
+                error={errors.lastName?.message}
+                required
+                {...register("lastName")}
+              />
+            </div>
 
-          <InternationalPhoneInput
-            label={t("register.form.phone")}
-            value={watch("phoneNumber")}
-            onChange={(value) => setValue("phoneNumber", value)}
-            error={errors.phoneNumber?.message}
-            required
-          />
-
-          <AppTextField
-            label={t("register.form.email")}
-            type="email"
-            error={errors.email?.message}
-            required
-            {...register("email")}
-          />
-          <div className="grid gap-4 grid-cols-2">
-            <AppTextField
-              label={t("register.form.password")}
-              error={errors.password?.message}
+            <InternationalPhoneInput
+              label={t("register.form.phone")}
+              value={watch("phoneNumber")}
+              onChange={(value) => setValue("phoneNumber", value)}
+              error={errors.phoneNumber?.message}
               required
-              {...register("password")}
             />
-            <AppTextField
-              label={t("register.form.confirmPassword")}
-              error={errors.confirmPassword?.message}
-              required
-              {...register("confirmPassword")}
-            />
-          </div>
 
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={isRegisterSubmitting}
-          >
-            {isSubmitting
-              ? t("register.creatingAccount")
-              : t("register.createAccount")}
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+            <AppTextField
+              label={t("register.form.email")}
+              type="email"
+              error={errors.email?.message}
+              required
+              {...register("email")}
+            />
+            <div className="grid gap-4 grid-cols-2">
+              <AppTextField
+                type="password"
+                showPasswordToggle
+                label={t("register.form.password")}
+                error={errors.password?.message}
+                required
+                {...register("password")}
+              />
+              <AppTextField
+                type="password"
+                showPasswordToggle
+                label={t("register.form.confirmPassword")}
+                error={errors.confirmPassword?.message}
+                required
+                {...register("confirmPassword")}
+              />
+            </div>
+            {passwordValue && <PasswordStrength password={passwordValue} />}
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isRegisterSubmitting}
+            >
+              {isSubmitting
+                ? t("register.creatingAccount")
+                : t("register.createAccount")}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

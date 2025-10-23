@@ -6,7 +6,7 @@ export default function AppLogo() {
   return (
     <div className="flex items-center space-x-2">
       <img src={logo} alt="App Logo" className="h-8 w-8" />
-      <span className="text-3xl font-bold">{t("nav.logoTitle")}</span>
+      <span className="text-2xl font-bold">{t("nav.logoTitle")}</span>
     </div>
   );
 }

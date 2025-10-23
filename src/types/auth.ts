@@ -1,3 +1,5 @@
+import type { UserRoleType } from "./role";
+
 // Request types (what we send to the API)
 export interface RegisterRequest {
   firstName: string;
@@ -5,7 +7,8 @@ export interface RegisterRequest {
   phoneNumber: string;
   email: string;
   password: string;
-  role: "STUDENT" | "TEACHER" | "ADMIN" | "PARENT";
+  confirmPassword: string;
+  role: UserRoleType;
 }
 
 export interface VerifyOtpRequest {
@@ -25,7 +28,7 @@ export interface RegisterResponse {
   email?: string;
   otpCode?: string;
   requiresVerification?: boolean;
-  role?: "STUDENT" | "TEACHER" | "ADMIN" | "PARENT";
+  role?: UserRoleType;
   status?: string;
 }
 
@@ -34,7 +37,7 @@ export interface VerifyOtpResponse {
   message: string;
   userId?: string;
   email?: string;
-  role?: "STUDENT" | "TEACHER" | "ADMIN" | "PARENT";
+  role?: UserRoleType;
   status?: string;
 }
 

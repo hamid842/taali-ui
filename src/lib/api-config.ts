@@ -18,7 +18,7 @@ export const apiConfig = {
 
 // Generic API client
 export const apiClient = {
-  async post<T>(url: string, data: any): Promise<T> {
+  async post<T>(url: string, data: unknown): Promise<T> {
     const response = await fetch(url, {
       method: "POST",
       headers: apiConfig.headers,

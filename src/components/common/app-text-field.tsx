@@ -1,7 +1,9 @@
-import { forwardRef, useId, type InputHTMLAttributes } from "react";
+import { forwardRef, useId, useState, type InputHTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Eye, EyeOff } from "lucide-react";
 import { useLanguage } from "@/hooks/use-language";
 
 export interface TextInputProps
@@ -15,6 +17,7 @@ export interface TextInputProps
   helperClassName?: string;
   dir?: "ltr" | "rtl" | "auto";
   labelPosition?: "top" | "left" | "right";
+  showPasswordToggle?: boolean;
 }
 
 const AppTextField = forwardRef<HTMLInputElement, TextInputProps>(
@@ -33,23 +36,36 @@ const AppTextField = forwardRef<HTMLInputElement, TextInputProps>(
       id,
       required,
       disabled,
-      type, // Extract type from props
+      type,
+      showPasswordToggle = false,
       ...props
     },
     ref
   ) => {
     const generatedId = useId();
     const inputId = id || generatedId;
-    const { dir: languageDir } = useLanguage(); // Get direction from language context
+    const { dir: languageDir } = useLanguage();
+    const [showPassword, setShowPassword] = useState(false);
 
-    // Determine actual direction for container and label
     const actualDir = dir === "auto" ? languageDir : dir;
     const isRTL = actualDir === "rtl";
 
-    // Determine input direction - LTR for email and tel, otherwise use actualDir
-    const inputDir = type === "email" || type === "tel" ? "ltr" : actualDir;
+    const inputDir =
+      type === "email" || type === "tel" || type === "password"
+        ? "ltr"
+        : actualDir;
 
-    // Base container classes
+    const togglePasswordVisibility = () => {
+      setShowPassword(!showPassword);
+    };
+
+    const inputType =
+      showPasswordToggle && type === "password"
+        ? showPassword
+          ? "text"
+          : "password"
+        : type;
+
     const containerClasses = cn(
       "w-full",
       {
@@ -62,7 +78,6 @@ const AppTextField = forwardRef<HTMLInputElement, TextInputProps>(
       containerClassName
     );
 
-    // Label classes
     const labelClasses = cn(
       "text-sm font-medium leading-none",
       {
@@ -74,29 +89,20 @@ const AppTextField = forwardRef<HTMLInputElement, TextInputProps>(
       labelClassName
     );
 
-    // Input classes
     const inputClasses = cn(
-      // Base styles
       "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background",
       "file:border-0 file:bg-transparent file:text-sm file:font-medium",
       "placeholder:text-muted-foreground",
       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-
-      // RTL/LTR specific styles
       {
         "text-right": inputDir === "rtl",
         "text-left": inputDir === "ltr",
-      },
-
-      // States
-      {
         "border-destructive focus-visible:ring-destructive": error,
         "cursor-not-allowed opacity-50": disabled,
       },
       className
     );
 
-    // Error/helper text classes
     const messageClasses = cn(
       "text-xs mt-1",
       {
@@ -116,15 +122,19 @@ const AppTextField = forwardRef<HTMLInputElement, TextInputProps>(
           </Label>
         )}
 
-        <div className={labelPosition === "top" ? "w-full" : "flex-1"}>
+        <div
+          className={
+            labelPosition === "top" ? "w-full relative" : "flex-1 relative"
+          }
+        >
           <Input
             id={inputId}
             ref={ref}
             className={inputClasses}
             required={required}
             disabled={disabled}
-            type={type} // Make sure type is passed through
-            dir={inputDir} // Use the computed input direction
+            type={inputType}
+            dir={inputDir}
             aria-invalid={!!error}
             aria-describedby={
               error
@@ -136,16 +146,36 @@ const AppTextField = forwardRef<HTMLInputElement, TextInputProps>(
             {...props}
           />
 
-          {(error || helperText) && (
-            <div
-              id={error ? `${inputId}-error` : `${inputId}-helper`}
-              className={messageClasses}
-              role={error ? "alert" : undefined}
+          {showPasswordToggle && type === "password" && (
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="absolute top-0 h-full px-3 py-2 hover:bg-transparent right-0"
+              onClick={togglePasswordVisibility}
+              disabled={disabled}
             >
-              {error || helperText}
-            </div>
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Eye className="h-4 w-4" aria-hidden="true" />
+              )}
+              <span className="sr-only">
+                {showPassword ? "Hide password" : "Show password"}
+              </span>
+            </Button>
           )}
         </div>
+
+        {(error || helperText) && (
+          <div
+            id={error ? `${inputId}-error` : `${inputId}-helper`}
+            className={messageClasses}
+            role={error ? "alert" : undefined}
+          >
+            {error || helperText}
+          </div>
+        )}
       </div>
     );
   }

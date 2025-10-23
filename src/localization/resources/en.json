@@ -1,4 +1,13 @@
 {
+  "common": {
+    "back": "Back",
+    "verify": "Verify",
+    "verifying": "Verifying...",
+    "sending": "Sending...",
+    "success": "Success",
+    "error": "Error",
+    "loading": "Loading..."
+  },
   "nav": {
     "logoTitle": "Taali",
     "features": "Features",
@@ -41,6 +50,15 @@
       "support": "Support"
     }
   },
+  "roles": {
+    "admin": "Administrator",
+    "supervisor": "Supervisor",
+    "teacher": "Teacher",
+    "student": "Student",
+    "parent": "Parent",
+    "canteenOperator": "Canteen Operator",
+    "financeTeam": "Finance Team"
+  },
   "register": {
     "title": "Create Account",
     "subtitle": "Please enter your information to create an account",
@@ -56,7 +74,6 @@
       "password": "Password",
       "confirmPassword": "Confirm Password"
     },
-
     "validation": {
       "required": "This field is required",
       "email": "Please enter a valid email address",
@@ -66,14 +83,12 @@
       "passwordsMatch": "Passwords must match",
       "emailTaken": "Email is already registered"
     },
-
     "placeholder": {
       "firstName": "Enter your first name",
       "lastName": "Enter your last name",
       "email": "email@example.com",
       "phone": "+1 (555) 000-0000"
     },
-
     "benefits": {
       "management": "Streamlined Management",
       "managementDesc": "Efficient tools for school administration",
@@ -92,7 +107,7 @@
     "lastName": {
       "min": "Last name must be at least 2 characters",
       "max": "Last name must be less than 50 characters",
-      "regex": "First name must contain only English letters"
+      "regex": "Last name must contain only English letters"
     },
     "email": {
       "format": "Please enter a valid email address",
@@ -104,16 +119,52 @@
     },
     "password": {
       "min": "Password must be at least 8 characters",
+      "regex": "Password must contain only English letters, numbers, and special characters",
       "strength": "Password must contain at least one uppercase letter, one lowercase letter, and one number"
     },
     "confirmPassword": {
       "match": "Passwords don't match"
+    },
+    "otp": {
+      "length": "OTP must be 6 digits",
+      "invalid": "Invalid OTP code"
     }
   },
-  "toast":{
-    "registerFailed":"Registration failed. Please try again.",
-    "otpSent":"Please check your email for the verification code.",
-    "registerSuccess":"Registration successful!",
-    "redirectingLogin":"Redirecting to login..."
+  "passwordStrength": {
+    "label": "Password strength:",
+    "enterPassword": "Enter a password",
+    "weak": "Weak",
+    "fair": "Fair",
+    "good": "Good",
+    "strong": "Strong"
+  },
+  "otpVerification": {
+    "title": "Verify Your Email",
+    "subtitle": "We sent a verification code to",
+    "otpLabel": "Verification Code",
+    "otpHint": "Enter the 6-digit code sent to your email",
+    "resendCode": "Resend Code",
+    "codeExpires": "This code will expire in 10 minutes",
+    "verificationSuccess": "Email verified successfully!",
+    "verificationFailed": "Verification failed",
+    "resendSuccess": "New verification code sent",
+    "resendFailed": "Failed to resend code"
+  },
+  "toast": {
+    "registerFailed": "Registration failed. Please try again.",
+    "otpSent": "Please check your email for the verification code.",
+    "registerSuccess": "Registration successful!",
+    "redirectingLogin": "Redirecting to login...",
+    "redirectingDashboard": "Redirecting to your dashboard..."
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "oops": "Oops! Page not found",
+    "message": "The page you're looking for doesn't exist or has been moved. Let's get you back on track.",
+    "goHome": "Go Home",
+    "goBack": "Go Back",
+    "contactSupport": "Contact Support",
+    "needHelp": "Need help?",
+    "visitHelpCenter": "Visit our help center"
   }
 }

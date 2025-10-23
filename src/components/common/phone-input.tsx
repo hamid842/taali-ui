@@ -21,6 +21,7 @@ import {
 } from "../ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { PhoneNumberUtil } from "google-libphonenumber";
+import { useLanguage } from "@/hooks/use-language";
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
@@ -51,9 +52,10 @@ export function InternationalPhoneInput({
   required,
   className,
 }: InternationalPhoneInputProps) {
+  const { language } = useLanguage();
   const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } =
     usePhoneInput({
-      defaultCountry: "us",
+      defaultCountry: language === "fa" ? "ir" : "us",
       value,
       countries: defaultCountries,
       onChange: (data) => {
