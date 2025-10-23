@@ -1,6 +1,11 @@
 import type { UserRoleType } from "./role";
 
 // Request types (what we send to the API)
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
 export interface RegisterRequest {
   firstName: string;
   lastName: string;
@@ -21,6 +26,15 @@ export interface ResendOtpRequest {
 }
 
 // Response types (what we receive from the API)
+export interface LoginResponse {
+  success: boolean;
+  message: string;
+  userId?: string;
+  email?: string;
+  role?: UserRoleType;
+  status?: string;
+}
+
 export interface RegisterResponse {
   success: boolean;
   message: string;

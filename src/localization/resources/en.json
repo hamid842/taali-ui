@@ -59,6 +59,16 @@
     "canteenOperator": "Canteen Operator",
     "financeTeam": "Finance Team"
   },
+  "login": {
+    "title": "Login",
+    "subtitle": "Enter your credentials to access your account",
+    "form": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "loggingIn": "Logging in...",
+    "login": "Login"
+  },
   "register": {
     "title": "Create Account",
     "subtitle": "Please enter your information to create an account",
