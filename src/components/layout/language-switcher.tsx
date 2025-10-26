@@ -12,7 +12,7 @@ import { type Language } from "@/contexts/language-context";
 import { useLanguage } from "@/hooks/use-language";
 
 export function LanguageSwitcher() {
-  const { currentLanguage, setCurrentLanguage, t } = useLanguage();
+  const { currentLanguage, setCurrentLanguage } = useLanguage();
   const setIsRTL = useAppStore((state) => state.setIsRTL);
 
   const handleLanguageChange = (language: Language) => {

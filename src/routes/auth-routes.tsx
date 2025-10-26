@@ -4,7 +4,6 @@ import RootLayout from "@/components/layout/root-layout";
 import ErrorPage from "@/components/error-boundary/error-page";
 
 // Lazy-loaded components
-const LandingPage = lazy(() => import("@/pages/landing-page"));
 const LoginPage = lazy(() => import("@/pages/auth/login"));
 const RegisterPage = lazy(() => import("@/pages/auth/register"));
 

@@ -12,7 +12,7 @@ import type {
 
 export const authService = {
   async login(data: LoginRequest): Promise<LoginResponse> {
-    return apiClient.post<RegisterResponse>(
+    return apiClient.post<LoginResponse>(
       apiConfig.endpoints.auth.login,
       data
     );

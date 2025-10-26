@@ -16,6 +16,7 @@ const rolePermissions = {
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     checkAuthStatus();
@@ -28,72 +29,43 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       const userData = localStorage.getItem("user_data");
 
       if (token && userData) {
-        // Verify token with backend
-        const response = await fetch("/api/auth/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (response.ok) {
-          const freshUserData = await response.json();
-          setUser(freshUserData);
-          localStorage.setItem("user_data", JSON.stringify(freshUserData));
-        } else {
-          // Token is invalid
-          localStorage.removeItem("auth_token");
-          localStorage.removeItem("user_data");
-          setUser(null);
+        // Use the stored user data directly
+        try {
+          const parsedUser = JSON.parse(userData);
+          setUser(parsedUser);
+        } catch (parseError) {
+          console.error("Error parsing user data:", parseError);
+          logout();
         }
+      } else {
+        setUser(null);
       }
     } catch (error) {
       console.error("Auth check failed:", error);
-      localStorage.removeItem("auth_token");
-      localStorage.removeItem("user_data");
-      setUser(null);
+      logout();
     } finally {
       setIsLoading(false);
+      setIsInitialized(true);
     }
   };
 
-  const login = async (email: string, password: string) => {
-    setIsLoading(true);
-    try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Login failed");
-      }
-
-      const data = await response.json();
-
-      // Store auth data
-      localStorage.setItem("auth_token", data.token);
-      localStorage.setItem("user_data", JSON.stringify(data.user));
-      localStorage.setItem("refresh_token", data.refreshToken);
-
-      setUser(data.user);
-
-      return data;
-    } catch (error) {
-      console.error("Login error:", error);
-      throw error;
-    } finally {
-      setIsLoading(false);
+  const login = (token: string, userData: User, refreshToken?: string) => {
+    // Store auth data
+    localStorage.setItem("auth_token", token);
+    localStorage.setItem("user_data", JSON.stringify(userData));
+    if (refreshToken) {
+      localStorage.setItem("refresh_token", refreshToken);
     }
+
+    // Set user state immediately
+    setUser(userData);
+    // Note: isLoading and isInitialized don't change here since this is sync
   };
 
   const register = async (userData: unknown) => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/auth/register", {
+      const response = await fetch("/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -117,12 +89,12 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = () => {
     // Call logout endpoint to invalidate token on server
-    fetch("/api/auth/logout", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-      },
-    }).catch(console.error);
+    // fetch("/auth/logout", {
+    //   method: "POST",
+    //   headers: {
+    //     Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+    //   },
+    // }).catch(console.error);
 
     // Clear local storage
     localStorage.removeItem("auth_token");
@@ -156,6 +128,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     user,
     isLoading,
     isAuthenticated: !!user,
+    isInitialized,
     login,
     register,
     logout,

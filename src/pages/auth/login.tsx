@@ -16,11 +16,15 @@ import { LogIn } from "lucide-react";
 import { useLoginMutation } from "@/hooks/use-auth-mutation";
 import { useRoleRedirect } from "@/hooks/use-role-redirect";
 import type { LoginRequest } from "@/types/auth";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function Login() {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const loginMutation = useLoginMutation();
   const { redirectToDashboard } = useRoleRedirect();
+  const { login} = useAuth();
 
   // Validation schema
   const loginSchema = z.object({
@@ -51,6 +55,18 @@ export default function Login() {
           description: t("toast.redirectingDashboard"),
         });
 
+        // Create user object from response
+        const userData = {
+          userId: result.userId,
+          email: result.email,
+          firstName: result.firstName,
+          lastName: result.lastName,
+          role: result.role,
+        };
+
+        // Call AuthContext login to update state
+        login(result.token, userData, result.refreshToken);
+
         setTimeout(() => {
           redirectToDashboard(result.role!);
         }, 2000);
@@ -59,7 +75,7 @@ export default function Login() {
       }
     } catch (error) {
       console.error("Login error:", error);
-      toast.error(t("toast.loginFailed"));
+      if (error instanceof Error) toast.error(error.message);
     }
   };
 
@@ -69,7 +85,7 @@ export default function Login() {
     <div className="flex justify-center items-center min-h-[calc(100vh-110px)]">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <LogIn size={"70px"} />
+          <LogIn size={"70px"} className="m-auto" />
           <CardTitle className="text-2xl font-bold">
             {t("login.title")}
           </CardTitle>
@@ -103,6 +119,15 @@ export default function Login() {
             </Button>
           </form>
         </CardContent>
+        <div className="flex items-center justify-center text-sm">
+          <span>{t("login.account")}</span>
+          <span
+            className="px-1 font-bold cursor-pointer hover:text-blue-600"
+            onClick={() => navigate("/register")}
+          >
+            {t("common.signUp")}
+          </span>
+        </div>
       </Card>
     </div>
   );

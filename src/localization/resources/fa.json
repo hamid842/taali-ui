@@ -6,16 +6,16 @@
     "sending": "در حال ارسال...",
     "success": "موفق",
     "error": "خطا",
-    "loading": "در حال بارگذاری..."
+    "loading": "در حال بارگذاری...",
+    "login": "ورود",
+    "signUp": "ثبت نام"
   },
   "nav": {
     "logoTitle": "تعــالی",
     "features": "ویژگی‌ها",
     "pricing": "قیمت‌گذاری",
     "testimonials": "نظرات",
-    "contact": "تماس",
-    "login": "ورود",
-    "signUp": "ثبت نام"
+    "contact": "تماس"
   },
   "landingPage": {
     "hero": {
@@ -67,7 +67,8 @@
       "password": "رمز عبور"
     },
     "loggingIn": "در حال ورود...",
-    "login": "ورود"
+    "login": "ورود",
+    "account": "حساب کاربری ندارید؟"
   },
   "register": {
     "title": "ایجاد حساب کاربری",
@@ -106,7 +107,8 @@
       "collaborationDesc": "با دانش‌آموزان، معلمان و والدین در ارتباط باشید",
       "security": "امن و خصوصی",
       "securityDesc": "داده‌های شما با امنیت درجه enterprise محافظت می‌شود"
-    }
+    },
+    "account": "حساب کاربری دارید؟"
   },
   "validation": {
     "firstName": {

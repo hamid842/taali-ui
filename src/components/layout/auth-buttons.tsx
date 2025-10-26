@@ -22,14 +22,14 @@ export default function AuthButtons() {
         onClick={handleSignUpClick}
         className="w-1/2 border-r-2"
       >
-        {t("nav.signUp")}
+        {t("common.signUp")}
       </Button>
       <Button
         variant={"secondary"}
         onClick={handleLoginClick}
         className="w-1/2"
       >
-        {t("nav.login")}
+        {t("common.login")}
       </Button>
     </ButtonGroup>
   );

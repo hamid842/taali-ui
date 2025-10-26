@@ -22,8 +22,10 @@ import { UserPlus } from "lucide-react";
 import { PasswordStrength } from "@/components/auth/password-strength";
 import { UserRole, type UserRoleType } from "@/types/role";
 import { useRoleRedirect } from "@/hooks/use-role-redirect";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [step, setStep] = useState<"register" | "verify">("register");
   const [userId, setUserId] = useState<string>("");
   const { t, language } = useLanguage();
@@ -106,7 +108,7 @@ export default function Register() {
       }
     } catch (error) {
       console.error("Registration error:", error);
-      toast.error(t("toast.registerFailed"));
+      if (error instanceof Error) toast.error(error.message);
     }
   };
 
@@ -145,7 +147,7 @@ export default function Register() {
     <div className="flex justify-center items-center min-h-[calc(100vh-110px)]">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <UserPlus size={"70px"} />
+          <UserPlus size={"70px"} className="m-auto" />
           <CardTitle className="text-2xl font-bold">
             {t("register.title")}
           </CardTitle>
@@ -213,6 +215,15 @@ export default function Register() {
             </Button>
           </form>
         </CardContent>
+        <div className="flex items-center justify-center text-sm">
+          <span>{t("register.account")}</span>
+          <span
+            className="px-1 font-bold cursor-pointer hover:text-blue-600"
+            onClick={() => navigate("/login")}
+          >
+            {t("common.login")}
+          </span>
+        </div>
       </Card>
     </div>
   );

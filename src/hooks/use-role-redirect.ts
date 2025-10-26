@@ -1,9 +1,11 @@
 import { useCallback } from "react";
 import { useLanguage } from "./use-language";
 import { RoleConfig, type UserRoleType } from "@/types/role";
+import { useNavigate } from "react-router-dom";
 
 export function useRoleRedirect() {
   const { t } = useLanguage();
+  const navigate = useNavigate();
 
   const getDashboardPath = useCallback((role: UserRoleType): string => {
     return RoleConfig[role].dashboardPath;
@@ -12,9 +14,9 @@ export function useRoleRedirect() {
   const redirectToDashboard = useCallback(
     (role: UserRoleType) => {
       const path = getDashboardPath(role);
-      window.location.href = path;
+      navigate(path, { replace: true });
     },
-    [getDashboardPath]
+    [getDashboardPath, navigate]
   );
 
   const getRoleLabel = useCallback(

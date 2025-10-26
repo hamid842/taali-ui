@@ -6,7 +6,6 @@ import { useAppStore } from "@/stores/app-store";
 // Import your JSON translation files
 import enTranslations from "@/localization/resources/en.json";
 import faTranslations from "@/localization/resources/fa.json";
-import { Toaster } from "../ui/sonner";
 
 // Define a type for nested objects
 type NestedObject = {
@@ -119,7 +118,6 @@ export default function LanguageProvider({
       }}
     >
       {children}
-      <Toaster position="top-center" dir={currentLanguage.dir} />
     </LanguageContext.Provider>
   );
 }

@@ -74,7 +74,7 @@ export function OtpVerification({
         toast.success(
           t("otpVerification.resendSuccess") || "Verification code sent"
         );
-        setOtp(""); 
+        setOtp("");
       } else {
         toast.error(result.message || t("otpVerification.resendFailed"));
       }
@@ -92,7 +92,7 @@ export function OtpVerification({
     <div className="flex justify-center items-center min-h-[calc(100vh-110px)]">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <UserLock size={"70px"} />
+          <UserLock size={"70px"} className="m-auto" />
           <CardTitle className="text-2xl font-bold">
             {t("otpVerification.title")}
           </CardTitle>

@@ -29,10 +29,13 @@ export interface ResendOtpRequest {
 export interface LoginResponse {
   success: boolean;
   message: string;
-  userId?: string;
-  email?: string;
-  role?: UserRoleType;
-  status?: string;
+  userId: string;
+  email: string;
+  role: UserRoleType;
+  token: string;
+  refreshToken: string;
+  firstName: string;
+  lastName:string
 }
 
 export interface RegisterResponse {

@@ -17,7 +17,7 @@ export const dashboardRoutes = [
         element: <AdminDashboard />,
       },
       {
-        path: "dashboard",
+        path: "/dashboard",
         element: <AdminDashboard />,
       },
       // You can add more admin routes here later
