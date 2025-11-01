@@ -10,25 +10,35 @@ import { languages } from "@/constants";
 import { useAppStore } from "@/stores/app-store";
 import { type Language } from "@/contexts/language-context";
 import { useLanguage } from "@/hooks/use-language";
+import { useAuth } from "@/hooks/use-auth";
 
 export function LanguageSwitcher() {
   const { currentLanguage, setCurrentLanguage } = useLanguage();
   const setIsRTL = useAppStore((state) => state.setIsRTL);
+  const { refetchMenu } = useAuth();
 
-  const handleLanguageChange = (language: Language) => {
-    // Update your custom context
-    setCurrentLanguage(language);
 
-    // Update document attributes
-    document.documentElement.dir = language.dir;
-    document.documentElement.lang = language.code;
+ const handleLanguageChange = async (language: Language) => {
+   // Update your custom context
+   setCurrentLanguage(language);
 
-    // Update Zustand store
-    setIsRTL(language.dir === "rtl");
+   // Update document attributes
+   document.documentElement.dir = language.dir;
+   document.documentElement.lang = language.code;
 
-    // Update localStorage
-    localStorage.setItem("selectedLanguage", language.code);
-  };
+   // Update Zustand store
+   setIsRTL(language.dir === "rtl");
+
+   // Update localStorage
+   localStorage.setItem("selectedLanguage", language.code);
+
+   // Refetch menu with new language
+   try {
+     await refetchMenu();
+   } catch (error) {
+     console.error("Failed to refetch menu after language change:", error);
+   }
+ };
 
   return (
     <DropdownMenu>

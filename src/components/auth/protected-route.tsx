@@ -2,6 +2,7 @@ import { useAuth } from "@/hooks/use-auth";
 import type { UserRoleType } from "@/types/role";
 import { Navigate } from "react-router-dom";
 import { FullPageSpinner } from "../common/loading-spinner";
+import { useLanguage } from "@/hooks/use-language";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -14,13 +15,19 @@ export function ProtectedRoute({
   allowedRoles,
   fallbackPath = "/unauthorized",
 }: ProtectedRouteProps) {
-  const { user, isLoading, isAuthenticated } = useAuth();
+  const { t } = useLanguage();
+  const { user, isLoading, isAuthenticated, isInitialized } = useAuth();
 
-  if (isLoading) {
-    return <FullPageSpinner text="Checking authentication..." />;
+  // Wait until auth is fully initialized
+  if (!isInitialized || isLoading) {
+    return <FullPageSpinner text={t("loading.checkAuth")} />;
   }
 
-  if (!isAuthenticated) {
+  if (isLoading) {
+    return <FullPageSpinner text={t("loading.checkAuth")} />;
+  }
+
+  if (!isAuthenticated || !user) {
     return <Navigate to="/login" replace />;
   }
 

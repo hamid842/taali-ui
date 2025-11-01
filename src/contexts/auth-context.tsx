@@ -1,3 +1,4 @@
+import type { MenuItemDto } from "@/types/menu";
 import type { UserRoleType } from "@/types/role";
 import { createContext } from "react";
 
@@ -10,15 +11,21 @@ export interface User {
 }
 
 export interface AuthContextType {
+  // State only
   user: User | null;
   isLoading: boolean;
-  isInitialized: boolean; 
+  isInitialized: boolean;
   isAuthenticated: boolean;
-  login: (token: string, userData: User, refreshToken?: string) => void; 
-  register: (userData: unknown) => Promise<void>;
+  menuItems: MenuItemDto[];
+  isMenuLoading: boolean;
+  isMenuError: boolean;
+
+  // State setters only (no API calls)
+  login: (token: string, userData: User, refreshToken?: string) => void;
   logout: () => void;
   updateUser: (userData: Partial<User>) => void;
   checkPermission: (permission: string) => boolean;
+  refetchMenu: () => Promise<unknown>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);

@@ -1,4 +1,5 @@
 export const UserRole = {
+  OWNER: "OWNER",
   ADMIN: "ADMIN",
   SUPERVISOR: "SUPERVISOR",
   TEACHER: "TEACHER",
@@ -11,6 +12,11 @@ export const UserRole = {
 export type UserRoleType = (typeof UserRole)[keyof typeof UserRole];
 
 export const RoleConfig = {
+  OWNER: {
+    translationKey: "roles.owner",
+    dashboardPath: "/owner/dashboard",
+    permissions: ["all"],
+  },
   ADMIN: {
     translationKey: "roles.admin",
     dashboardPath: "/admin/dashboard",

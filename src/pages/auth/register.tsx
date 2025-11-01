@@ -23,6 +23,7 @@ import { PasswordStrength } from "@/components/auth/password-strength";
 import { UserRole, type UserRoleType } from "@/types/role";
 import { useRoleRedirect } from "@/hooks/use-role-redirect";
 import { useNavigate } from "react-router-dom";
+import registerImage from "@/assets/images/register-pic.webp";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -52,6 +53,7 @@ export default function Register() {
       phoneNumber: z.string().min(5, t("validation.phone.min")),
       email: z.email(t("validation.email.format")),
       role: z.enum([
+        UserRole.OWNER,
         UserRole.ADMIN,
         UserRole.SUPERVISOR,
         UserRole.TEACHER,
@@ -88,7 +90,7 @@ export default function Register() {
       email: "",
       password: "",
       confirmPassword: "",
-      role: UserRole.ADMIN,
+      role: UserRole.OWNER,
     },
   });
   const passwordValue = watch("password");
@@ -145,86 +147,100 @@ export default function Register() {
 
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-110px)]">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <UserPlus size={"70px"} className="m-auto" />
-          <CardTitle className="text-2xl font-bold">
-            {t("register.title")}
-          </CardTitle>
-          <CardDescription>{t("register.subtitle")}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid gap-4 grid-cols-2">
-              <AppTextField
-                label={t("register.form.firstName")}
-                error={errors.firstName?.message}
-                required
-                {...register("firstName")}
-              />
-              <AppTextField
-                label={t("register.form.lastName")}
-                error={errors.lastName?.message}
-                required
-                {...register("lastName")}
-              />
-            </div>
-
-            <InternationalPhoneInput
-              label={t("register.form.phone")}
-              value={watch("phoneNumber")}
-              onChange={(value) => setValue("phoneNumber", value)}
-              error={errors.phoneNumber?.message}
-              required
+      {/* Main container with rounded corners */}
+      <div className="flex overflow-hidden rounded-lg shadow-md">
+        {/* Image - Same size as form */}
+        <div className="flex-1 hidden lg:block">
+          <div className="w-full h-full">
+            <img
+              src={registerImage}
+              alt="Register Pic"
+              className="w-full h-full max-h-[700px] object-cover shadow-md"
             />
-
-            <AppTextField
-              label={t("register.form.email")}
-              type="email"
-              error={errors.email?.message}
-              required
-              {...register("email")}
-            />
-            <div className="grid gap-4 grid-cols-2">
-              <AppTextField
-                type="password"
-                showPasswordToggle
-                label={t("register.form.password")}
-                error={errors.password?.message}
-                required
-                {...register("password")}
-              />
-              <AppTextField
-                type="password"
-                showPasswordToggle
-                label={t("register.form.confirmPassword")}
-                error={errors.confirmPassword?.message}
-                required
-                {...register("confirmPassword")}
-              />
-            </div>
-            {passwordValue && <PasswordStrength password={passwordValue} />}
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={isRegisterSubmitting}
-            >
-              {isSubmitting
-                ? t("register.creatingAccount")
-                : t("register.createAccount")}
-            </Button>
-          </form>
-        </CardContent>
-        <div className="flex items-center justify-center text-sm">
-          <span>{t("register.account")}</span>
-          <span
-            className="px-1 font-bold cursor-pointer hover:text-blue-600"
-            onClick={() => navigate("/login")}
-          >
-            {t("common.login")}
-          </span>
+          </div>
         </div>
-      </Card>
+        {/* Form Card */}
+        <Card className="w-full max-w-md">
+          <CardHeader className="space-y-1">
+            <UserPlus size={"70px"} className="m-auto" />
+            <CardTitle className="text-2xl font-bold">
+              {t("register.title")}
+            </CardTitle>
+            <CardDescription>{t("register.subtitle")}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div className="grid gap-4 grid-cols-2">
+                <AppTextField
+                  label={t("register.form.firstName")}
+                  error={errors.firstName?.message}
+                  required
+                  {...register("firstName")}
+                />
+                <AppTextField
+                  label={t("register.form.lastName")}
+                  error={errors.lastName?.message}
+                  required
+                  {...register("lastName")}
+                />
+              </div>
+
+              <InternationalPhoneInput
+                label={t("register.form.phone")}
+                value={watch("phoneNumber")}
+                onChange={(value) => setValue("phoneNumber", value)}
+                error={errors.phoneNumber?.message}
+                required
+              />
+
+              <AppTextField
+                label={t("register.form.email")}
+                type="email"
+                error={errors.email?.message}
+                required
+                {...register("email")}
+              />
+              <div className="grid gap-4 grid-cols-2">
+                <AppTextField
+                  type="password"
+                  showPasswordToggle
+                  label={t("register.form.password")}
+                  error={errors.password?.message}
+                  required
+                  {...register("password")}
+                />
+                <AppTextField
+                  type="password"
+                  showPasswordToggle
+                  label={t("register.form.confirmPassword")}
+                  error={errors.confirmPassword?.message}
+                  required
+                  {...register("confirmPassword")}
+                />
+              </div>
+              {passwordValue && <PasswordStrength password={passwordValue} />}
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isRegisterSubmitting}
+              >
+                {isSubmitting
+                  ? t("register.creatingAccount")
+                  : t("register.createAccount")}
+              </Button>
+            </form>
+          </CardContent>
+          <div className="flex items-center justify-center text-sm">
+            <span>{t("register.account")}</span>
+            <span
+              className="px-1 mb-0.5 font-bold cursor-pointer hover:text-blue-600"
+              onClick={() => navigate("/login")}
+            >
+              {t("common.login")}
+            </span>
+          </div>
+        </Card>
+      </div>
     </div>
   );
 }

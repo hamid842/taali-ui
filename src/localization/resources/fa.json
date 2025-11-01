@@ -178,5 +178,45 @@
     "contactSupport": "تماس با پشتیبانی",
     "needHelp": "نیاز به کمک دارید؟",
     "visitHelpCenter": "از مرکز راهنمایی ما دیدن کنید"
+  },
+  "unauthorized": {
+    "title": "دسترسی غیرمجاز",
+    "message": "شما مجوز دسترسی به این صفحه را ندارید. در صورت بروز خطا، لطفاً با مدیر سیستم تماس بگیرید.",
+    "loggedInAs": "ورود به عنوان",
+    "goHome": "بازگشت به صفحه اصلی",
+    "signInDifferent": "ورود با حساب کاربری دیگر"
+  },
+  "breadcrumbs": {
+    "home": "خانه",
+    "dashboard": "داشبورد",
+    "schools": "مدارس",
+    "addSchool": "افزودن مدرسه",
+    "editSchool": "ویرایش مدرسه",
+    "classes": "کلاس‌ها",
+    "addClass": "افزودن کلاس",
+    "editClass": "ویرایش کلاس",
+    "teachers": "معلمان",
+    "addTeacher": "افزودن معلم",
+    "editTeacher": "ویرایش معلم",
+    "students": "دانش‌آموزان",
+    "addStudent": "افزودن دانش‌آموز",
+    "editStudent": "ویرایش دانش‌آموز",
+    "supervisors": "ناظمان",
+    "addSupervisor": "افزودن ناظم",
+    "editSupervisor": "ویرایش ناظم",
+    "settings": "تنظیمات"
+  },
+  "mockData": {
+    "schools": {
+      "title": "مدارس",
+      "s1": "مدرسه اول",
+      "s2": "مدرسه دوم",
+      "s3": "مدرسه سوم",
+      "addr1": "آدرس تستی",
+      "addSchool": "مدرسه جدید"
+    }
+  },
+  "loading": {
+    "checkAuth": "بررسی احراز هویت..."
   }
 }

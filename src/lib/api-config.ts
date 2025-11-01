@@ -1,9 +1,14 @@
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
 
 // Get user's preferred language from localStorage, i18n, or browser
 const getPreferredLanguage = (): string => {
-  return localStorage.getItem("selectedLanguage")!;
+  return localStorage.getItem("selectedLanguage")! || "fa";
+};
+
+// Get auth token from localStorage
+const getAuthToken = (): string | null => {
+  return localStorage.getItem("auth_token");
 };
 
 export const apiConfig = {
@@ -15,6 +20,12 @@ export const apiConfig = {
       resendOtp: `${API_BASE_URL}/auth/resend-otp`,
       login: `${API_BASE_URL}/auth/login`,
     },
+    menu: {
+      getUserMenu: `${API_BASE_URL}/menu/user`,
+    },
+    schools: {
+      getMySchools: `${API_BASE_URL}/schools/my-schools`,
+    },
   },
   headers: {
     "Content-Type": "application/json",
@@ -25,11 +36,17 @@ export const apiConfig = {
 export const apiClient = {
   async post<T>(url: string, data: unknown, language?: string): Promise<T> {
     const preferredLanguage = language || getPreferredLanguage();
+    const token = getAuthToken();
 
-    const headers = {
+    const headers: Record<string, string> = {
       ...apiConfig.headers,
       "Accept-Language": preferredLanguage,
     };
+
+    // Add Authorization header if token exists
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
 
     const response = await fetch(url, {
       method: "POST",
@@ -48,13 +65,18 @@ export const apiClient = {
     return result;
   },
 
-  // Optional: Add other HTTP methods with language support
   async get<T>(url: string, language?: string): Promise<T> {
     const preferredLanguage = language || getPreferredLanguage();
+    const token = getAuthToken();
 
-    const headers = {
+    const headers: Record<string, string> = {
       "Accept-Language": preferredLanguage,
     };
+
+    // Add Authorization header if token exists
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
 
     const response = await fetch(url, {
       method: "GET",
@@ -74,11 +96,17 @@ export const apiClient = {
 
   async put<T>(url: string, data: unknown, language?: string): Promise<T> {
     const preferredLanguage = language || getPreferredLanguage();
+    const token = getAuthToken();
 
-    const headers = {
+    const headers: Record<string, string> = {
       ...apiConfig.headers,
       "Accept-Language": preferredLanguage,
     };
+
+    // Add Authorization header if token exists
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
 
     const response = await fetch(url, {
       method: "PUT",
@@ -99,10 +127,16 @@ export const apiClient = {
 
   async delete<T>(url: string, language?: string): Promise<T> {
     const preferredLanguage = language || getPreferredLanguage();
+    const token = getAuthToken();
 
-    const headers = {
+    const headers: Record<string, string> = {
       "Accept-Language": preferredLanguage,
     };
+
+    // Add Authorization header if token exists
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
 
     const response = await fetch(url, {
       method: "DELETE",

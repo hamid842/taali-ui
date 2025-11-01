@@ -177,5 +177,45 @@
     "contactSupport": "Contact Support",
     "needHelp": "Need help?",
     "visitHelpCenter": "Visit our help center"
+  },
+  "unauthorized": {
+    "title": "Access Denied",
+    "message": "You don't have permission to access this page. Please contact your administrator if you believe this is an error.",
+    "loggedInAs": "Logged in as",
+    "goHome": "Go Home",
+    "signInDifferent": "Sign In with Different Account"
+  },
+  "breadcrumbs": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "schools": "Schools",
+    "addSchool": "Add School",
+    "editSchool": "Edit School",
+    "classes": "Classes",
+    "addClass": "Add Class",
+    "editClass": "Edit Class",
+    "teachers": "Teachers",
+    "addTeacher": "Add Teacher",
+    "editTeacher": "Edit Teacher",
+    "students": "Students",
+    "addStudent": "Add Student",
+    "editStudent": "Edit Student",
+    "supervisors": "Supervisors",
+    "addSupervisor": "Add Supervisor",
+    "editSupervisor": "Edit Supervisor",
+    "settings": "Settings"
+  },
+  "mockData": {
+    "schools": {
+      "title": "Schools",
+      "s1": "School One",
+      "s2": "School Two",
+      "s3": "School Three",
+      "addr1": "Test address",
+      "addSchool": "Add School"
+    }
+  },
+  "loading":{
+    "checkAuth":"Checking authentication..."
   }
 }

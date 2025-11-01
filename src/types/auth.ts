@@ -1,4 +1,16 @@
 import type { UserRoleType } from "./role";
+import type { School } from "./school";
+
+export interface User {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: UserRoleType;
+  permissions: string[];
+  availableSchools: School[];
+  currentSchool?: School;
+}
 
 // Request types (what we send to the API)
 export interface LoginRequest {
@@ -29,13 +41,16 @@ export interface ResendOtpRequest {
 export interface LoginResponse {
   success: boolean;
   message: string;
-  userId: string;
-  email: string;
-  role: UserRoleType;
-  token: string;
-  refreshToken: string;
-  firstName: string;
-  lastName:string
+  token?: string;
+  refreshToken?: string;
+  userId?: string;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  role?: string;
+  permissions: string[];
+  availableSchools: School[];
+  currentSchool?: School;
 }
 
 export interface RegisterResponse {
