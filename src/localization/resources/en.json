@@ -8,7 +8,8 @@
     "error": "Error",
     "loading": "Loading...",
     "login": "Login",
-    "signUp": "Sign Up"
+    "signUp": "Sign Up",
+    "uploading": "Uploading..."
   },
   "nav": {
     "logoTitle": "Taali",
@@ -189,7 +190,7 @@
     "home": "Home",
     "dashboard": "Dashboard",
     "schools": "Schools",
-    "addSchool": "Add School",
+    "create": "Add School",
     "editSchool": "Edit School",
     "classes": "Classes",
     "addClass": "Add Class",
@@ -205,17 +206,54 @@
     "editSupervisor": "Edit Supervisor",
     "settings": "Settings"
   },
-  "mockData": {
-    "schools": {
-      "title": "Schools",
-      "s1": "School One",
-      "s2": "School Two",
-      "s3": "School Three",
-      "addr1": "Test address",
-      "addSchool": "Add School"
+  "dashboard": {
+    "schoolSwitcher": {
+      "emptyTitle": "Create School",
+      "emptyDesc": "No school available",
+      "loading": "Loading schools...",
+      "failed": "Failed to load schools!",
+      "title":"Schools"
     }
   },
-  "loading":{
-    "checkAuth":"Checking authentication..."
+  "school": {
+    "create": "Create School",
+    "createSuccess": "School created successfully!",
+    "createError": "Failed to create school",
+    "createDescription": "Add a new school to your account",
+    "logo": "School Logo",
+    "logoDescription": "Upload your school's logo",
+    "details": "School Details",
+    "detailsDescription": "Enter the basic information for your school",
+    "tips": "Tips for creating a school",
+    "tipCode": "School code should be unique and easy to remember",
+    "tipName": "Use the official name of your school",
+    "tipContact": "Provide accurate contact information for communication",
+    "tipLogo": "A high-quality logo helps with brand recognition",
+    "name": "School Name",
+    "code": "School Code",
+    "image": "School Image",
+    "address": "Address",
+    "email": "Email",
+    "phone": "Phone",
+    "submit": "Create School",
+    "cancel": "Cancel",
+    "validation": {
+      "nameRequired": "School name is required",
+      "codeRequired": "School code is required",
+      "codePattern": "Code must be alphanumeric without spaces",
+      "emailInvalid": "Please enter a valid email address",
+      "phoneInvalid": "Please enter a valid phone number"
+    }
+  },
+  "loading": {
+    "checkAuth": "Checking authentication..."
+  },
+  "upload": {
+    "chooseImage": "Choose Image",
+    "schoolLogoHint": "JPG, PNG, WebP or GIF. Max 5MB.",
+    "profileImageHint": "JPG, PNG or WebP. Max 2MB.",
+    "invalidType": "Please select a valid image file (JPEG, PNG, WebP, GIF)",
+    "fileTooLarge": "File is too large",
+    "failed": "Upload failed. Please try again."
   }
 }

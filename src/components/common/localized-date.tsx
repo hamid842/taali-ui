@@ -18,5 +18,5 @@ export default function LocalizedDate({ locale }: LocalizedDateProps) {
     return formatter.format(date);
   }, [locale]);
 
-  return <span className="text-sm text-muted-foreground">{today}</span>;
+  return <span className="hidden md:block text-sm text-muted-foreground">{today}</span>;
 }

@@ -3,7 +3,7 @@ import MainLayout from "@/components/layout/main-layout";
 import AdminDashboard from "@/pages/admin/dashboard";
 import OwnerDashboard from "@/pages/owner/dashboard";
 import Schools from "@/pages/owner/schools";
-import AddSchool from "@/pages/owner/schools/add-school";
+import AddSchool from "@/pages/owner/schools/create/add-school";
 import { UserRole } from "@/types/role";
 
 export const dashboardRoutes = [
@@ -29,7 +29,7 @@ export const dashboardRoutes = [
         element: <Schools />,
       },
       {
-        path: "/owner/add-school",
+        path: "/owner/schools/create",
         element: <AddSchool />,
       },
     ],

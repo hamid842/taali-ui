@@ -14,10 +14,10 @@ export interface School {
 export interface CreateSchoolRequest {
   name: string;
   code: string;
-  image?: string;
-  address?: string;
-  email?: string;
-  phone?: string;
+  image?: string | null | undefined;
+  address?: string | null | undefined;
+  email?: string | null | undefined;
+  phone?: string | null | undefined;
 }
 
 export interface UpdateSchoolRequest {

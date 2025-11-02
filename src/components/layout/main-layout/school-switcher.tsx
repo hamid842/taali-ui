@@ -14,15 +14,17 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useLanguage } from "@/hooks/use-language";
-import { useSchools } from "@/hooks/use-school";
+import { useSchools } from "@/hooks/use-schools";
 import { cn } from "@/lib/utils";
 import type { School } from "@/types/school";
 import { Building, ChevronsUpDown, Loader2, Plus } from "lucide-react";
 import { useState, type ElementType } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SchoolSwitcher() {
   const { t, dir } = useLanguage();
   const { isMobile } = useSidebar();
+  const navigate = useNavigate();
   const { data: schools, isLoading, error } = useSchools();
   const [activeSchool, setActiveSchool] = useState<School | null>(null);
 
@@ -45,7 +47,9 @@ export default function SchoolSwitcher() {
         <SidebarMenuItem>
           <SidebarMenuButton size="lg" className="justify-center" disabled>
             <Loader2 className="h-4 w-4 animate-spin" />
-            <span className="sr-only">Loading schools...</span>
+            <span className="sr-only">
+              {t("dashboard.schoolSwitcher.loading")}
+            </span>
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>
@@ -59,7 +63,9 @@ export default function SchoolSwitcher() {
         <SidebarMenuItem>
           <SidebarMenuButton size="lg" className="text-destructive" disabled>
             <Building className="h-4 w-4" />
-            <span className="text-xs">Failed to load schools</span>
+            <span className="text-xs">
+              {t("dashboard.schoolSwitcher.failed")}
+            </span>
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>
@@ -70,10 +76,10 @@ export default function SchoolSwitcher() {
   if (!schools || schools.length === 0) {
     return (
       <SidebarMenu>
-        <SidebarMenuItem>
+        <SidebarMenuItem onClick={() => navigate("/owner/add-school")}>
           <SidebarMenuButton
             size="lg"
-            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            className="cursor-pointer data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
           >
             <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
               <Plus className="size-4" />
@@ -81,12 +87,15 @@ export default function SchoolSwitcher() {
             <div
               className={cn(
                 "grid flex-1 text-sm leading-tight",
-                dir === "rtl" ? "text-right" : "text-left"
+                dir === "ltr" ? "text-left" : "text-right"
               )}
-              dir={dir}
             >
-              <span className="truncate font-medium">Create School</span>
-              <span className="truncate text-xs">No schools available</span>
+              <span className="truncate font-medium">
+                {t("dashboard.schoolSwitcher.emptyTitle")}
+              </span>
+              <span className="truncate text-xs">
+                {t("dashboard.schoolSwitcher.emptyDesc")}
+              </span>
             </div>
           </SidebarMenuButton>
         </SidebarMenuItem>
@@ -144,7 +153,7 @@ export default function SchoolSwitcher() {
               dir={dir}
               className="text-muted-foreground text-xs"
             >
-              {t("mockData.schools.title") || "Your Schools"}
+              {t("dashboard.schoolSwitcher.title") || "Your Schools"}
             </DropdownMenuLabel>
             {schools.map((school, index) => {
               const SchoolLogo = getLogoComponent();
@@ -190,7 +199,7 @@ export default function SchoolSwitcher() {
                 <Plus className="size-4" />
               </div>
               <div className="text-muted-foreground font-medium">
-                {t("mockData.schools.addSchool") || "Add School"}
+                {t("school.create") || "Add School"}
               </div>
             </DropdownMenuItem>
           </DropdownMenuContent>
