@@ -76,7 +76,7 @@ export default function SchoolSwitcher() {
   if (!schools || schools.length === 0) {
     return (
       <SidebarMenu>
-        <SidebarMenuItem onClick={() => navigate("/owner/add-school")}>
+        <SidebarMenuItem onClick={() => navigate("/owner/schools/create")}>
           <SidebarMenuButton
             size="lg"
             className="cursor-pointer data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
@@ -189,11 +189,7 @@ export default function SchoolSwitcher() {
             <DropdownMenuItem
               className="gap-2 p-2"
               dir={dir}
-              onClick={() => {
-                // You can add create school functionality here
-                // For example, navigate to create school page
-                console.log("Create new school clicked");
-              }}
+              onClick={() => navigate("/owner/schools/create")}
             >
               <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
                 <Plus className="size-4" />

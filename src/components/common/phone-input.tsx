@@ -36,7 +36,7 @@ const isPhoneValid = (phone: string) => {
 
 interface InternationalPhoneInputProps {
   label?: string;
-  value: string;
+  value?: string;
   onChange: (value: string) => void;
   error?: string;
   required?: boolean;

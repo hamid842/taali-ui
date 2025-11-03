@@ -93,7 +93,7 @@ export default function Login() {
             <CardDescription>{t("login.subtitle")}</CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <AppTextField
                 label={t("login.form.email")}
                 type="email"
@@ -113,7 +113,7 @@ export default function Login() {
 
               <Button
                 type="submit"
-                className="w-full"
+                className="w-full mt-2"
                 disabled={isLoginSubmitting}
               >
                 {isLoginSubmitting ? t("login.loggingIn") : t("login.login")}

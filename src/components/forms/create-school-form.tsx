@@ -7,22 +7,23 @@ import { Loader2 } from "lucide-react";
 import { AppTextField } from "../common/app-text-field";
 import { InternationalPhoneInput } from "../common/phone-input";
 
-// Validation schema
+// Fixed validation schema
 const createSchoolSchema = z.object({
   name: z.string().min(1, "validation.nameRequired"),
   code: z
     .string()
     .min(1, "validation.codeRequired")
     .regex(/^[a-zA-Z0-9]+$/, "validation.codePattern"),
-  image: z.string().optional().nullable(),
-  address: z.string().optional().nullable(),
-  email: z.email("validation.emailInvalid").optional().nullable(),
-  phone: z
+  image: z.string().optional(),
+  address: z.string().optional(),
+  email: z
     .string()
-    .regex(/^[+]?[0-9\s\-()]{10,}$/, "validation.phoneInvalid")
+    .email("validation.emailInvalid")
     .optional()
-    .nullable(),
+    .or(z.literal("")),
+  phone: z.string().optional(),
 });
+
 export type CreateSchoolFormData = z.infer<typeof createSchoolSchema>;
 
 interface CreateSchoolFormProps {
@@ -43,7 +44,7 @@ export function CreateSchoolForm({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     setValue,
     watch,
   } = useForm<CreateSchoolFormData>({
@@ -60,19 +61,27 @@ export function CreateSchoolForm({
   });
 
   const handleFormSubmit = (data: CreateSchoolFormData) => {
-    // Convert empty strings to null for optional fields
+    // Clean up empty strings to undefined for optional fields
     const submitData = {
       ...data,
-      image: data.image || null,
-      address: data.address || null,
-      email: data.email || null,
-      phone: data.phone || null,
+      image: data.image || undefined,
+      address: data.address || undefined,
+      email: data.email || undefined,
+      phone: data.phone || undefined,
     };
     onSubmit(submitData);
   };
 
   const getErrorMessage = (error: unknown): string | undefined => {
-    const message = error instanceof Error ? error?.message : "";
+    if (!error) return undefined;
+
+    const message =
+      error instanceof Error
+        ? error.message
+        : typeof error === "object" && error !== null && "message" in error
+        ? String(error.message)
+        : String(error);
+
     if (!message) return undefined;
 
     const translationKeys: Record<string, string> = {
@@ -85,6 +94,11 @@ export function CreateSchoolForm({
 
     const translationKey = translationKeys[message] || message;
     return t(translationKey);
+  };
+
+  // Handle phone input changes with validation
+  const handlePhoneChange = (value: string) => {
+    setValue("phone", value, { shouldValidate: true });
   };
 
   return (
@@ -109,6 +123,7 @@ export function CreateSchoolForm({
           disabled={isLoading}
         />
       </div>
+
       <AppTextField
         label={t("school.email")}
         type="email"
@@ -121,17 +136,19 @@ export function CreateSchoolForm({
       <InternationalPhoneInput
         label={t("school.phone")}
         value={watch("phone") || ""}
-        onChange={(value) => setValue("phone", value)}
-        error={errors.phone?.message}
+        onChange={handlePhoneChange}
+        error={getErrorMessage(errors.phone)}
       />
+
       <AppTextField
         label={t("school.address")}
         {...register("address")}
-        error={errors.address?.message}
+        error={getErrorMessage(errors.address)}
         placeholder={t("school.address")}
         disabled={isLoading}
       />
-      {/* Hidden image field - controlled by ImageUpload component */}
+
+      {/* Hidden image field */}
       <input type="hidden" {...register("image")} />
 
       {/* Form Actions */}
@@ -140,7 +157,7 @@ export function CreateSchoolForm({
       >
         <Button
           type="submit"
-          disabled={isLoading}
+          disabled={isLoading || !isValid} // Disable if form is invalid
           className="flex-1 gap-2"
         >
           {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}

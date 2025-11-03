@@ -13,7 +13,6 @@ export const uploadApi = {
   ): Promise<UploadResponse> => {
     const formData = new FormData();
     formData.append("file", file);
-
     return apiClient.upload<UploadResponse>(
       apiConfig.endpoints.upload.schoolLogo,
       formData,
