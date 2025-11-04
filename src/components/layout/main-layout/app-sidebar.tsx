@@ -1,176 +1,20 @@
 import {
-  AudioWaveform,
-  Calendar,
-  Command,
-  GalleryVerticalEnd,
-  Home,
-  Inbox,
-  Search,
-  Settings,
-  ChevronDown,
-} from "lucide-react";
-
-import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { useLanguage } from "@/hooks/use-language";
-import SchoolSwitcher from "./school-switcher";
+import SchoolSwitcher from "./school-swithcer/school-switcher";
 import { useAuth } from "@/hooks/use-auth";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import SidebarSkeleton from "@/components/skeleton/layout/sidebar-skeleton";
 import type { MenuItemDto } from "@/types/menu";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
-
-// Icon mapping for your menu items
-const iconMap = {
-  home: Home,
-  inbox: Inbox,
-  calendar: Calendar,
-  search: Search,
-  settings: Settings,
-  building: GalleryVerticalEnd,
-  users: AudioWaveform,
-  command: Command,
-  "dollar-sign": Command,
-  "user-check": AudioWaveform,
-  "graduation-cap": AudioWaveform,
-  "family-restroom": AudioWaveform,
-  "event-available": Calendar,
-  assignment: Inbox,
-  "book-open": Inbox,
-  "clipboard-check": Inbox,
-  "file-text": Inbox,
-  "user-plus": AudioWaveform,
-  "bar-chart": Settings,
-  "credit-card": Inbox,
-  "trending-down": Settings,
-  utensils: Inbox,
-  "shopping-cart": Inbox,
-  package: Inbox,
-  plus: Inbox,
-  list: Inbox,
-  bell: Inbox,
-  book: Inbox,
-  award: Inbox,
-};
-
-// Fallback icon if the icon name is not found
-const FallbackIcon = Home;
-
-// Collapsible menu item component for smooth animations
-interface CollapsibleMenuItemProps {
-  item: MenuItemDto;
-  level: number;
-  isExpanded: boolean;
-  onToggle: (itemId: number) => void;
-  isActive: boolean;
-  dir: "ltr" | "rtl";
-}
-
-function CollapsibleMenuItem({
-  item,
-  level,
-  isExpanded,
-  onToggle,
-  isActive,
-  dir,
-}: CollapsibleMenuItemProps) {
-  const IconComponent = getIconComponent(item.icon);
-  const hasChildren = item.children && item.children.length > 0;
-
-  // For RTL, we need to adjust the margins and chevron direction
-  const marginDirection = dir === "rtl" ? "mr-4" : "ml-4";
-  const borderDirection = dir === "rtl" ? "border-r" : "border-l";
-
-  if (hasChildren) {
-    return (
-      <SidebarMenuItem>
-        <SidebarMenuButton
-          onClick={() => onToggle(item.id)}
-          className={cn(
-            "flex items-center justify-between w-full cursor-pointer transition-colors duration-200",
-            isActive && "bg-accent",
-            "hover:bg-accent/50"
-          )}
-        >
-          <div className="flex items-center gap-2">
-            <IconComponent className="h-4 w-4" />
-            <span>{item.title}</span>
-          </div>
-          <ChevronDown
-            className={cn(
-              "h-3 w-3 transition-transform duration-500 ease-in-out",
-              isExpanded ? "rotate-180" : "rotate-0"
-            )}
-          />
-        </SidebarMenuButton>
-
-        {/* Animated children container */}
-        <div
-          className={cn(
-            "overflow-hidden transition-all duration-500 ease-in-out",
-            marginDirection,
-            borderDirection,
-            "border-border",
-            isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          )}
-        >
-          <div className="py-1">
-            <SidebarMenu>
-              {item.children!.map((child) => (
-                <CollapsibleMenuItem
-                  key={child.id}
-                  item={child}
-                  level={level + 1}
-                  isExpanded={isExpanded}
-                  onToggle={onToggle}
-                  isActive={
-                    child.route ? location.pathname === child.route : false
-                  }
-                  dir={dir}
-                />
-              ))}
-            </SidebarMenu>
-          </div>
-        </div>
-      </SidebarMenuItem>
-    );
-  }
-
-  // Leaf item (no children)
-  return (
-    <SidebarMenuItem>
-      <SidebarMenuButton
-        asChild
-        isActive={isActive}
-        tooltip={item.title}
-        className="transition-colors duration-200 hover:bg-accent/50"
-      >
-        <Link to={item.route || "#"}>
-          <IconComponent className="h-4 w-4" />
-          <span>{item.title}</span>
-        </Link>
-      </SidebarMenuButton>
-    </SidebarMenuItem>
-  );
-}
-
-// Get icon component from string
-function getIconComponent(iconName?: string) {
-  if (!iconName) return FallbackIcon;
-
-  const IconComponent = iconMap[iconName as keyof typeof iconMap];
-  return IconComponent || FallbackIcon;
-}
+import CollapsibleMenuItem from "./collapsible-menu-item";
 
 export default function AppSidebar() {
   const { dir } = useLanguage();

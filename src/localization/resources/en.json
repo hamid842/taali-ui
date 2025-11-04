@@ -212,7 +212,8 @@
       "emptyDesc": "No school available",
       "loading": "Loading schools...",
       "failed": "Failed to load schools!",
-      "title":"Schools"
+      "title": "Schools",
+      "selectSchool": "Select School"
     }
   },
   "school": {
