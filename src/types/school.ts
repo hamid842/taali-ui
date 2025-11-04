@@ -6,9 +6,14 @@ export interface School {
   address?: string;
   email?: string;
   phone?: string;
+  status: string;
   ownerId: number;
   createdAt: string;
   updatedAt: string;
+  teacherCount: number;
+  classCount: number;
+  studentCount: number;
+  canteenCount: number;
 }
 
 export interface CreateSchoolRequest {

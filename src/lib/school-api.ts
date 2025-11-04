@@ -10,7 +10,7 @@ export const schoolApi = {
     return apiClient.get<School[]>(apiConfig.endpoints.schools.getMySchools);
   },
 
-  getSchoolById: async (id: number): Promise<School> => {
+  getSchoolById: async (id: string): Promise<School> => {
     return apiClient.get<School>(apiConfig.endpoints.schools.getById(id));
   },
 
@@ -19,17 +19,17 @@ export const schoolApi = {
   },
 
   updateSchool: async (
-    id: number,
+    id: string,
     data: UpdateSchoolRequest
   ): Promise<School> => {
     return apiClient.put<School>(apiConfig.endpoints.schools.update(id), data);
   },
 
-  deleteSchool: async (id: number): Promise<void> => {
+  deleteSchool: async (id: string): Promise<void> => {
     return apiClient.delete(apiConfig.endpoints.schools.delete(id));
   },
 
-  updateSchoolLogo: async (id: number, imageUrl: string): Promise<School> => {
+  updateSchoolLogo: async (id: string, imageUrl: string): Promise<School> => {
     return apiClient.patch<School>(apiConfig.endpoints.schools.updateLogo(id), {
       imageUrl,
     });

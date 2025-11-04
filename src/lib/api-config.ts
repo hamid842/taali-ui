@@ -26,10 +26,10 @@ export const apiConfig = {
     schools: {
       getMySchools: `${API_BASE_URL}/schools/my-schools`,
       create: `${API_BASE_URL}/schools`,
-      getById: (id: number) => `${API_BASE_URL}/schools/${id}`,
-      update: (id: number) => `${API_BASE_URL}/schools/${id}`,
-      delete: (id: number) => `${API_BASE_URL}/schools/${id}`,
-      updateLogo: (id: number) => `${API_BASE_URL}/schools/${id}/logo`,
+      getById: (id: string) => `${API_BASE_URL}/schools/${id}`,
+      update: (id: string) => `${API_BASE_URL}/schools/${id}`,
+      delete: (id: string) => `${API_BASE_URL}/schools/${id}`,
+      updateLogo: (id: string) => `${API_BASE_URL}/schools/${id}/logo`,
       search: `${API_BASE_URL}/schools/search`,
     },
     upload: {

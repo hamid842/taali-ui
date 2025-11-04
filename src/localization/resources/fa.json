@@ -9,7 +9,12 @@
     "loading": "در حال بارگذاری...",
     "login": "ورود",
     "signUp": "ثبت نام",
-    "uploading": "در حال آپلود..."
+    "uploading": "در حال آپلود...",
+    "search": "جستجو",
+    "filter": "فیلتر",
+    "retry": "تلاش مجدد",
+    "since": "از سال",
+    "current": "جاری"
   },
   "nav": {
     "logoTitle": "تعــالی",
@@ -217,7 +222,7 @@
       "selectSchool": "انتخاب مدرسه"
     }
   },
-  "school": {
+  "addSchool": {
     "create": "ایجاد مدرسه",
     "createSuccess": "مدرسه با موفقیت ایجاد شد!",
     "createError": "ایجاد مدرسه ناموفق بود",
@@ -245,6 +250,54 @@
       "codePattern": "کد باید شامل حروف و اعداد بدون فاصله باشد",
       "emailInvalid": "لطفا یک آدرس ایمیل معتبر وارد کنید",
       "phoneInvalid": "لطفا یک شماره تلفن معتبر وارد کنید"
+    }
+  },
+  "schoolsPage": {
+    "title": "مدارس من",
+    "subtitle": "مدیریت تمام مؤسسات آموزشی شما",
+    "errorTitle": "خطا در بارگذاری مدارس",
+    "errorDescription": "لطفاً دوباره تلاش کنید",
+    "searchPlaceholder": "جستجوی مدرسه بر اساس نام یا کد...",
+    "emptyTitle": "مدرسه‌ای یافت نشد",
+    "searchNoResults": "معیارهای جستجو یا فیلتر خود را تنظیم کنید",
+    "emptyDescription": "با ایجاد اولین مدرسه خود شروع کنید",
+    "stats": {
+      "total": "تعداد کل مدارس",
+      "active": "فعال",
+      "setup": "در حال راه‌اندازی",
+      "archived": "آرشیو شده"
+    },
+    "descriptions": {
+      "total": "تمام مؤسسات",
+      "active": "در حال فعالیت",
+      "setup": "در حال پیکربندی",
+      "archived": "غیرفعال"
+    },
+    "filters": {
+      "allStatus": "همه وضعیت‌ها",
+      "active": "فعال",
+      "setup": "در حال راه‌اندازی",
+      "archived": "آرشیو شده",
+      "searchNoResults": "معیارهای جستجو یا فیلتر خود را تنظیم کنید",
+      "emptyDescription": "با ایجاد اولین مدرسه خود شروع کنید"
+    },
+    "actions": {
+      "viewDetails": "مشاهده جزئیات",
+      "editSchool": "ویرایش مدرسه",
+      "deleteSchool": "حذف مدرسه",
+      "dashboard": "داشبورد",
+      "createSchool": "ایجاد مدرسه"
+    },
+    "features": {
+      "teachers": "معلمان",
+      "classes": "کلاس‌ها",
+      "students": "دانش‌آموزان",
+      "canteen": "بوفه"
+    },
+    "status": {
+      "active": "فعال",
+      "setup": "در حال راه‌اندازی",
+      "archived": "آرشیو شده"
     }
   },
   "loading": {

@@ -12,7 +12,7 @@ import type { ReactNode } from "react";
 type EmptyContentProps = {
   title: string;
   desc: string;
-  actions: ReactNode;
+  actions?: ReactNode;
 };
 
 export default function EmptyData({ title, desc, actions }: EmptyContentProps) {

@@ -35,7 +35,7 @@ export default function AddSchool() {
       await createSchoolMutation.mutateAsync(schoolData);
 
       toast.success(
-        t("school.createSuccess") || "School created successfully!"
+        t("addSchool.createSuccess") || "School created successfully!"
       );
 
       // Redirect to schools list after successful creation
@@ -43,7 +43,7 @@ export default function AddSchool() {
     } catch (error) {
       console.error("Failed to create school:", error);
       toast.error(
-        t("school.createError") || "Failed to create school. Please try again."
+        t("addSchool.createError") || "Failed to create school. Please try again."
       );
     }
   };
@@ -70,10 +70,10 @@ export default function AddSchool() {
         </Button>
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
-            {t("school.create") || "Create School"}
+            {t("addSchool.create") || "Create School"}
           </h1>
           <p className="text-muted-foreground">
-            {t("school.createDescription") ||
+            {t("addSchool.createDescription") ||
               "Add a new school to your account"}
           </p>
         </div>
@@ -86,10 +86,10 @@ export default function AddSchool() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <School className="h-5 w-5" />
-                {t("school.logo") || "School Logo"}
+                {t("addSchool.logo") || "School Logo"}
               </CardTitle>
               <CardDescription>
-                {t("school.logoDescription") || "Upload your school's logo"}
+                {t("addSchool.logoDescription") || "Upload your school's logo"}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -106,9 +106,9 @@ export default function AddSchool() {
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
-              <CardTitle>{t("school.details") || "School Details"}</CardTitle>
+              <CardTitle>{t("addSchool.details") || "School Details"}</CardTitle>
               <CardDescription>
-                {t("school.detailsDescription") ||
+                {t("addSchool.detailsDescription") ||
                   "Enter the basic information for your school"}
               </CardDescription>
             </CardHeader>
@@ -127,7 +127,7 @@ export default function AddSchool() {
       <Card className="mt-6">
         <CardHeader>
           <CardTitle className="text-lg">
-            {t("school.tips") || "Tips for creating a school"}
+            {t("addSchool.tips") || "Tips for creating a school"}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -137,18 +137,18 @@ export default function AddSchool() {
             }`}
           >
             <li>
-              {t("school.tipCode") ||
+              {t("addSchool.tipCode") ||
                 "School code should be unique and easy to remember"}
             </li>
             <li>
-              {t("school.tipName") || "Use the official name of your school"}
+              {t("addSchool.tipName") || "Use the official name of your school"}
             </li>
             <li>
-              {t("school.tipContact") ||
+              {t("addSchool.tipContact") ||
                 "Provide accurate contact information for communication"}
             </li>
             <li>
-              {t("school.tipLogo") ||
+              {t("addSchool.tipLogo") ||
                 "A high-quality logo helps with brand recognition"}
             </li>
           </ul>

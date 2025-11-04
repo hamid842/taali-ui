@@ -9,7 +9,12 @@
     "loading": "Loading...",
     "login": "Login",
     "signUp": "Sign Up",
-    "uploading": "Uploading..."
+    "uploading": "Uploading...",
+    "search": "Search",
+    "filter": "Filter",
+    "retry": "Retry",
+    "since": "Since",
+    "current": "current"
   },
   "nav": {
     "logoTitle": "Taali",
@@ -216,7 +221,7 @@
       "selectSchool": "Select School"
     }
   },
-  "school": {
+  "addSchool": {
     "create": "Create School",
     "createSuccess": "School created successfully!",
     "createError": "Failed to create school",
@@ -244,6 +249,54 @@
       "codePattern": "Code must be alphanumeric without spaces",
       "emailInvalid": "Please enter a valid email address",
       "phoneInvalid": "Please enter a valid phone number"
+    }
+  },
+  "schoolsPage": {
+    "title": "My Schools",
+    "subtitle": "Manage all your educational institutions",
+    "errorTitle": "Failed to load schools",
+    "errorDescription": "Please try again later",
+    "searchPlaceholder": "Search schools by name or code...",
+    "emptyTitle": "No schools found",
+    "searchNoResults": "Try adjusting your search or filter criteria",
+    "emptyDescription": "Get started by creating your first school",
+    "stats": {
+      "total": "Total Schools",
+      "active": "Active",
+      "setup": "In Setup",
+      "archived": "Archived"
+    },
+    "descriptions": {
+      "total": "All institutions",
+      "active": "Currently operating",
+      "setup": "Being configured",
+      "archived": "Not active"
+    },
+    "filters": {
+      "allStatus": "All Status",
+      "active": "Active",
+      "setup": "In Setup",
+      "archived": "Archived",
+      "searchNoResults": "Try adjusting your search or filter criteria",
+      "emptyDescription": "Get started by creating your first school"
+    },
+    "actions": {
+      "viewDetails": "View Details",
+      "editSchool": "Edit School",
+      "deleteSchool": "Delete School",
+      "dashboard": "Dashboard",
+      "createSchool": "Create School"
+    },
+    "features": {
+      "teachers": "Teachers",
+      "classes": "Classes",
+      "students": "Students",
+      "canteen": "Canteen"
+    },
+    "status": {
+      "active": "Active",
+      "setup": "Setup",
+      "archived": "Archived"
     }
   },
   "loading": {
