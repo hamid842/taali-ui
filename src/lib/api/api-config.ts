@@ -36,6 +36,15 @@ export const apiConfig = {
       schoolLogo: `${API_BASE_URL}/upload/school-logo`,
       profileImage: `${API_BASE_URL}/upload/profile-image`,
     },
+    users: {
+      list: `${API_BASE_URL}/users`,
+      getById: (id: string) => `${API_BASE_URL}/users/${id}`,
+      create: `${API_BASE_URL}/users`,
+      update: (id: string) => `${API_BASE_URL}/users/${id}`,
+      updateStatus: (id: string) => `${API_BASE_URL}/users/${id}/status`,
+      delete: (id: string) => `${API_BASE_URL}/users/${id}`,
+      search: `${API_BASE_URL}/users/search`,
+    },
   },
   headers: {
     "Content-Type": "application/json",

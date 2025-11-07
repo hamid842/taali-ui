@@ -1,5 +1,5 @@
 import type { UserRoleType } from "./role";
-import type { School } from "./school";
+import type { ISchool } from "./school";
 
 export interface User {
   id: string;
@@ -8,8 +8,8 @@ export interface User {
   lastName: string;
   role: UserRoleType;
   permissions: string[];
-  availableSchools: School[];
-  currentSchool?: School;
+  availableSchools: ISchool[];
+  currentSchool?: ISchool;
 }
 
 // Request types (what we send to the API)
@@ -26,6 +26,7 @@ export interface RegisterRequest {
   password: string;
   confirmPassword: string;
   role: UserRoleType;
+  profileImage?: string | null;
 }
 
 export interface VerifyOtpRequest {
@@ -49,8 +50,8 @@ export interface LoginResponse {
   lastName?: string;
   role?: string;
   permissions: string[];
-  availableSchools: School[];
-  currentSchool?: School;
+  availableSchools: ISchool[];
+  currentSchool?: ISchool;
 }
 
 export interface RegisterResponse {

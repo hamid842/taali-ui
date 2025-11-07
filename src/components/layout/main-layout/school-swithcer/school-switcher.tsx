@@ -9,11 +9,21 @@ import { Building } from "lucide-react";
 import SchoolSwitcherSkeleton from "@/components/skeleton/layout/school-switcher-skeleton";
 import EmptySchools from "./empty-schools";
 import SchoolDropdown from "./school-dropdown";
+import { useAppStore } from "@/stores/app-store";
+import { useEffect } from "react";
 
 export default function SchoolSwitcher() {
   const { t } = useLanguage();
+  const { setOwnerHasSchool } = useAppStore();
 
   const { data: schools, isLoading, error } = useSchools();
+
+  useEffect(() => {
+    if (!isLoading && !error) {
+      const hasSchool = !!schools && schools.length > 0;
+      setOwnerHasSchool(hasSchool);
+    }
+  }, [isLoading, error, schools, setOwnerHasSchool]);
 
   // Handle loading state
   if (isLoading) {

@@ -1,4 +1,4 @@
-import { apiClient, apiConfig } from "@/lib/api-config";
+import { apiClient, apiConfig } from "@/lib/api/api-config";
 import type {
   LoginRequest,
   LoginResponse,
@@ -12,10 +12,7 @@ import type {
 
 export const authService = {
   async login(data: LoginRequest): Promise<LoginResponse> {
-    return apiClient.post<LoginResponse>(
-      apiConfig.endpoints.auth.login,
-      data
-    );
+    return apiClient.post<LoginResponse>(apiConfig.endpoints.auth.login, data);
   },
   async register(data: RegisterRequest): Promise<RegisterResponse> {
     return apiClient.post<RegisterResponse>(

@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { uploadApi, type UploadResponse } from "@/lib/upload-api";
+import { uploadApi, type UploadResponse } from "@/lib/api/upload-api";
 
 export function useUploadSchoolLogo() {
   return useMutation<UploadResponse, Error, File>({

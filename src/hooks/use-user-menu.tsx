@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { useLanguage } from "./use-language";
 import { useAuth } from "./use-auth";
 import type { MenuItemDto } from "@/types/menu";
-import { apiClient, apiConfig } from "@/lib/api-config";
+import { apiClient, apiConfig } from "@/lib/api/api-config";
 
 export function useUserMenu() {
   const { user } = useAuth();
@@ -15,7 +15,7 @@ export function useUserMenu() {
     // In a real implementation, you'd fetch from API
     // For now, we'll use a mock or static data that matches your backend structure
     return getMenuForRole(user.role);
-  }, [user?.role,currentLanguage]);
+  }, [user?.role, currentLanguage]);
 
   const fetchUserMenu = async (role: string): Promise<MenuItemDto[]> => {
     try {

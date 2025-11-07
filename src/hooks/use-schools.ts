@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { schoolApi } from "@/lib/school-api";
+import { schoolApi } from "@/lib/api/school-api";
 import type { CreateSchoolRequest, UpdateSchoolRequest } from "@/types/school";
 
 export function useSchools() {

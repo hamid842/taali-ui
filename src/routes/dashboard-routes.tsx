@@ -2,8 +2,10 @@ import { ProtectedRoute } from "@/components/auth/protected-route";
 import MainLayout from "@/components/layout/main-layout";
 import AdminDashboard from "@/pages/admin/dashboard";
 import OwnerDashboard from "@/pages/owner/dashboard";
-import Schools from "@/pages/owner/schools";
+import Schools from "@/pages/owner/schools/list";
 import AddSchool from "@/pages/owner/schools/create/add-school";
+import Users from "@/pages/owner/users/list";
+import AddSchoolAdmin from "@/pages/owner/users/add-user/add-school-admin";
 import { UserRole } from "@/types/role";
 
 export const dashboardRoutes = [
@@ -31,6 +33,14 @@ export const dashboardRoutes = [
       {
         path: "/owner/schools/create",
         element: <AddSchool />,
+      },
+      {
+        path: "/owner/users/create",
+        element: <AddSchoolAdmin />,
+      },
+      {
+        path: "/owner/users",
+        element: <Users />,
       },
     ],
   },

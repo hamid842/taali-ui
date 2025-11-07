@@ -89,7 +89,8 @@
       "email": "Email Address",
       "phone": "Phone Number",
       "password": "Password",
-      "confirmPassword": "Confirm Password"
+      "confirmPassword": "Confirm Password",
+      "selectSchool": "Select School"
     },
     "validation": {
       "required": "This field is required",
@@ -298,6 +299,48 @@
       "setup": "Setup",
       "archived": "Archived"
     }
+  },
+  "addSchoolAdmin": {
+    "create": "Add School Admin",
+    "createDesc": "You could create an admin and assign to a school",
+    "imgSectionTitle": "Profile Image",
+    "imgSectionDesc": "Upload image if exist",
+    "details": "Admin Details",
+    "detailsDescription": "Enter the basic information for the admin",
+    "tips": "Tips for adding a school admin",
+    "tipCode": "School admin will control the school you assigned",
+    "tipName": "He/She could login with email and default password",
+    "tipContact": "Provide accurate contact information for communication",
+    "tipLogo": "He/She could add supervisor/s for school panel"
+  },
+  "users": {
+    "title": "User Management",
+    "subtitleAdmins": "Manage administrators and supervisors",
+    "addAdmin": "Add User",
+    "searchAdmins": "Search users...",
+    "selectRole": "Select role",
+    "adminList": "Users List",
+    "adminsFound": "users found",
+    "updating": "Updating...",
+    "noAdminsFound": "No users found",
+    "tryChangingFilters": "Try changing your search or filters",
+    "getStartedByAdding": "Get started by adding your first user",
+    "addFirstAdmin": "Add First User",
+    "active": "Active",
+    "inactive": "Inactive",
+    "viewDetails": "View details",
+    "editProfile": "Edit profile",
+    "noSchoolAssigned": "No school assigned",
+    "deactivate": "Deactivate",
+    "activate": "Activate",
+    "showing": "Showing",
+    "of": "of",
+    "previous": "Previous",
+    "next": "Next",
+    "errorLoading": "Failed to load users. Please try again.",
+    "noSchoolWarningTitle": "No School Created Yet",
+    "noSchoolWarningDesc": "You need to create a school before you can add administrators. Please create your first school to get started.",
+    "createSchoolButton": "Create School"
   },
   "loading": {
     "checkAuth": "Checking authentication..."

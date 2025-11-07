@@ -34,8 +34,8 @@ import {
 } from "lucide-react";
 import { ImageDisplay } from "@/components/common/image-display";
 import EmptyData from "@/components/common/empty-data";
-import type { School } from "@/types/school";
-import SchoolsGridSkeleton from "@/components/skeleton/schools/school-grid-skeleton";
+import type { ISchool } from "@/types/school";
+import SchoolsGridSkeleton from "@/components/skeleton/owner/schools/school-grid-skeleton";
 
 export default function SchoolsPage() {
   const { t } = useLanguage();
@@ -105,28 +105,28 @@ export default function SchoolsPage() {
       {!isLoading && schools && schools.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <StatCard
-            title="Total Schools"
+            title={t("schoolsPage.stats.total")}
             value={schools.length}
             icon={Building}
-            description="All institutions"
+            description={t("schoolsPage.descriptions.total")}
           />
           <StatCard
-            title="Active"
+            title={t("schoolsPage.stats.active")}
             value={schools.filter((s) => s.status === "active").length}
             icon={Users}
-            description="Currently operating"
+            description={t("schoolsPage.descriptions.active")}
           />
           <StatCard
-            title="In Setup"
+            title={t("schoolsPage.stats.setup")}
             value={schools.filter((s) => s.status === "setup").length}
             icon={Settings}
-            description="Being configured"
+            description={t("schoolsPage.descriptions.setup")}
           />
           <StatCard
-            title="Archived"
+            title={t("schoolsPage.stats.archived")}
             value={schools.filter((s) => s.status === "archived").length}
             icon={Building}
-            description="Not active"
+            description={t("schoolsPage.descriptions.archived")}
           />
         </div>
       )}
@@ -178,7 +178,7 @@ export default function SchoolsPage() {
         {isLoading ? (
           <SchoolsGridSkeleton />
         ) : filteredSchools && filteredSchools.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {filteredSchools.map((school) => (
               <SchoolCard
                 key={school.id}
@@ -238,12 +238,13 @@ function StatCard({ title, value, icon: Icon, description }: StatCardProps) {
 
 // School Card Component
 interface SchoolCardProps {
-  school: School;
+  school: ISchool;
   onView: (id: number) => void;
   onEdit: (id: number) => void;
 }
 
 function SchoolCard({ school, onView, onEdit }: SchoolCardProps) {
+  const { t } = useLanguage();
   const getStatusVariant = (status: string) => {
     switch (status) {
       case "active":
@@ -259,10 +260,26 @@ function SchoolCard({ school, onView, onEdit }: SchoolCardProps) {
 
   // Mock data for features - replace with actual data from your API
   const features = [
-    { icon: Users, label: "Teachers", value: school.teacherCount || 0 },
-    { icon: BookOpen, label: "Classes", value: school.classCount || 0 },
-    { icon: Users, label: "Students", value: school.studentCount || 0 },
-    { icon: Utensils, label: "Canteen", value: school.canteenCount || 0 },
+    {
+      icon: Users,
+      label: t("schoolsPage.features.teachers"),
+      value: school.teacherCount || 0,
+    },
+    {
+      icon: BookOpen,
+      label: t("schoolsPage.features.classes"),
+      value: school.classCount || 0,
+    },
+    {
+      icon: Users,
+      label: t("schoolsPage.features.students"),
+      value: school.studentCount || 0,
+    },
+    {
+      icon: Utensils,
+      label: t("schoolsPage.features.canteen"),
+      value: school.canteenCount || 0,
+    },
   ];
 
   return (

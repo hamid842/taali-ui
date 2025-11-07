@@ -10,28 +10,28 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenuButton, useSidebar } from "@/components/ui/sidebar";
 import SchoolImage from "./school-image";
-import { Building, ChevronsUpDown, Plus } from "lucide-react";
+import { ChevronsUpDown, Plus, School } from "lucide-react";
 import { useLanguage } from "@/hooks/use-language";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import type { School } from "@/types/school";
+import type { ISchool } from "@/types/school";
 
-export default function SchoolDropdown({ schools }: { schools: School[] }) {
+export default function SchoolDropdown({ schools }: { schools: ISchool[] }) {
   const { t, dir } = useLanguage();
   const { isMobile } = useSidebar();
   const navigate = useNavigate();
 
-  const [activeSchool, setActiveSchool] = useState<School | null>(null);
+  const [activeSchool, setActiveSchool] = useState<ISchool | null>(null);
 
   // Get logo component (you can enhance this to use actual images)
   const getLogoComponent = (): ElementType => {
     // If you have school images, you can use them here
     // For now, we'll use a building icon as default
-    return Building;
+    return School;
   };
 
   // Get the active school's logo component
-  const ActiveLogo = activeSchool ? getLogoComponent() : Building;
+  const ActiveLogo = activeSchool ? getLogoComponent() : School;
 
   return (
     <DropdownMenu>
@@ -113,7 +113,7 @@ export default function SchoolDropdown({ schools }: { schools: School[] }) {
             <Plus className="size-4" />
           </div>
           <div className="text-muted-foreground font-medium">
-            {t("school.create") || "Add School"}
+            {t("addSchool.create") || "Add School"}
           </div>
         </DropdownMenuItem>
       </DropdownMenuContent>

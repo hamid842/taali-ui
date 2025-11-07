@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/hooks/use-language";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -9,14 +8,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ArrowLeft, School } from "lucide-react";
+import { School } from "lucide-react";
 import { toast } from "sonner";
 import { useCreateSchool } from "@/hooks/use-schools";
-import { ImageUpload } from "@/components/common/image-upload";
 import {
   CreateSchoolForm,
   type CreateSchoolFormData,
 } from "@/components/forms/create-school-form";
+import FormHeader from "@/components/common/form-header";
+import ImageUploadSection from "@/components/common/image-upload-section";
 
 export default function AddSchool() {
   const navigate = useNavigate();
@@ -43,7 +43,8 @@ export default function AddSchool() {
     } catch (error) {
       console.error("Failed to create school:", error);
       toast.error(
-        t("addSchool.createError") || "Failed to create school. Please try again."
+        t("addSchool.createError") ||
+          "Failed to create school. Please try again."
       );
     }
   };
@@ -59,54 +60,30 @@ export default function AddSchool() {
   return (
     <div className="container mx-auto py-6 max-w-4xl">
       {/* Header */}
-      <div className="flex items-center gap-4 mb-6">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={handleCancel}
-          className={dir === "rtl" ? "rotate-180" : ""}
-        >
-          <ArrowLeft className="h-4 w-4" />
-        </Button>
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">
-            {t("addSchool.create") || "Create School"}
-          </h1>
-          <p className="text-muted-foreground">
-            {t("addSchool.createDescription") ||
-              "Add a new school to your account"}
-          </p>
-        </div>
-      </div>
+      <FormHeader
+        title={t("addSchool.create") || "Create School"}
+        desc={
+          t("addSchool.createDescription") || "Add a new school to your account"
+        }
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Logo Upload Section */}
-        <div className="lg:col-span-1">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <School className="h-5 w-5" />
-                {t("addSchool.logo") || "School Logo"}
-              </CardTitle>
-              <CardDescription>
-                {t("addSchool.logoDescription") || "Upload your school's logo"}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ImageUpload
-                onImageChange={handleLogoChange}
-                uploadType="school-logo"
-                className="justify-center"
-              />
-            </CardContent>
-          </Card>
-        </div>
+        <ImageUploadSection
+          uploadType="school-logo"
+          icon={<School className="h-5 w-5" />}
+          title={t("addSchool.logo") || "School Logo"}
+          desc={t("addSchool.logoDescription") || "Upload your school's logo"}
+          onImageChange={handleLogoChange}
+        />
 
         {/* Form Section */}
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
-              <CardTitle>{t("addSchool.details") || "School Details"}</CardTitle>
+              <CardTitle>
+                {t("addSchool.details") || "School Details"}
+              </CardTitle>
               <CardDescription>
                 {t("addSchool.detailsDescription") ||
                   "Enter the basic information for your school"}
