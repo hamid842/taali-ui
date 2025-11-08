@@ -8,18 +8,21 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { useLanguage } from "@/hooks/use-language";
-import SchoolSwitcher from "./school-swithcer/school-switcher";
+import SchoolSwitcher from "./school-switcher/school-switcher";
 import { useAuth } from "@/hooks/use-auth";
 import { useLocation } from "react-router-dom";
 import SidebarSkeleton from "@/components/skeleton/layout/sidebar-skeleton";
 import type { MenuItemDto } from "@/types/menu";
 import { useState } from "react";
 import CollapsibleMenuItem from "./collapsible-menu-item";
+import { useAppStore } from "@/stores/app-store";
+import SchoolTitle from "@/components/common/school-title";
 
 export default function AppSidebar() {
   const { dir } = useLanguage();
   const { menuItems, isMenuLoading } = useAuth();
   const location = useLocation();
+  const { role, currentSchool } = useAppStore();
   const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
 
   // Toggle expand/collapse for menu items
@@ -116,7 +119,11 @@ export default function AppSidebar() {
       collapsible="icon"
     >
       <SidebarHeader>
-        <SchoolSwitcher />
+        {role === "OWNER" ? (
+          <SchoolSwitcher />
+        ) : (
+          <SchoolTitle school={currentSchool} />
+        )}
       </SidebarHeader>
       <SidebarSeparator />
       <SidebarContent>

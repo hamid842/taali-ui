@@ -48,7 +48,7 @@ export interface LoginResponse {
   email?: string;
   firstName?: string;
   lastName?: string;
-  role?: string;
+  role?: UserRoleType;
   permissions: string[];
   availableSchools: ISchool[];
   currentSchool?: ISchool;
