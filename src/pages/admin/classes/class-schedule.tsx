@@ -25,6 +25,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   ArrowLeft,
   Plus,
@@ -33,6 +34,7 @@ import {
   User,
   Edit,
   Calendar as CalendarIcon,
+  AlertCircle,
 } from "lucide-react";
 import { classApi } from "@/lib/api/class-api";
 import { scheduleApi } from "@/lib/api/schedule-api";
@@ -48,7 +50,7 @@ import {
   type Lesson,
 } from "@/types/schedule";
 
-const ClassSchedule: FC = () => {
+export default function ClassSchedule() {
   const { classId } = useParams<{ classId: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -61,6 +63,7 @@ const ClassSchedule: FC = () => {
   const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingSchedule, setEditingSchedule] = useState<ClassSchedule | null>(
     null
@@ -97,37 +100,80 @@ const ClassSchedule: FC = () => {
 
   // Load all data
   const loadData = useCallback(async () => {
-    if (!classId) return;
+    if (!classId) {
+      setError("Class ID is missing");
+      setLoading(false);
+      return;
+    }
 
     try {
       setLoading(true);
-      const [classData, schedulesData, teachersData] = await Promise.all([
-        classApi.getClassById(classId),
-        scheduleApi.getByClass(classId),
+      setError(null);
+      console.log("Loading data for class:", classId);
+
+      // Load class details first
+      const classData = await classApi.getClassById(classId);
+      console.log("Class data:", classData);
+      setClassDetail(classData);
+
+      // Then load schedules, teachers, and lessons in parallel
+      const [schedulesData, teachersData] = await Promise.all([
+        scheduleApi.getByClass(classId).catch((err) => {
+          console.error("Error loading schedules:", err);
+          return [];
+        }),
         user?.schoolId
-          ? teacherApi.getBySchool(user.schoolId.toString())
+          ? teacherApi.getBySchool(user.schoolId.toString()).catch((err) => {
+              console.error("Error loading teachers:", err);
+              return [];
+            })
           : Promise.resolve([]),
       ]);
 
-      setClassDetail(classData);
+      console.log("Schedules data:", schedulesData);
+      console.log("Teachers data:", teachersData);
+
       setSchedules(schedulesData);
       setTeachers(teachersData);
 
       // Load lessons based on grade level
       if (classData.gradeLevel) {
-        try {
-          const lessonsData = await lessonApi.getByGradeLevel(
-            classData.gradeLevel
-          );
-          setLessons(lessonsData);
-        } catch (error) {
-          console.error("Error loading lessons:", error);
-          // Fallback to default lessons if API not available
-          setLessons(getDefaultLessons(classData.gradeLevel));
-        }
+       try {
+         console.log("Loading lessons for grade level:", classData.gradeLevel);
+         console.log(
+           "Encoded grade level:",
+           encodeURIComponent(classData.gradeLevel)
+         );
+
+         const lessonsData = await lessonApi.getByGradeLevel(
+           classData.gradeLevel
+         );
+         console.log("Lessons API response:", lessonsData);
+         setLessons(lessonsData);
+       } catch (error) {
+         console.error("Error loading lessons:", error);
+         console.error("Error details:", {
+           message: error instanceof Error ? error.message : "Unknown error",
+           gradeLevel: classData.gradeLevel,
+           encodedGradeLevel: encodeURIComponent(classData.gradeLevel),
+         });
+
+         // Fallback to default lessons if API not available
+         const defaultLessons = getDefaultLessons(classData.gradeLevel);
+         console.log("Using default lessons:", defaultLessons);
+         setLessons(defaultLessons);
+       }
+      } else {
+        console.log("No grade level found for class");
+        setLessons(getDefaultLessons("ابتدایی دوره اول")); // Default fallback
       }
     } catch (error) {
       console.error("Error loading data:", error);
+      setError(
+        `Failed to load class data: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
+      );
     } finally {
       setLoading(false);
     }
@@ -157,6 +203,7 @@ const ClassSchedule: FC = () => {
   };
 
   useEffect(() => {
+    console.log("ClassSchedule component mounted with classId:", classId);
     loadData();
   }, [loadData]);
 
@@ -259,19 +306,6 @@ const ClassSchedule: FC = () => {
     setIsDialogOpen(true);
   };
 
-  // Delete schedule
-  //   const handleDelete = async (scheduleId: number) => {
-  //     if (confirm(t("schedule.confirmDelete"))) {
-  //       try {
-  //         await scheduleApi.deleteSchedule(scheduleId.toString());
-  //         loadData(); // Reload schedules
-  //       } catch (error) {
-  //         console.error("Error deleting schedule:", error);
-  //         alert(t("schedule.errors.deleteFailed"));
-  //       }
-  //     }
-  //   };
-
   // Add new schedule for a specific time slot
   const handleAddSchedule = (day: DayOfWeek, timeSlot: string) => {
     setEditingSchedule(null);
@@ -308,6 +342,23 @@ const ClassSchedule: FC = () => {
     );
   }
 
+  if (error) {
+    return (
+      <div className="space-y-4">
+        <Alert variant="destructive">
+          <AlertCircle className="w-4 h-4" />
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+        <div className="flex gap-4">
+          <Button onClick={() => loadData()}>Retry</Button>
+          <Link to="/classes">
+            <Button variant="outline">Back to Classes</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   if (!classDetail) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -317,6 +368,8 @@ const ClassSchedule: FC = () => {
       </div>
     );
   }
+    
+    
 
   return (
     <div className="space-y-6">
@@ -340,6 +393,43 @@ const ClassSchedule: FC = () => {
           {t("schedule.addSchedule")}
         </Button>
       </div>
+
+      {schedules.length === 0 && (
+        <Alert className="bg-blue-50 border-blue-200">
+          <AlertDescription>
+            No schedules found for this class. Click on any time slot to add a
+            schedule.
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {teachers.length === 0 && (
+        <Alert className="bg-amber-50 border-amber-200">
+          <AlertDescription>
+            No teachers found in this school. Please create teachers first to
+            assign them to schedules.
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {lessons.length === 0 && (
+        <Alert className="bg-amber-50 border-amber-200">
+          <AlertDescription>
+            No lessons found for this grade level. Using default lesson list.
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {/* Debug Info - Remove in production */}
+      <Card className="bg-yellow-50 border-yellow-200">
+        <CardContent className="pt-4">
+          <div className="text-sm text-yellow-800">
+            <strong>Debug Info:</strong> Class: {classDetail.name}, Schedules:{" "}
+            {schedules.length}, Teachers: {teachers.length}, Lessons:{" "}
+            {lessons.length}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Timetable */}
       <Card>
@@ -605,4 +695,3 @@ const ClassSchedule: FC = () => {
   );
 };
 
-export default ClassSchedule;

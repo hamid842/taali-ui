@@ -47,25 +47,25 @@ export const apiConfig = {
     },
     classes: {
       create: `${API_BASE_URL}/school-classes`,
-      getById: (id: string) => `${API_BASE_URL}/school-classes/${id}`,
-      update: (id: string) => `${API_BASE_URL}/school-classes/${id}`,
-      delete: (id: string) => `${API_BASE_URL}/school-classes/${id}`,
-      getBySchool: (schoolId: string) =>
+      getById: (id: number) => `${API_BASE_URL}/school-classes/${id}`,
+      update: (id: number) => `${API_BASE_URL}/school-classes/${id}`,
+      delete: (id: number) => `${API_BASE_URL}/school-classes/${id}`,
+      getBySchool: (schoolId: number) =>
         `${API_BASE_URL}/school-classes/school/${schoolId}`,
-      getActiveBySchool: (schoolId: string) =>
+      getActiveBySchool: (schoolId: number) =>
         `${API_BASE_URL}/school-classes/school/${schoolId}/active`,
-      addStudent: (classId: string, studentId: string) =>
+      addStudent: (classId: number, studentId: number) =>
         `${API_BASE_URL}/school-classes/${classId}/students/${studentId}`,
-      removeStudent: (classId: string, studentId: string) =>
+      removeStudent: (classId: number, studentId: number) =>
         `${API_BASE_URL}/school-classes/${classId}/students/${studentId}`,
-      getSchedulesByClass: (classId: string) =>
+      getSchedulesByClass: (classId: number) =>
         `${API_BASE_URL}/class-schedules/class/${classId}`,
     },
     schedules: {
       create: `${API_BASE_URL}/class-schedules`,
-      update: (id: string) => `${API_BASE_URL}/class-schedules/${id}`,
-      delete: (id: string) => `${API_BASE_URL}/class-schedules/${id}`,
-      getByClass: (classId: string) =>
+      update: (id: number) => `${API_BASE_URL}/class-schedules/${id}`,
+      delete: (id: number) => `${API_BASE_URL}/class-schedules/${id}`,
+      getByClass: (classId: number) =>
         `${API_BASE_URL}/class-schedules/class/${classId}`,
       getByClassAndDay: (classId: string, dayOfWeek: string) =>
         `${API_BASE_URL}/class-schedules/class/${classId}/day/${dayOfWeek}`,
@@ -78,11 +78,20 @@ export const apiConfig = {
         `${API_BASE_URL}/lessons/grade-level/${encodeURIComponent(gradeLevel)}`,
     },
     teachers: {
-      getBySchool: (schoolId: string) =>
+      create: `${API_BASE_URL}/teachers`,
+      getById: (id: number) => `${API_BASE_URL}/teachers/${id}`,
+      update: (id: number) => `${API_BASE_URL}/teachers/${id}`,
+      delete: (id: number) => `${API_BASE_URL}/teachers/${id}`,
+      updateStatus: (id: number) => `${API_BASE_URL}/teachers/${id}/status`,
+      getBySchool: (schoolId: number) =>
         `${API_BASE_URL}/teachers/school/${schoolId}`,
+      search: `${API_BASE_URL}/teachers/search`,
+      getBySubject: `${API_BASE_URL}/teachers/by-subject`,
+      getActiveBySchool: (schoolId: number) =>
+        `${API_BASE_URL}/teachers/school/${schoolId}/active`,
     },
     students: {
-      getBySchool: (schoolId: string) =>
+      getBySchool: (schoolId: number) =>
         `${API_BASE_URL}/students/school/${schoolId}`,
     },
   },

@@ -9,8 +9,10 @@ export const lessonApi = {
 
   // Get lessons by grade level
   getByGradeLevel: async (gradeLevel: string): Promise<Lesson[]> => {
+    // Use encodeURIComponent to properly encode the grade level
+    const encodedGradeLevel = encodeURIComponent(gradeLevel);
     return apiClient.get<Lesson[]>(
-      apiConfig.endpoints.lessons.getByGradeLevel(gradeLevel)
+      `${apiConfig.endpoints.lessons.getByGradeLevel(encodedGradeLevel)}`
     );
   },
 };

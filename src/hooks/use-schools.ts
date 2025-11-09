@@ -1,11 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { schoolApi } from "@/lib/api/school-api";
 import type { CreateSchoolRequest, UpdateSchoolRequest } from "@/types/school";
+import { useAuth } from "./use-auth";
 
 export function useSchools() {
+  const { user } = useAuth();
+
+  // Determine if we should fetch based on role
+  const shouldFetch = user?.role === "OWNER";
+
   return useQuery({
-    queryKey: ["schools"],
+    queryKey: ["schools", "role-based"],
     queryFn: schoolApi.getMySchools,
+    enabled: shouldFetch,
+    staleTime: 5 * 60 * 1000,
   });
 }
 

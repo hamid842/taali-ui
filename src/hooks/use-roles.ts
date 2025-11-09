@@ -14,9 +14,14 @@ export const useRoles = () => {
     return hasRole(["OWNER", "ADMIN", "SUPERVISOR"]);
   };
 
+  const canManageTeachers = (): boolean => {
+    return hasRole(["OWNER", "ADMIN", "SUPERVISOR"]);
+  };
+
   return {
     hasRole,
     canManageClasses,
+    canManageTeachers,
     user,
   };
 };

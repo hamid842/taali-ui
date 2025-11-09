@@ -26,7 +26,8 @@
     "inactive": "غیرفعال",
     "yes": "بله",
     "no": "خیر",
-    "confirm": "تایید"
+    "confirm": "تایید",
+    "view":"جزئبات"
   },
   "nav": {
     "logoTitle": "تعــالی",
@@ -324,7 +325,10 @@
     "tipCode": "مدیر مدرسه کنترل مدرسه‌ای را دارد که به او اختصاص داده‌اید",
     "tipName": "او می‌تواند با ایمیل و رمز عبور پیش‌فرض وارد شود",
     "tipContact": "اطلاعات تماس را دقیق وارد کنید تا ارتباط به‌درستی برقرار شود",
-    "tipLogo": "او می‌تواند کاربر یا کاربران را به پنل مدرسه اضافه کند"
+    "tipLogo": "او می‌تواند کاربر یا کاربران را به پنل مدرسه اضافه کند",
+    "noSchoolTitle": "مدرسه ای یافت نشد!",
+    "noSchoolDesc": "لطفا ابتدا مدرسه ای ایجاد کنید",
+    "noSchoolBtn": "ایجاد اولین مدرسه"
   },
   "users": {
     "title": "مدیریت کاربران",
@@ -415,7 +419,62 @@
     }
   },
   "teachers": {
-    "createTeacher": "ایجاد معلم"
+  "title": "معلمان",
+  "description": "مدیریت همهٔ معلمان مدرسهٔ شما",
+  "loading": "در حال بارگذاری معلمان...",
+  "createTeacher": "افزودن معلم",
+  "searchPlaceholder": "جستجوی معلم...",
+  "allStatus": "همه وضعیت‌ها",
+  "allSubjects": "همهٔ درس‌ها",
+  "noTeachersFound": "هیچ معلمی پیدا نشد",
+  "confirmDelete": "آیا مطمئن هستید که می‌خواهید این معلم را حذف کنید؟",
+  "name": "نام",
+  "email": "ایمیل",
+  "subjects": "درس‌ها",
+  "classes": "کلاس‌ها",
+  "subject": "درس",
+  "errors": {
+    "loadFailed": "خطا در بارگذاری معلمان",
+    "deleteFailed": "خطا در حذف معلم"
+  }
+},
+  "addTeacher": {
+    "create": "ایجاد معلم",
+    "createDesc": "معلم جدید به مدرسه خود اضافه کنید",
+    "createTeacher": "ایجاد معلم",
+    "imgSectionTitle": "تصویر پروفایل معلم",
+    "imgSectionDesc": "یک تصویر پروفایل برای معلم آپلود کنید",
+    "details": "جزئیات معلم",
+    "detailsDescription": "اطلاعات شخصی و حرفه ای معلم را وارد کنید",
+    "tips": "راهنمای سریع",
+    "tipSpecialization": "درس تخصصی اصلی معلم را انتخاب کنید",
+    "tipQualification": "بالاترین مدرک تحصیلی را انتخاب کنید",
+    "tipContact": "اطمینان حاصل کنید که اطلاعات تماس برای ارتباط دقیق است",
+    "tipProfile": "تصویر پروفایل به دانش آموزان و کارکنان کمک می کند معلم را بشناسند",
+    "noSchoolTitle": "مدرسه ای یافت نشد",
+    "noSchoolDesc": "قبل از افزودن معلم، باید یک مدرسه ایجاد کنید",
+    "noSchoolBtn": "ایجاد مدرسه",
+
+    "firstName": "نام",
+    "firstNamePlaceholder": "نام را وارد کنید",
+    "lastName": "نام خانوادگی",
+    "lastNamePlaceholder": "نام خانوادگی را وارد کنید",
+    "email": "ایمیل",
+    "emailPlaceholder": "آدرس ایمیل را وارد کنید",
+    "phone": "شماره تلفن",
+    "phonePlaceholder": "شماره تلفن را وارد کنید",
+    "subjectSpecialization": "تخصص درس",
+    "selectSpecialization": "انتخاب تخصص",
+    "specializationDescription": "درس اصلی که این معلم تدریس خواهد کرد را انتخاب کنید",
+    "qualification": "مدرک تحصیلی",
+    "selectQualification": "انتخاب مدرک",
+    "qualificationDescription": "بالاترین مدرک تحصیلی را انتخاب کنید",
+
+    "createSuccess": "معلم با موفقیت ایجاد شد",
+    "createError": "ایجاد معلم با شکست مواجه شد",
+    "errors": {
+      "noSchool": "مدرسه ای یافت نشد. لطفا ابتدا یک مدرسه ایجاد کنید."
+    }
   },
   "students": {
     "createStudent": "ایجاد دانش‌آموز"

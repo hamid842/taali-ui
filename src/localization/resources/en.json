@@ -26,7 +26,8 @@
     "inactive": "Inactive",
     "yes": "Yes",
     "no": "No",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "view": "View"
   },
   "nav": {
     "logoTitle": "Taali",
@@ -323,7 +324,10 @@
     "tipCode": "School admin will control the school you assigned",
     "tipName": "He/She could login with email and default password",
     "tipContact": "Provide accurate contact information for communication",
-    "tipLogo": "He/She could add supervisor/s for school panel"
+    "tipLogo": "He/She could add supervisor/s for school panel",
+    "noSchoolTitle": "No school found!",
+    "noSchoolDesc": "Please create the first school",
+    "noSchoolBtn": "Create your first school"
   },
   "users": {
     "title": "User Management",
@@ -414,7 +418,62 @@
     }
   },
   "teachers": {
-    "createTeacher": "Create Teacher"
+    "title": "Teachers",
+    "description": "Manage all teachers in your school",
+    "loading": "Loading teachers...",
+    "createTeacher": "Add Teacher",
+    "searchPlaceholder": "Search teachers...",
+    "allStatus": "All Status",
+    "allSubjects": "All Subjects",
+    "noTeachersFound": "No teachers found",
+    "confirmDelete": "Are you sure you want to delete this teacher?",
+    "name": "Name",
+    "email": "Email",
+    "subjects": "Subjects",
+    "classes": "Classes",
+    "subject": "Subject",
+    "errors": {
+      "loadFailed": "Failed to load teachers",
+      "deleteFailed": "Failed to delete teacher"
+    }
+  },
+  "addTeacher": {
+    "create": "Create Teacher",
+    "createDesc": "Add a new teacher to your school",
+    "createTeacher": "Create Teacher",
+    "imgSectionTitle": "Teacher Profile Image",
+    "imgSectionDesc": "Upload a profile picture for the teacher",
+    "details": "Teacher Details",
+    "detailsDescription": "Enter the teacher's personal and professional information",
+    "tips": "Quick Tips",
+    "tipSpecialization": "Select the main subject the teacher specializes in",
+    "tipQualification": "Choose the highest educational qualification",
+    "tipContact": "Ensure contact information is accurate for communication",
+    "tipProfile": "A profile picture helps students and staff recognize the teacher",
+    "noSchoolTitle": "No School Found",
+    "noSchoolDesc": "You need to create a school before you can add teachers",
+    "noSchoolBtn": "Create School",
+
+    "firstName": "First Name",
+    "firstNamePlaceholder": "Enter first name",
+    "lastName": "Last Name",
+    "lastNamePlaceholder": "Enter last name",
+    "email": "Email",
+    "emailPlaceholder": "Enter email address",
+    "phone": "Phone Number",
+    "phonePlaceholder": "Enter phone number",
+    "subjectSpecialization": "Subject Specialization",
+    "selectSpecialization": "Select specialization",
+    "specializationDescription": "Choose the main subject this teacher will teach",
+    "qualification": "Qualification",
+    "selectQualification": "Select qualification",
+    "qualificationDescription": "Select the highest educational qualification",
+
+    "createSuccess": "Teacher created successfully",
+    "createError": "Failed to create teacher",
+    "errors": {
+      "noSchool": "No school found. Please create a school first."
+    }
   },
   "students": {
     "createStudent": "Create Student"

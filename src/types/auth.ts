@@ -2,13 +2,24 @@ import type { UserRoleType } from "./role";
 import type { ISchool } from "./school";
 
 export interface User {
-  id: string;
-  email: string;
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  userId: string;
   firstName: string;
   lastName: string;
+  email: string;
+  phoneNumber: string;
+  passwordHash: string;
+  profileImage: string;
+  status: string;
+  lastLogin: string;
+  active: boolean;
+  school: ISchool;
+  createdBy?: string;
   role: UserRoleType;
-  permissions: string[];
-  availableSchools: ISchool[];
+  permissions?: string[];
+  availableSchools?: ISchool[];
   currentSchool?: ISchool;
 }
 

@@ -14,6 +14,7 @@ import type { RegisterRequest } from "@/types/auth";
 import { useRegisterMutation } from "@/hooks/use-auth-mutation";
 import { useNavigate } from "react-router-dom";
 import { SchoolSelect } from "./school-select";
+import { useAppStore } from "@/stores/app-store";
 
 interface RegisterUserFormProps {
   registerForRole: UserRoleType;
@@ -34,6 +35,7 @@ export default function RegisterUserForm({
 }: RegisterUserFormProps) {
   const { t, language } = useLanguage();
   const navigate = useNavigate();
+  const { currentSchool } = useAppStore();
   const registerMutation = useRegisterMutation();
 
   const nameRegex = language === "fa" ? FARSI_REGEX : ENGLISH_REGEX;
@@ -96,7 +98,7 @@ export default function RegisterUserForm({
       password: registerForRole === UserRole.OWNER ? "" : "Default@123",
       confirmPassword: registerForRole === UserRole.OWNER ? "" : "Default@123",
       role: registerForRole,
-      schoolId: undefined,
+      schoolId: currentSchool?.id ? currentSchool.id.toString() : undefined,
     },
   });
   const passwordValue = watch("password");
@@ -185,12 +187,12 @@ export default function RegisterUserForm({
         />
       </div>
       {passwordValue && <PasswordStrength password={passwordValue} />}
-      {registerForRole !== UserRole.OWNER && (
+      {registerForRole === UserRole.OWNER && (
         <SchoolSelect
           required
           value={watch("schoolId") || ""}
           onChange={(id) => setValue("schoolId", id)}
-          label={t('register.form.selectSchool')}
+          label={t("register.form.selectSchool")}
         />
       )}
       <Button type="submit" className="w-full" disabled={isSubmitting}>

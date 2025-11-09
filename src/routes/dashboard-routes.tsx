@@ -9,7 +9,6 @@ import AddSchoolAdmin from "@/pages/owner/users/create/add-school-admin";
 import { UserRole } from "@/types/role";
 import AdminUsers from "@/pages/admin/users/list";
 import CreateAdminUser from "@/pages/admin/users/create";
-import AdminTeachers from "@/pages/admin/teachers/teachers";
 import CreateTeacher from "@/pages/admin/teachers/create-teacher";
 import Classes from "@/pages/admin/classes/classes";
 import CreateClass from "@/pages/admin/classes/create-class";
@@ -21,6 +20,7 @@ import Tuition from "@/pages/admin/finance/tuition";
 import Invoice from "@/pages/admin/finance/invoice";
 import Reports from "@/pages/admin/finance/reports";
 import ClassSchedule from "@/pages/admin/classes/class-schedule";
+import Teachers from "@/pages/admin/teachers/teachers";
 
 export const dashboardRoutes = [
   // Owner Routes
@@ -85,7 +85,7 @@ export const dashboardRoutes = [
       },
       {
         path: "/admin/teachers",
-        element: <AdminTeachers />,
+        element: <Teachers />,
       },
       {
         path: "/admin/teachers/create",
@@ -100,7 +100,7 @@ export const dashboardRoutes = [
         element: <CreateClass />,
       },
       {
-        path: "/admin/classes/:id/schedule",
+        path: "/admin/classes/:classId/schedule",
         element: <ClassSchedule />,
       },
       {
