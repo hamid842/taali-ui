@@ -45,6 +45,46 @@ export const apiConfig = {
       delete: (id: string) => `${API_BASE_URL}/users/${id}`,
       search: `${API_BASE_URL}/users/search`,
     },
+    classes: {
+      create: `${API_BASE_URL}/school-classes`,
+      getById: (id: string) => `${API_BASE_URL}/school-classes/${id}`,
+      update: (id: string) => `${API_BASE_URL}/school-classes/${id}`,
+      delete: (id: string) => `${API_BASE_URL}/school-classes/${id}`,
+      getBySchool: (schoolId: string) =>
+        `${API_BASE_URL}/school-classes/school/${schoolId}`,
+      getActiveBySchool: (schoolId: string) =>
+        `${API_BASE_URL}/school-classes/school/${schoolId}/active`,
+      addStudent: (classId: string, studentId: string) =>
+        `${API_BASE_URL}/school-classes/${classId}/students/${studentId}`,
+      removeStudent: (classId: string, studentId: string) =>
+        `${API_BASE_URL}/school-classes/${classId}/students/${studentId}`,
+      getSchedulesByClass: (classId: string) =>
+        `${API_BASE_URL}/class-schedules/class/${classId}`,
+    },
+    schedules: {
+      create: `${API_BASE_URL}/class-schedules`,
+      update: (id: string) => `${API_BASE_URL}/class-schedules/${id}`,
+      delete: (id: string) => `${API_BASE_URL}/class-schedules/${id}`,
+      getByClass: (classId: string) =>
+        `${API_BASE_URL}/class-schedules/class/${classId}`,
+      getByClassAndDay: (classId: string, dayOfWeek: string) =>
+        `${API_BASE_URL}/class-schedules/class/${classId}/day/${dayOfWeek}`,
+      getByTeacher: (teacherId: string) =>
+        `${API_BASE_URL}/class-schedules/teacher/${teacherId}`,
+    },
+    lessons: {
+      getAll: `${API_BASE_URL}/lessons`,
+      getByGradeLevel: (gradeLevel: string) =>
+        `${API_BASE_URL}/lessons/grade-level/${encodeURIComponent(gradeLevel)}`,
+    },
+    teachers: {
+      getBySchool: (schoolId: string) =>
+        `${API_BASE_URL}/teachers/school/${schoolId}`,
+    },
+    students: {
+      getBySchool: (schoolId: string) =>
+        `${API_BASE_URL}/students/school/${schoolId}`,
+    },
   },
   headers: {
     "Content-Type": "application/json",

@@ -17,6 +17,7 @@ export const useLoginMutation = () => {
           lastName: data.lastName!,
           role: data.role! as UserRoleType,
           email: data.email!,
+          schoolId: data.currentSchool?.id,
         };
         // Use the context login to update state
         login(data.token, userData, data.refreshToken);

@@ -40,11 +40,22 @@ export default function LanguageProvider({
 
   // Translation function
   const t = useCallback(
-    (key: string): string => {
+    (key: string, vars?: Record<string, unknown>): string => {
       const translations =
         currentLanguage.code === "fa" ? faTranslations : enTranslations;
-      const value = getNestedValue(translations as NestedObject, key);
-      return value || key;
+
+      // Get translation string
+      const value = getNestedValue(translations as NestedObject, key) || key;
+
+      // If variables provided, replace placeholders {var}
+      if (vars) {
+        return Object.entries(vars).reduce(
+          (acc, [k, v]) => acc.replaceAll(`{${k}}`, String(v)),
+          value
+        );
+      }
+
+      return value;
     },
     [currentLanguage.code, getNestedValue]
   );

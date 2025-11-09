@@ -50,7 +50,7 @@ export default function CollapsibleMenuItem({
           </div>
           <ChevronDown
             className={cn(
-              "h-3 w-3 transition-transform duration-500 ease-in-out",
+              "h-3 w-3 transition-transform duration-300 ease-in-out",
               isExpanded ? "rotate-180" : "rotate-0"
             )}
           />
@@ -59,7 +59,7 @@ export default function CollapsibleMenuItem({
         {/* Animated children container */}
         <div
           className={cn(
-            "overflow-hidden transition-all duration-500 ease-in-out",
+            "overflow-hidden transition-all duration-300 ease-in-out",
             marginDirection,
             borderDirection,
             "border-border",
@@ -73,7 +73,7 @@ export default function CollapsibleMenuItem({
                   key={child.id}
                   item={child}
                   level={level + 1}
-                  isExpanded={isExpanded}
+                  isExpanded={false} // Children don't control their own expansion
                   onToggle={onToggle}
                   isActive={
                     child.route ? location.pathname === child.route : false
@@ -88,7 +88,7 @@ export default function CollapsibleMenuItem({
     );
   }
 
-  // Leaf item (no children)
+  // Leaf item (no children) - unchanged
   return (
     <SidebarMenuItem>
       <SidebarMenuButton

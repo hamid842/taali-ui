@@ -1,0 +1,608 @@
+import { useState, useEffect, useCallback, type FC } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  ArrowLeft,
+  Plus,
+  Clock,
+  MapPin,
+  User,
+  Edit,
+  Calendar as CalendarIcon,
+} from "lucide-react";
+import { classApi } from "@/lib/api/class-api";
+import { scheduleApi } from "@/lib/api/schedule-api";
+import { teacherApi } from "@/lib/api/teacher-api";
+import { lessonApi } from "@/lib/api/lesson-api";
+import { useAuth } from "@/hooks/use-auth";
+import { useLanguage } from "@/hooks/use-language";
+import type { ClassSchedule, SchoolClassDetail } from "@/types/class";
+import type { Teacher } from "@/types/teacher";
+import {
+  DayOfWeek,
+  type CreateClassScheduleRequest,
+  type Lesson,
+} from "@/types/schedule";
+
+const ClassSchedule: FC = () => {
+  const { classId } = useParams<{ classId: string }>();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { t } = useLanguage();
+
+  const [classDetail, setClassDetail] = useState<SchoolClassDetail | null>(
+    null
+  );
+  const [schedules, setSchedules] = useState<ClassSchedule[]>([]);
+  const [teachers, setTeachers] = useState<Teacher[]>([]);
+  const [lessons, setLessons] = useState<Lesson[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editingSchedule, setEditingSchedule] = useState<ClassSchedule | null>(
+    null
+  );
+
+  const [formData, setFormData] = useState<CreateClassScheduleRequest>({
+    classId: parseInt(classId || "0"),
+    dayOfWeek: DayOfWeek.SUNDAY,
+    startTime: "08:00",
+    endTime: "08:45",
+    subjectName: "",
+    teacherId: undefined,
+    roomNumber: "",
+  });
+
+  // Color palette for different subjects
+  const subjectColors: Record<string, string> = {
+    ریاضی: "bg-blue-100 text-blue-800 border-blue-200",
+    علوم: "bg-green-100 text-green-800 border-green-200",
+    ادبیات: "bg-purple-100 text-purple-800 border-purple-200",
+    "زبان انگلیسی": "bg-red-100 text-red-800 border-red-200",
+    تاریخ: "bg-amber-100 text-amber-800 border-amber-200",
+    جغرافیا: "bg-emerald-100 text-emerald-800 border-emerald-200",
+    هنر: "bg-pink-100 text-pink-800 border-pink-200",
+    ورزش: "bg-orange-100 text-orange-800 border-orange-200",
+    دینی: "bg-indigo-100 text-indigo-800 border-indigo-200",
+  };
+
+  const getSubjectColor = (subject: string): string => {
+    return (
+      subjectColors[subject] || "bg-gray-100 text-gray-800 border-gray-200"
+    );
+  };
+
+  // Load all data
+  const loadData = useCallback(async () => {
+    if (!classId) return;
+
+    try {
+      setLoading(true);
+      const [classData, schedulesData, teachersData] = await Promise.all([
+        classApi.getClassById(classId),
+        scheduleApi.getByClass(classId),
+        user?.schoolId
+          ? teacherApi.getBySchool(user.schoolId.toString())
+          : Promise.resolve([]),
+      ]);
+
+      setClassDetail(classData);
+      setSchedules(schedulesData);
+      setTeachers(teachersData);
+
+      // Load lessons based on grade level
+      if (classData.gradeLevel) {
+        try {
+          const lessonsData = await lessonApi.getByGradeLevel(
+            classData.gradeLevel
+          );
+          setLessons(lessonsData);
+        } catch (error) {
+          console.error("Error loading lessons:", error);
+          // Fallback to default lessons if API not available
+          setLessons(getDefaultLessons(classData.gradeLevel));
+        }
+      }
+    } catch (error) {
+      console.error("Error loading data:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [classId, user?.schoolId]);
+
+  // Default lessons fallback
+  const getDefaultLessons = (gradeLevel: string): Lesson[] => {
+    const commonLessons = [
+      { id: 1, name: "ریاضی", gradeLevel, color: "blue" },
+      { id: 2, name: "علوم", gradeLevel, color: "green" },
+      { id: 3, name: "ادبیات", gradeLevel, color: "purple" },
+      { id: 4, name: "زبان انگلیسی", gradeLevel, color: "red" },
+      { id: 5, name: "تاریخ", gradeLevel, color: "amber" },
+      { id: 6, name: "جغرافیا", gradeLevel, color: "emerald" },
+      { id: 7, name: "هنر", gradeLevel, color: "pink" },
+      { id: 8, name: "ورزش", gradeLevel, color: "orange" },
+      { id: 9, name: "دینی", gradeLevel, color: "indigo" },
+    ];
+
+    if (gradeLevel.includes("ابتدایی")) {
+      return commonLessons.filter(
+        (lesson) => !["تاریخ", "جغرافیا"].includes(lesson.name)
+      );
+    }
+
+    return commonLessons;
+  };
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  // Time slots for the timetable
+  const timeSlots = [
+    "08:00",
+    "08:45",
+    "09:30",
+    "10:15",
+    "11:00",
+    "11:45",
+    "12:30",
+    "13:15",
+    "14:00",
+    "14:45",
+    "15:30",
+  ];
+
+  // Persian day names
+  const persianDays = {
+    [DayOfWeek.SATURDAY]: "شنبه",
+    [DayOfWeek.SUNDAY]: "یکشنبه",
+    [DayOfWeek.MONDAY]: "دوشنبه",
+    [DayOfWeek.TUESDAY]: "سه‌شنبه",
+    [DayOfWeek.WEDNESDAY]: "چهارشنبه",
+    [DayOfWeek.THURSDAY]: "پنجشنبه",
+    [DayOfWeek.FRIDAY]: "جمعه",
+  };
+
+  const daysOrder = [
+    DayOfWeek.SATURDAY,
+    DayOfWeek.SUNDAY,
+    DayOfWeek.MONDAY,
+    DayOfWeek.TUESDAY,
+    DayOfWeek.WEDNESDAY,
+    DayOfWeek.THURSDAY,
+    DayOfWeek.FRIDAY,
+  ];
+
+  // Get schedule for a specific day and time
+  const getSchedule = (
+    day: DayOfWeek,
+    timeSlot: string
+  ): ClassSchedule | undefined => {
+    return schedules.find(
+      (schedule) =>
+        schedule.dayOfWeek === day && schedule.startTime === timeSlot
+    );
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      if (editingSchedule) {
+        await scheduleApi.updateSchedule(
+          editingSchedule.id.toString(),
+          formData
+        );
+      } else {
+        await scheduleApi.createSchedule(formData);
+      }
+
+      setIsDialogOpen(false);
+      setEditingSchedule(null);
+      resetForm();
+      loadData(); // Reload schedules
+    } catch (error) {
+      console.error("Error saving schedule:", error);
+      alert(t("schedule.errors.saveFailed"));
+    }
+  };
+
+  // Reset form
+  const resetForm = () => {
+    setFormData({
+      classId: parseInt(classId || "0"),
+      dayOfWeek: DayOfWeek.SUNDAY,
+      startTime: "08:00",
+      endTime: "08:45",
+      subjectName: "",
+      teacherId: undefined,
+      roomNumber: "",
+    });
+  };
+
+  // Edit schedule
+  const handleEdit = (schedule: ClassSchedule) => {
+    setEditingSchedule(schedule);
+    setFormData({
+      classId: schedule.classId,
+      dayOfWeek: schedule.dayOfWeek,
+      startTime: schedule.startTime,
+      endTime: schedule.endTime,
+      subjectName: schedule.subjectName,
+      teacherId: schedule.teacher?.id,
+      roomNumber: schedule.roomNumber || "",
+    });
+    setIsDialogOpen(true);
+  };
+
+  // Delete schedule
+  //   const handleDelete = async (scheduleId: number) => {
+  //     if (confirm(t("schedule.confirmDelete"))) {
+  //       try {
+  //         await scheduleApi.deleteSchedule(scheduleId.toString());
+  //         loadData(); // Reload schedules
+  //       } catch (error) {
+  //         console.error("Error deleting schedule:", error);
+  //         alert(t("schedule.errors.deleteFailed"));
+  //       }
+  //     }
+  //   };
+
+  // Add new schedule for a specific time slot
+  const handleAddSchedule = (day: DayOfWeek, timeSlot: string) => {
+    setEditingSchedule(null);
+    setFormData((prev) => ({
+      ...prev,
+      dayOfWeek: day,
+      startTime: timeSlot,
+      endTime: getNextTimeSlot(timeSlot),
+    }));
+    setIsDialogOpen(true);
+  };
+
+  // Calculate next time slot (45 minutes later)
+  const getNextTimeSlot = (timeSlot: string): string => {
+    const [hours, minutes] = timeSlot.split(":").map(Number);
+    let newMinutes = minutes + 45;
+    let newHours = hours;
+
+    if (newMinutes >= 60) {
+      newHours += Math.floor(newMinutes / 60);
+      newMinutes = newMinutes % 60;
+    }
+
+    return `${newHours.toString().padStart(2, "0")}:${newMinutes
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-lg">{t("common.loading")}</div>
+      </div>
+    );
+  }
+
+  if (!classDetail) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-lg text-red-600">
+          {t("schedule.errors.classNotFound")}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Link to="/classes">
+            <Button variant="outline" size="icon">
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold">{t("schedule.title")}</h1>
+            <p className="text-muted-foreground">
+              {classDetail.name} - {classDetail.gradeLevel}
+            </p>
+          </div>
+        </div>
+        <Button onClick={() => setIsDialogOpen(true)}>
+          <Plus className="w-4 h-4 mr-2" />
+          {t("schedule.addSchedule")}
+        </Button>
+      </div>
+
+      {/* Timetable */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <CalendarIcon className="w-5 h-5" />
+            {t("schedule.weeklyTimetable")}
+          </CardTitle>
+          <CardDescription>
+            {t("schedule.timetableDescription")}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <div className="min-w-full bg-white rounded-lg border">
+              {/* Days Header */}
+              <div className="grid grid-cols-8 border-b">
+                <div className="p-4 font-semibold border-r bg-gray-50">
+                  {t("schedule.time")}
+                </div>
+                {daysOrder.map((day) => (
+                  <div
+                    key={day}
+                    className="p-4 font-semibold text-center bg-gray-50"
+                  >
+                    {persianDays[day]}
+                  </div>
+                ))}
+              </div>
+
+              {/* Time Slots */}
+              {timeSlots.map((timeSlot, index) => (
+                <div
+                  key={timeSlot || index}
+                  className="grid grid-cols-8 border-b last:border-b-0"
+                >
+                  {/* Time Column */}
+                  <div className="p-4 border-r bg-gray-50 flex items-center justify-center">
+                    <div className="text-sm font-medium">{timeSlot}</div>
+                  </div>
+
+                  {/* Day Columns */}
+                  {daysOrder.map((day) => {
+                    const schedule = getSchedule(day, timeSlot);
+                    return (
+                      <div
+                        key={day}
+                        className="p-2 border-r last:border-r-0 min-h-20 relative group"
+                        onClick={() =>
+                          !schedule && handleAddSchedule(day, timeSlot)
+                        }
+                      >
+                        {schedule ? (
+                          <div
+                            className={`p-3 rounded-lg border-2 h-full cursor-pointer transition-all hover:shadow-md ${getSubjectColor(
+                              schedule.subjectName
+                            )}`}
+                            onClick={() => handleEdit(schedule)}
+                          >
+                            <div className="font-semibold text-sm mb-1">
+                              {schedule.subjectName}
+                            </div>
+                            {schedule.teacher && (
+                              <div className="flex items-center gap-1 text-xs mb-1">
+                                <User className="w-3 h-3" />
+                                {schedule.teacher.firstName}{" "}
+                                {schedule.teacher.lastName}
+                              </div>
+                            )}
+                            {schedule.roomNumber && (
+                              <div className="flex items-center gap-1 text-xs">
+                                <MapPin className="w-3 h-3" />
+                                {schedule.roomNumber}
+                              </div>
+                            )}
+                            <div className="flex items-center gap-1 text-xs mt-2 text-gray-600">
+                              <Clock className="w-3 h-3" />
+                              {schedule.startTime} - {schedule.endTime}
+                            </div>
+                            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-6 w-6"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleEdit(schedule);
+                                }}
+                              >
+                                <Edit className="w-3 h-3" />
+                              </Button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="h-full flex items-center justify-center cursor-pointer hover:bg-gray-50 rounded-lg transition-colors">
+                            <Plus className="w-5 h-5 text-gray-400" />
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Schedule Form Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>
+              {editingSchedule
+                ? t("schedule.editSchedule")
+                : t("schedule.addSchedule")}
+            </DialogTitle>
+            <DialogDescription>
+              {t("schedule.formDescription")}
+            </DialogDescription>
+          </DialogHeader>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="dayOfWeek">{t("schedule.dayOfWeek")}</Label>
+                <Select
+                  value={formData.dayOfWeek}
+                  onValueChange={(value: DayOfWeek) =>
+                    setFormData((prev) => ({ ...prev, dayOfWeek: value }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {daysOrder.map((day) => (
+                      <SelectItem key={day} value={day}>
+                        {persianDays[day]}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="subjectName">{t("schedule.subject")}</Label>
+                <Select
+                  value={formData.subjectName}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({ ...prev, subjectName: value }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder={t("schedule.selectSubject")} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {lessons.map((lesson) => (
+                      <SelectItem key={lesson.id} value={lesson.name}>
+                        {lesson.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="startTime">{t("schedule.startTime")}</Label>
+                <Input
+                  type="time"
+                  value={formData.startTime}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      startTime: e.target.value,
+                    }))
+                  }
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="endTime">{t("schedule.endTime")}</Label>
+                <Input
+                  type="time"
+                  value={formData.endTime}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      endTime: e.target.value,
+                    }))
+                  }
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="teacherId">{t("schedule.teacher")}</Label>
+                <Select
+                  value={formData.teacherId?.toString()}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      teacherId: parseInt(value),
+                    }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder={t("schedule.selectTeacher")} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {teachers.map((teacher) => (
+                      <SelectItem
+                        key={teacher.id}
+                        value={teacher.id.toString()}
+                      >
+                        {teacher.firstName} {teacher.lastName}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="roomNumber">{t("schedule.room")}</Label>
+                <Input
+                  value={formData.roomNumber}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      roomNumber: e.target.value,
+                    }))
+                  }
+                  placeholder={t("schedule.roomPlaceholder")}
+                />
+              </div>
+            </div>
+
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setIsDialogOpen(false);
+                  setEditingSchedule(null);
+                  resetForm();
+                }}
+              >
+                {t("common.cancel")}
+              </Button>
+              <Button type="submit">
+                {editingSchedule ? t("common.save") : t("schedule.addSchedule")}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+};
+
+export default ClassSchedule;

@@ -5,8 +5,22 @@ import OwnerDashboard from "@/pages/owner/dashboard";
 import Schools from "@/pages/owner/schools/list";
 import AddSchool from "@/pages/owner/schools/create/add-school";
 import Users from "@/pages/owner/users/list";
-import AddSchoolAdmin from "@/pages/owner/users/add-user/add-school-admin";
+import AddSchoolAdmin from "@/pages/owner/users/create/add-school-admin";
 import { UserRole } from "@/types/role";
+import AdminUsers from "@/pages/admin/users/list";
+import CreateAdminUser from "@/pages/admin/users/create";
+import AdminTeachers from "@/pages/admin/teachers/teachers";
+import CreateTeacher from "@/pages/admin/teachers/create-teacher";
+import Classes from "@/pages/admin/classes/classes";
+import CreateClass from "@/pages/admin/classes/create-class";
+import Students from "@/pages/admin/students/students";
+import CreateStudent from "@/pages/admin/students/create-student";
+import Parents from "@/pages/admin/parents/parents";
+import CreateParent from "@/pages/admin/parents/create-parent";
+import Tuition from "@/pages/admin/finance/tuition";
+import Invoice from "@/pages/admin/finance/invoice";
+import Reports from "@/pages/admin/finance/reports";
+import ClassSchedule from "@/pages/admin/classes/class-schedule";
 
 export const dashboardRoutes = [
   // Owner Routes
@@ -61,9 +75,62 @@ export const dashboardRoutes = [
         path: "/admin/dashboard",
         element: <AdminDashboard />,
       },
-      // You can add more admin routes here later
-      // { path: "users", element: <AdminUsers /> },
-      // { path: "settings", element: <AdminSettings /> },
+      {
+        path: "/admin/users",
+        element: <AdminUsers />,
+      },
+      {
+        path: "/admin/users/create",
+        element: <CreateAdminUser />,
+      },
+      {
+        path: "/admin/teachers",
+        element: <AdminTeachers />,
+      },
+      {
+        path: "/admin/teachers/create",
+        element: <CreateTeacher />,
+      },
+      {
+        path: "/admin/classes",
+        element: <Classes />,
+      },
+      {
+        path: "/admin/classes/create",
+        element: <CreateClass />,
+      },
+      {
+        path: "/admin/classes/:id/schedule",
+        element: <ClassSchedule />,
+      },
+      {
+        path: "/admin/students",
+        element: <Students />,
+      },
+      {
+        path: "/admin/students/create",
+        element: <CreateStudent />,
+      },
+      {
+        path: "/admin/parents",
+        element: <Parents />,
+      },
+      {
+        path: "/admin/parents/create",
+        element: <CreateParent />,
+      },
+      {
+        path: "/admin/finance/tuition",
+        element: <Tuition />,
+      },
+      {
+        path: "/admin/finance/invoice",
+        element: <Invoice />,
+      },
+      {
+        path: "/admin/finance/reports",
+        element: <Reports />,
+      },
     ],
   },
 ];

@@ -13,7 +13,7 @@ interface LanguageContextType {
   currentLanguage: Language;
   setCurrentLanguage: (language: Language) => void;
   setCurrentLanguageByCode: (languageCode: string) => void;
-  t: (key: string) => string;
+  t: (key: string, params?: Record<string, unknown>) => string;
   dir: "ltr" | "rtl";
   language: "en" | "fa";
   languages: readonly Language[];

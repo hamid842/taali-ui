@@ -14,7 +14,19 @@
     "filter": "فیلتر",
     "retry": "تلاش مجدد",
     "since": "از سال",
-    "current": "جاری"
+    "current": "جاری",
+    "save": "ذخیره",
+    "cancel": "انصراف",
+    "edit": "ویرایش",
+    "delete": "حذف",
+    "create": "ایجاد",
+    "status": "وضعیت",
+    "actions": "عملیات",
+    "active": "فعال",
+    "inactive": "غیرفعال",
+    "yes": "بله",
+    "no": "خیر",
+    "confirm": "تایید"
   },
   "nav": {
     "logoTitle": "تعــالی",
@@ -342,6 +354,95 @@
     "noSchoolWarningTitle": "هنوز مدرسه ای ایجاد نشده",
     "noSchoolWarningDesc": "برای افزودن مدیران، ابتدا باید یک مدرسه ایجاد کنید. لطفاً اولین مدرسه خود را ایجاد کنید.",
     "createSchoolButton": "ایجاد مدرسه"
+  },
+  "classes": {
+    "title": "کلاس‌ها",
+    "description": "مدیریت کلاس‌های مدرسه و انتساب دانش‌آموزان",
+    "createClass": "ایجاد کلاس",
+    "editClass": "ویرایش کلاس",
+    "searchPlaceholder": "جستجوی کلاس‌ها...",
+    "allStatus": "همه وضعیت‌ها",
+    "academicYear": "سال تحصیلی",
+    "allYears": "همه سال‌ها",
+    "name": "نام",
+    "gradeLevel": "مقطع تحصیلی",
+    "students": "دانش‌آموزان",
+    "teachers": "معلمان",
+    "noClassesFound": "هیچ کلاسی یافت نشد",
+    "schedule": "برنامه",
+    "loading": "در حال بارگذاری کلاس‌ها...",
+    "createDescription": "یک کلاس جدید ایجاد کرده و دانش‌آموزان و معلمان را انتساب دهید",
+    "basicInformation": "اطلاعات پایه",
+    "basicInformationDesc": "جزئیات پایه کلاس را وارد کنید",
+    "studentsAndTeachers": "دانش‌آموزان و معلمان",
+    "studentsAndTeachersDesc": "دانش‌آموزان و معلمان را به این کلاس انتساب دهید",
+    "className": "نام کلاس",
+    "classNamePlaceholder": "نام کلاس را وارد کنید",
+    "selectGradeLevel": "انتخاب مقطع تحصیلی",
+    "capacity": "ظرفیت",
+    "mainTeacher": "معلم اصلی",
+    "selectMainTeacher": "انتخاب معلم اصلی",
+    "selectedCount": "انتخاب شده: {count}",
+    "creating": "در حال ایجاد...",
+    "createInfo": "می‌توانید کلاس ایجاد کنید و معلمان و دانش‌آموزان را بعداً اختصاص دهید. توصیه می‌شود اگر می‌خواهید معلم اصلی اختصاص دهید، ابتدا معلمان را ایجاد کنید.",
+    "noTeachersAvailable": "هیچ معلمی موجود نیست",
+    "noStudentsAvailable": "هیچ دانش‌آموزی موجود نیست",
+    "noTeachersMessage": "هیچ معلمی یافت نشد. برای اختصاص معلم به این کلاس، ابتدا معلمان را ایجاد کنید.",
+    "noStudentsMessage": "هیچ دانش‌آموزی یافت نشد. برای اختصاص دانش‌آموز به این کلاس، ابتدا دانش‌آموزان را ایجاد کنید.",
+    "gradeLevels": {
+      "kindergarten": "مهد کودک",
+      "preschool": "پیش دبستانی",
+      "primaryFirst": "ابتدایی دوره اول",
+      "primarySecond": "ابتدایی دوره دوم",
+      "secondaryFirst": "متوسطه دوره اول",
+      "secondarySecond": "متوسطه دوره دوم"
+    },
+
+    "errors": {
+      "nameRequired": "نام کلاس الزامی است",
+      "academicYearRequired": "سال تحصیلی الزامی است",
+      "schoolRequired": "مدرسه الزامی است",
+      "createFailed": "ایجاد کلاس با شکست مواجه شد",
+      "loadFailed": "بارگذاری کلاس‌ها با شکست مواجه شد",
+      "updateFailed": "بروزرسانی کلاس با شکست مواجه شد",
+      "deleteFailed": "حذف کلاس با شکست مواجه شد"
+    },
+
+    "success": {
+      "created": "کلاس با موفقیت ایجاد شد",
+      "updated": "کلاس با موفقیت بروزرسانی شد",
+      "deleted": "کلاس با موفقیت حذف شد"
+    }
+  },
+  "teachers": {
+    "createTeacher": "ایجاد معلم"
+  },
+  "students": {
+    "createStudent": "ایجاد دانش‌آموز"
+  },
+  "schedule": {
+    "title": "برنامه کلاسی",
+    "weeklyTimetable": "برنامه هفتگی",
+    "timetableDescription": "مدیریت برنامه کلاس و دروس",
+    "time": "زمان",
+    "addSchedule": "افزودن برنامه",
+    "editSchedule": "ویرایش برنامه",
+    "formDescription": "افزودن یا ویرایش برنامه کلاسی",
+    "dayOfWeek": "روز هفته",
+    "subject": "درس",
+    "selectSubject": "انتخاب درس",
+    "startTime": "زمان شروع",
+    "endTime": "زمان پایان",
+    "teacher": "معلم",
+    "selectTeacher": "انتخاب معلم",
+    "room": "اتاق",
+    "roomPlaceholder": "شماره اتاق",
+    "confirmDelete": "آیا از حذف این برنامه مطمئن هستید؟",
+    "errors": {
+      "classNotFound": "کلاس یافت نشد",
+      "saveFailed": "ذخیره برنامه با خطا مواجه شد",
+      "deleteFailed": "حذف برنامه با خطا مواجه شد"
+    }
   },
   "loading": {
     "checkAuth": "بررسی احراز هویت..."

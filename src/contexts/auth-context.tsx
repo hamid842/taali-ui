@@ -8,6 +8,7 @@ export interface User {
   role: UserRoleType;
   firstName: string;
   lastName: string;
+  schoolId?: number;
 }
 
 export interface AuthContextType {

@@ -14,7 +14,19 @@
     "filter": "Filter",
     "retry": "Retry",
     "since": "Since",
-    "current": "current"
+    "current": "current",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "create": "Create",
+    "status": "Status",
+    "actions": "Actions",
+    "active": "Active",
+    "inactive": "Inactive",
+    "yes": "Yes",
+    "no": "No",
+    "confirm": "Confirm"
   },
   "nav": {
     "logoTitle": "Taali",
@@ -341,6 +353,95 @@
     "noSchoolWarningTitle": "No School Created Yet",
     "noSchoolWarningDesc": "You need to create a school before you can add administrators. Please create your first school to get started.",
     "createSchoolButton": "Create School"
+  },
+  "classes": {
+    "title": "Classes",
+    "description": "Manage school classes and student assignments",
+    "createClass": "Create Class",
+    "editClass": "Edit Class",
+    "searchPlaceholder": "Search classes...",
+    "allStatus": "All Status",
+    "academicYear": "Academic Year",
+    "allYears": "All Years",
+    "name": "Name",
+    "gradeLevel": "Grade Level",
+    "students": "Students",
+    "teachers": "Teachers",
+    "noClassesFound": "No classes found",
+    "schedule": "Schedule",
+    "loading": "Loading classes...",
+    "createDescription": "Create a new class and assign students and teachers",
+    "basicInformation": "Basic Information",
+    "basicInformationDesc": "Enter the basic details of the class",
+    "studentsAndTeachers": "Students & Teachers",
+    "studentsAndTeachersDesc": "Assign students and teachers to this class",
+    "className": "Class Name",
+    "classNamePlaceholder": "Enter class name",
+    "selectGradeLevel": "Select grade level",
+    "capacity": "Capacity",
+    "mainTeacher": "Main Teacher",
+    "selectMainTeacher": "Select main teacher",
+    "selectedCount": "Selected: {count}",
+    "creating": "Creating...",
+    "createInfo": "You can create a class now and assign teachers & students later. It's recommended to create teachers first if you want to assign a main teacher.",
+    "noTeachersAvailable": "No teachers available",
+    "noStudentsAvailable": "No students available",
+    "noTeachersMessage": "No teachers found. Create teachers first to assign them to this class.",
+    "noStudentsMessage": "No students found. Create students first to assign them to this class.",
+    "gradeLevels": {
+      "kindergarten": "Kindergarten",
+      "preschool": "Preschool",
+      "primaryFirst": "Primary - First Period",
+      "primarySecond": "Primary - Second Period",
+      "secondaryFirst": "Secondary - First Period",
+      "secondarySecond": "Secondary - Second Period"
+    },
+
+    "errors": {
+      "nameRequired": "Class name is required",
+      "academicYearRequired": "Academic year is required",
+      "schoolRequired": "School is required",
+      "createFailed": "Failed to create class",
+      "loadFailed": "Failed to load classes",
+      "updateFailed": "Failed to update class",
+      "deleteFailed": "Failed to delete class"
+    },
+
+    "success": {
+      "created": "Class created successfully",
+      "updated": "Class updated successfully",
+      "deleted": "Class deleted successfully"
+    }
+  },
+  "teachers": {
+    "createTeacher": "Create Teacher"
+  },
+  "students": {
+    "createStudent": "Create Student"
+  },
+  "schedule": {
+    "title": "Class Schedule",
+    "weeklyTimetable": "Weekly Timetable",
+    "timetableDescription": "Manage class schedule and lessons",
+    "time": "Time",
+    "addSchedule": "Add Schedule",
+    "editSchedule": "Edit Schedule",
+    "formDescription": "Add or edit class schedule entry",
+    "dayOfWeek": "Day of Week",
+    "subject": "Subject",
+    "selectSubject": "Select subject",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "teacher": "Teacher",
+    "selectTeacher": "Select teacher",
+    "room": "Room",
+    "roomPlaceholder": "Room number",
+    "confirmDelete": "Are you sure you want to delete this schedule?",
+    "errors": {
+      "classNotFound": "Class not found",
+      "saveFailed": "Failed to save schedule",
+      "deleteFailed": "Failed to delete schedule"
+    }
   },
   "loading": {
     "checkAuth": "Checking authentication..."
