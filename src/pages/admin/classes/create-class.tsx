@@ -55,7 +55,7 @@ const CreateClassPage: FC = () => {
     try {
       if (!user?.schoolId) return;
       setTeachersLoading(true);
-      const data = await teacherApi.getBySchool(user.schoolId.toString());
+      const data = await teacherApi.getBySchool(user.schoolId);
       setTeachers(data);
     } catch (error) {
       console.error("Error loading teachers:", error);
@@ -68,7 +68,7 @@ const CreateClassPage: FC = () => {
     try {
       if (!user?.schoolId) return;
       setStudentsLoading(true);
-      const data = await studentApi.getBySchool(user.schoolId.toString());
+      const data = await studentApi.getBySchool(user.schoolId);
       setStudents(data);
     } catch (error) {
       console.error("Error loading students:", error);
@@ -300,9 +300,9 @@ const CreateClassPage: FC = () => {
                           key={teacher.id}
                           value={teacher.id.toString()}
                         >
-                          {teacher.firstName} {teacher.lastName}
-                          {teacher.subjectSpecialization &&
-                            ` - ${teacher.subjectSpecialization}`}
+                          {teacher?.user?.firstName} {teacher?.user?.lastName}
+                          {teacher.specializations &&
+                            ` - ${teacher.specializations}`}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -422,10 +422,10 @@ const CreateClassPage: FC = () => {
                           />
                           <div className="flex-1">
                             <div className="font-medium">
-                              {teacher.firstName} {teacher.lastName}
+                              {teacher?.user?.firstName} {teacher?.user?.lastName}
                             </div>
                             <div className="text-sm text-muted-foreground">
-                              {teacher.subjectSpecialization}
+                              {teacher.specializations}
                             </div>
                           </div>
                         </div>

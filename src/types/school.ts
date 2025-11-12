@@ -19,6 +19,7 @@ export interface ISchool {
 export interface CreateSchoolRequest {
   name: string;
   code: string;
+  ownerId?: number;
   image?: string | null | undefined;
   address?: string | null | undefined;
   email?: string | null | undefined;

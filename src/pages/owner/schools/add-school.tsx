@@ -17,10 +17,12 @@ import {
 } from "@/components/forms/create-school-form";
 import FormHeader from "@/components/common/form-header";
 import ImageUploadSection from "@/components/common/image-upload-section";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function AddSchool() {
   const navigate = useNavigate();
   const { t, dir } = useLanguage();
+  const { user } = useAuth();
   const createSchoolMutation = useCreateSchool();
   const [schoolLogo, setSchoolLogo] = useState<string | null>(null);
 
@@ -29,6 +31,7 @@ export default function AddSchool() {
       // Combine form data with the uploaded logo
       const schoolData = {
         ...data,
+        ownerId:user?.id,
         image: schoolLogo || data.image, // Use uploaded logo if available
       };
 
@@ -39,7 +42,7 @@ export default function AddSchool() {
       );
 
       // Redirect to schools list after successful creation
-      navigate("/owner/dashboard");
+      navigate("/owner/schools");
     } catch (error) {
       console.error("Failed to create school:", error);
       toast.error(

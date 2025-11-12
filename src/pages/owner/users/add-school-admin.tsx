@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useLanguage } from "@/hooks/use-language";
-import { Image } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -12,9 +11,7 @@ import FormHeader from "@/components/common/form-header";
 import ImageUploadSection from "@/components/common/image-upload-section";
 import RegisterUserForm from "@/components/forms/register-user-form";
 import { useAppStore } from "@/stores/app-store";
-import EmptyData from "@/components/common/empty-data";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import NoSchoolContent from "@/components/dashboard/schools/no-school-content";
 
 export default function AddSchoolAdmin() {
   const { dir, t } = useLanguage();
@@ -38,7 +35,6 @@ export default function AddSchoolAdmin() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Logo Upload Section */}
             <ImageUploadSection
-              icon={<Image className="h-5 w-5" />}
               uploadType="profile-image"
               title={t("addSchoolAdmin.imgSectionTitle")}
               desc={t("addSchoolAdmin.imgSectionDesc")}
@@ -87,15 +83,7 @@ export default function AddSchoolAdmin() {
           </Card>
         </>
       ) : (
-        <EmptyData
-          title={t("addSchoolAdmin.noSchoolTitle")}
-          desc={t("addSchoolAdmin.noSchoolDesc")}
-          actions={
-            <Link to={"/admin/schools/create"}>
-              <Button>{t("addSchoolAdmin.noSchoolBtn")}</Button>
-            </Link>
-          }
-        />
+        <NoSchoolContent />
       )}
     </div>
   );

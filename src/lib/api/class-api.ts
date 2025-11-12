@@ -8,7 +8,7 @@ import type {
 
 export const classApi = {
   // Get all classes for a school
-  getClassesBySchool: async (schoolId: string): Promise<SchoolClass[]> => {
+  getClassesBySchool: async (schoolId: number): Promise<SchoolClass[]> => {
     return apiClient.get<SchoolClass[]>(
       apiConfig.endpoints.classes.getBySchool(schoolId)
     );
@@ -16,7 +16,7 @@ export const classApi = {
 
   // Get active classes for a school
   getActiveClassesBySchool: async (
-    schoolId: string
+    schoolId: number
   ): Promise<SchoolClass[]> => {
     return apiClient.get<SchoolClass[]>(
       apiConfig.endpoints.classes.getActiveBySchool(schoolId)
@@ -24,7 +24,7 @@ export const classApi = {
   },
 
   // Get class by ID
-  getClassById: async (id: string): Promise<SchoolClassDetail> => {
+  getClassById: async (id: number): Promise<SchoolClassDetail> => {
     return apiClient.get<SchoolClassDetail>(
       apiConfig.endpoints.classes.getById(id)
     );
@@ -40,7 +40,7 @@ export const classApi = {
 
   // Update class
   updateClass: async (
-    id: string,
+    id: number,
     data: UpdateSchoolClassRequest
   ): Promise<SchoolClass> => {
     return apiClient.put<SchoolClass>(
@@ -50,14 +50,14 @@ export const classApi = {
   },
 
   // Delete class
-  deleteClass: async (id: string): Promise<void> => {
+  deleteClass: async (id: number): Promise<void> => {
     return apiClient.delete(apiConfig.endpoints.classes.delete(id));
   },
 
   // Add student to class
   addStudent: async (
-    classId: string,
-    studentId: string
+    classId: number,
+    studentId: number
   ): Promise<SchoolClass> => {
     return apiClient.post<SchoolClass>(
       apiConfig.endpoints.classes.addStudent(classId, studentId),
@@ -67,8 +67,8 @@ export const classApi = {
 
   // Remove student from class
   removeStudent: async (
-    classId: string,
-    studentId: string
+    classId: number,
+    studentId: number
   ): Promise<SchoolClass> => {
     return apiClient.delete<SchoolClass>(
       apiConfig.endpoints.classes.removeStudent(classId, studentId)

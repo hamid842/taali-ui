@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import {
   Empty,
   EmptyContent,
@@ -7,7 +8,6 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 import { FolderSearch } from "lucide-react";
-import type { ReactNode } from "react";
 
 type EmptyContentProps = {
   title: string;

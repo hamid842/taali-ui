@@ -91,14 +91,14 @@ export default function Login() {
           <CardHeader className="space-y-1">
             <LogIn size={"70px"} className="m-auto" />
             <CardTitle className="text-2xl font-bold">
-              {t("login.title")}
+              {t("common.login")}
             </CardTitle>
             <CardDescription>{t("login.subtitle")}</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <AppTextField
-                label={t("login.form.email")}
+                label={t("register.form.email")}
                 type="email"
                 error={errors.email?.message}
                 required
@@ -108,7 +108,7 @@ export default function Login() {
               <AppTextField
                 type="password"
                 showPasswordToggle
-                label={t("login.form.password")}
+                label={t("common.password")}
                 error={errors.password?.message}
                 required
                 {...register("password")}
@@ -119,7 +119,7 @@ export default function Login() {
                 className="w-full mt-2"
                 disabled={isLoginSubmitting}
               >
-                {isLoginSubmitting ? t("login.loggingIn") : t("login.login")}
+                {isLoginSubmitting ? t("login.loggingIn") : t("common.login")}
               </Button>
             </form>
           </CardContent>

@@ -7,9 +7,10 @@ import {
   CardTitle,
 } from "../ui/card";
 import { ImageUpload } from "./image-upload";
+import { Image } from "lucide-react";
 
 type ImageUploadSectionProps = {
-  icon: ReactNode;
+  icon?: ReactNode;
   title: string;
   desc: string;
   uploadType: "profile-image" | "school-logo";
@@ -28,7 +29,7 @@ export default function ImageUploadSection({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            {icon}
+            {icon ? icon : <Image className="h-5 w-5" />}
             {title}
           </CardTitle>
           <CardDescription>{desc}</CardDescription>

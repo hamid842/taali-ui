@@ -3,6 +3,7 @@ import type { UserRoleType } from "@/types/role";
 import { createContext } from "react";
 
 export interface User {
+  id: number;
   userId: string;
   email: string;
   role: UserRoleType;

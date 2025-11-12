@@ -21,6 +21,12 @@ export interface SchoolClassDetail extends SchoolClass {
   schedules: ClassSchedule[];
 }
 
+export interface ClassResponse {
+  id: number;
+  name: string;
+  gradeLevel?: string;
+}
+
 export interface CreateSchoolClassRequest {
   name: string;
   gradeLevel?: string;

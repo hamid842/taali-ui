@@ -93,6 +93,17 @@ export const apiConfig = {
     students: {
       getBySchool: (schoolId: number) =>
         `${API_BASE_URL}/students/school/${schoolId}`,
+      getById: (id: number) => `${API_BASE_URL}/students/${id}`,
+      getByClass: (classId: number) =>
+        `${API_BASE_URL}/students/class/${classId}`,
+      getByUser: (userId: number) => `${API_BASE_URL}/students/user/${userId}`,
+      updateDetailsByUser: (userId: number) =>
+        `${API_BASE_URL}/students/user/${userId}/details`,
+      associateParents: (userId: number) =>
+        `${API_BASE_URL}/students/user/${userId}/parents`,
+      getGradeLevels: (schoolId: number) =>
+        `${API_BASE_URL}/students/school/${schoolId}/grade-levels`,
+      getClasses: (schoolId: number) => `/students/school/${schoolId}/classes`,
     },
   },
   headers: {

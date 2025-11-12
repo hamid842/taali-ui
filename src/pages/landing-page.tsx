@@ -183,7 +183,7 @@ export default function LandingPage() {
               }`}
             >
               <Button size="lg" variant="secondary" className="text-lg px-8">
-                {t("landingPage.cta.primary")}
+                {t("common.createAccount")}
               </Button>
               <Button
                 size="lg"

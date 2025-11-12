@@ -2,10 +2,9 @@ import { ProtectedRoute } from "@/components/auth/protected-route";
 import MainLayout from "@/components/layout/main-layout";
 import AdminDashboard from "@/pages/admin/dashboard";
 import OwnerDashboard from "@/pages/owner/dashboard";
-import Schools from "@/pages/owner/schools/list";
-import AddSchool from "@/pages/owner/schools/create/add-school";
-import Users from "@/pages/owner/users/list";
-import AddSchoolAdmin from "@/pages/owner/users/create/add-school-admin";
+import AddSchool from "@/pages/owner/schools/add-school";
+import Users from "@/pages/owner/users";
+import AddSchoolAdmin from "@/pages/owner/users/add-school-admin";
 import { UserRole } from "@/types/role";
 import AdminUsers from "@/pages/admin/users/list";
 import CreateAdminUser from "@/pages/admin/users/create";
@@ -21,6 +20,7 @@ import Invoice from "@/pages/admin/finance/invoice";
 import Reports from "@/pages/admin/finance/reports";
 import ClassSchedule from "@/pages/admin/classes/class-schedule";
 import Teachers from "@/pages/admin/teachers/teachers";
+import OwnerSchools from "@/pages/owner/schools";
 
 export const dashboardRoutes = [
   // Owner Routes
@@ -42,7 +42,7 @@ export const dashboardRoutes = [
       },
       {
         path: "/owner/schools",
-        element: <Schools />,
+        element: <OwnerSchools />,
       },
       {
         path: "/owner/schools/create",

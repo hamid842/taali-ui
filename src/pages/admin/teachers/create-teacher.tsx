@@ -1,7 +1,5 @@
-// src/pages/CreateTeacher.tsx
 import { useState } from "react";
 import { useLanguage } from "@/hooks/use-language";
-import { Image } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -41,7 +39,6 @@ export default function CreateTeacher() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Logo Upload Section */}
             <ImageUploadSection
-              icon={<Image className="h-5 w-5" />}
               uploadType="profile-image"
               title={t("addTeacher.imgSectionTitle")}
               desc={t("addTeacher.imgSectionDesc")}

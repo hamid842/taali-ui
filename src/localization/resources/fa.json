@@ -27,7 +27,20 @@
     "yes": "بله",
     "no": "خیر",
     "confirm": "تایید",
-    "view":"جزئبات"
+    "view": "جزئبات",
+    "password": "رمز عبور",
+    "goHome": "برو به صفحه اصلی",
+    "goBack": "بازگشت",
+    "step": "مرحله",
+    "of": "از",
+    "continue": "ادامه",
+    "createAccount": "ایجاد حساب کاربری",
+    "all": "همه",
+    "clear": "پاک کردن فیلترها",
+    "refresh": "بروزرسانی",
+    "showing": "نمایش",
+    "previous": "قبلی",
+    "next": "بعدی"
   },
   "nav": {
     "logoTitle": "تعــالی",
@@ -59,7 +72,6 @@
     "cta": {
       "title": "آماده تحول در مدرسه خود هستید؟",
       "description": "به هزاران مدرسه ای بپیوندید که از پلتفرم ما برای ساده کردن عملیات و بهبود تجربیات یادگیری استفاده می کنند.",
-      "primary": "ایجاد حساب کاربری",
       "secondary": "تماس با فروش"
     },
     "footer": {
@@ -81,18 +93,11 @@
   "login": {
     "title": "ورود",
     "subtitle": "برای دسترسی به حساب خود اطلاعات خود را وارد کنید",
-    "form": {
-      "email": "ایمیل",
-      "password": "رمز عبور"
-    },
     "loggingIn": "در حال ورود...",
-    "login": "ورود",
     "account": "حساب کاربری ندارید؟"
   },
   "register": {
-    "title": "ایجاد حساب کاربری",
     "subtitle": "لطفا اطلاعات خود را برای ایجاد حساب کاربری وارد کنید",
-    "createAccount": "ایجاد حساب کاربری",
     "creatingAccount": "در حال ایجاد حساب کاربری...",
     "haveAccount": "قبلاً حساب کاربری دارید؟",
     "signIn": "از اینجا وارد شوید",
@@ -193,8 +198,6 @@
     "title": "صفحه پیدا نشد",
     "oops": "اوه! صفحه مورد نظر پیدا نشد",
     "message": "صفحه‌ای که به دنبال آن هستید وجود ندارد یا منتقل شده است. بگذارید شما را به مسیر درست هدایت کنیم.",
-    "goHome": "برو به صفحه اصلی",
-    "goBack": "بازگشت",
     "contactSupport": "تماس با پشتیبانی",
     "needHelp": "نیاز به کمک دارید؟",
     "visitHelpCenter": "از مرکز راهنمایی ما دیدن کنید"
@@ -203,7 +206,6 @@
     "title": "دسترسی غیرمجاز",
     "message": "شما مجوز دسترسی به این صفحه را ندارید. در صورت بروز خطا، لطفاً با مدیر سیستم تماس بگیرید.",
     "loggedInAs": "ورود به عنوان",
-    "goHome": "بازگشت به صفحه اصلی",
     "signInDifferent": "ورود با حساب کاربری دیگر"
   },
   "breadcrumbs": {
@@ -401,7 +403,6 @@
       "secondaryFirst": "متوسطه دوره اول",
       "secondarySecond": "متوسطه دوره دوم"
     },
-
     "errors": {
       "nameRequired": "نام کلاس الزامی است",
       "academicYearRequired": "سال تحصیلی الزامی است",
@@ -411,7 +412,6 @@
       "updateFailed": "بروزرسانی کلاس با شکست مواجه شد",
       "deleteFailed": "حذف کلاس با شکست مواجه شد"
     },
-
     "success": {
       "created": "کلاس با موفقیت ایجاد شد",
       "updated": "کلاس با موفقیت بروزرسانی شد",
@@ -419,25 +419,25 @@
     }
   },
   "teachers": {
-  "title": "معلمان",
-  "description": "مدیریت همهٔ معلمان مدرسهٔ شما",
-  "loading": "در حال بارگذاری معلمان...",
-  "createTeacher": "افزودن معلم",
-  "searchPlaceholder": "جستجوی معلم...",
-  "allStatus": "همه وضعیت‌ها",
-  "allSubjects": "همهٔ درس‌ها",
-  "noTeachersFound": "هیچ معلمی پیدا نشد",
-  "confirmDelete": "آیا مطمئن هستید که می‌خواهید این معلم را حذف کنید؟",
-  "name": "نام",
-  "email": "ایمیل",
-  "subjects": "درس‌ها",
-  "classes": "کلاس‌ها",
-  "subject": "درس",
-  "errors": {
-    "loadFailed": "خطا در بارگذاری معلمان",
-    "deleteFailed": "خطا در حذف معلم"
-  }
-},
+    "title": "معلمان",
+    "description": "مدیریت همهٔ معلمان مدرسهٔ شما",
+    "loading": "در حال بارگذاری معلمان...",
+    "createTeacher": "افزودن معلم",
+    "searchPlaceholder": "جستجوی معلم...",
+    "allStatus": "همه وضعیت‌ها",
+    "allSubjects": "همهٔ درس‌ها",
+    "noTeachersFound": "هیچ معلمی پیدا نشد",
+    "confirmDelete": "آیا مطمئن هستید که می‌خواهید این معلم را حذف کنید؟",
+    "name": "نام",
+    "email": "ایمیل",
+    "subjects": "درس‌ها",
+    "classes": "کلاس‌ها",
+    "subject": "درس",
+    "errors": {
+      "loadFailed": "خطا در بارگذاری معلمان",
+      "deleteFailed": "خطا در حذف معلم"
+    }
+  },
   "addTeacher": {
     "create": "ایجاد معلم",
     "createDesc": "معلم جدید به مدرسه خود اضافه کنید",
@@ -454,14 +454,9 @@
     "noSchoolTitle": "مدرسه ای یافت نشد",
     "noSchoolDesc": "قبل از افزودن معلم، باید یک مدرسه ایجاد کنید",
     "noSchoolBtn": "ایجاد مدرسه",
-
-    "firstName": "نام",
     "firstNamePlaceholder": "نام را وارد کنید",
-    "lastName": "نام خانوادگی",
     "lastNamePlaceholder": "نام خانوادگی را وارد کنید",
-    "email": "ایمیل",
     "emailPlaceholder": "آدرس ایمیل را وارد کنید",
-    "phone": "شماره تلفن",
     "phonePlaceholder": "شماره تلفن را وارد کنید",
     "subjectSpecialization": "تخصص درس",
     "selectSpecialization": "انتخاب تخصص",
@@ -469,15 +464,76 @@
     "qualification": "مدرک تحصیلی",
     "selectQualification": "انتخاب مدرک",
     "qualificationDescription": "بالاترین مدرک تحصیلی را انتخاب کنید",
-
     "createSuccess": "معلم با موفقیت ایجاد شد",
     "createError": "ایجاد معلم با شکست مواجه شد",
     "errors": {
       "noSchool": "مدرسه ای یافت نشد. لطفا ابتدا یک مدرسه ایجاد کنید."
     }
   },
+  "addStudent": {
+    "create": "ایجاد دانش‌آموز",
+    "createDesc": "افزودن دانش‌آموز جدید به مدرسه",
+    "imgSectionTitle": "تصویر پروفایل دانش‌آموز",
+    "imgSectionDesc": "یک تصویر پروفایل برای دانش‌آموز آپلود کنید",
+    "details": "جزئیات دانش‌آموز",
+    "detailsDescription": "اطلاعات شخصی دانش‌آموز را وارد کنید",
+    "steps": {
+      "registerInfo": "اطلاعات ثبت‌نام",
+      "registerInfoDesc": "ایجاد حساب کاربری دانش‌آموز",
+      "personalInfo": "اطلاعات شخصی",
+      "personalInfoDesc": "جزئیات دانش‌آموز و اطلاعات اضطراری",
+      "parentsInfo": "اطلاعات والدین",
+      "parentsInfoDesc": "افزودن والدین یا سرپرستان"
+    },
+    "fields": {
+      "studentId": "کد دانش آموزی",
+      "idNumber": "کد ملی",
+      "birthDate": "تاریخ تولد",
+      "gradeLevel": "پایه تحصیلی",
+      "emergencyContact": "مخاطب اضطراری",
+      "emergencyPhone": "تلفن اضطراری",
+      "medicalNotes": "ملاحظات پزشکی"
+    },
+    "placeholders": {
+      "studentId": "کد دانش آموزی را وارد کنید",
+      "idNumber": "کد ملی را وارد کنید",
+      "gradeLevel": "پایه تحصیلی را انتخاب کنید",
+      "emergencyContact": "نام مخاطب اضطراری",
+      "emergencyPhone": "شماره تلفن اضطراری",
+      "medicalNotes": "شرایط پزشکی یا آلرژی ها",
+      "birthDate": "تاریخ تولد را انتخاب کنید",
+      "notes": "توضیحی اگر دارید اینجا بیاورید"
+    },
+    "parents": {
+      "addNew": "افزودن والد جدید",
+      "firstName": "نام",
+      "lastName": "نام خانوادگی",
+      "email": "ایمیل",
+      "phone": "شماره تلفن",
+      "occupation": "شغل",
+      "addParent": "افزودن والد",
+      "addedParents": "والدین اضافه شده",
+      "firstNamePlaceholder": "نام را وارد کنید",
+      "lastNamePlaceholder": "نام خانوادگی را وارد کنید",
+      "emailPlaceholder": "آدرس ایمیل را وارد کنید",
+      "phonePlaceholder": "شماره تلفن را وارد کنید",
+      "occupationPlaceholder": "شغل را وارد کنید",
+      "completeRegistration": "تکمیل ثبت نام",
+      "notes": "توضیحات"
+    }
+  },
   "students": {
-    "createStudent": "ایجاد دانش‌آموز"
+    "title": "دانش آموزان",
+    "subtitle": "مدیریت {count} دانش آموز",
+    "searchPlaceholder": "جستجو بر اساس نام، شماره دانش آموزی یا ایمیل...",
+    "gradeLevel": "پایه تحصیلی",
+    "class": "کلاس",
+    "noStudents": "دانش آموزی یافت نشد",
+    "noStudentsDescription": "سعی کنید جستجو یا فیلترهای خود را تغییر دهید.",
+    "students": "دانش آموز",
+    "yearsOld": "ساله",
+    "emergencyContact": "مخاطب اضطراری",
+    "medicalNotes": "یادداشت‌های پزشکی"
   },
   "schedule": {
     "title": "برنامه کلاسی",

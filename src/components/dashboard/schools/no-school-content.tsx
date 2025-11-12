@@ -25,12 +25,12 @@ export default function NoSchoolContent() {
         </div>
 
         {/* Warning Card */}
-        <Card className="border-yellow-200 bg-yellow-50">
+        <Card className="border-yellow-200 bg-yellow-50 dark:bg-yellow-900/10">
           <CardContent className="pt-6">
             <div className="flex items-start gap-4">
               <AlertTriangle className="h-6 w-6 text-yellow-600 mt-0.5" />
               <div className="flex-1">
-                <h3 className="font-semibold text-yellow-800 mb-2">
+                <h3 className="font-semibold text-yellow-600 mb-2">
                   {t("users.noSchoolWarningTitle")}
                 </h3>
                 <p className="text-yellow-700 mb-4">

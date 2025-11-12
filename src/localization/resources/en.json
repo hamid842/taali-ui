@@ -27,7 +27,20 @@
     "yes": "Yes",
     "no": "No",
     "confirm": "Confirm",
-    "view": "View"
+    "view": "View",
+    "password": "Password",
+    "goHome": "Go Home",
+    "goBack": "Go Back",
+    "createAccount": "Create Account",
+    "step": "Step",
+    "of": "of",
+    "continue": "Continue",
+    "all": "All",
+    "clear": "Clear Filters",
+    "refresh": "Refresh",
+    "showing": "Showing",
+    "previous": "Previous",
+    "next": "Next"
   },
   "nav": {
     "logoTitle": "Taali",
@@ -59,7 +72,6 @@
     "cta": {
       "title": "Ready to Transform Your School?",
       "description": "Join thousands of schools using our platform to streamline their operations and enhance learning experiences.",
-      "primary": "Create Account",
       "secondary": "Contact Sales"
     },
     "footer": {
@@ -79,20 +91,12 @@
     "financeTeam": "Finance Team"
   },
   "login": {
-    "title": "Login",
     "subtitle": "Enter your credentials to access your account",
-    "form": {
-      "email": "Email",
-      "password": "Password"
-    },
     "loggingIn": "Logging in...",
-    "login": "Login",
     "account": "Don't have account?"
   },
   "register": {
-    "title": "Create Account",
     "subtitle": "Please enter your information to create an account",
-    "createAccount": "Create Account",
     "creatingAccount": "Creating Account...",
     "haveAccount": "Already have an account?",
     "signIn": "Sign in here",
@@ -192,8 +196,6 @@
     "title": "Page Not Found",
     "oops": "Oops! Page not found",
     "message": "The page you're looking for doesn't exist or has been moved. Let's get you back on track.",
-    "goHome": "Go Home",
-    "goBack": "Go Back",
     "contactSupport": "Contact Support",
     "needHelp": "Need help?",
     "visitHelpCenter": "Visit our help center"
@@ -202,7 +204,6 @@
     "title": "Access Denied",
     "message": "You don't have permission to access this page. Please contact your administrator if you believe this is an error.",
     "loggedInAs": "Logged in as",
-    "goHome": "Go Home",
     "signInDifferent": "Sign In with Different Account"
   },
   "breadcrumbs": {
@@ -253,7 +254,6 @@
     "code": "School Code",
     "image": "School Image",
     "address": "Address",
-    "email": "Email",
     "phone": "Phone",
     "submit": "Create School",
     "cancel": "Cancel",
@@ -428,7 +428,6 @@
     "noTeachersFound": "No teachers found",
     "confirmDelete": "Are you sure you want to delete this teacher?",
     "name": "Name",
-    "email": "Email",
     "subjects": "Subjects",
     "classes": "Classes",
     "subject": "Subject",
@@ -453,14 +452,9 @@
     "noSchoolTitle": "No School Found",
     "noSchoolDesc": "You need to create a school before you can add teachers",
     "noSchoolBtn": "Create School",
-
-    "firstName": "First Name",
     "firstNamePlaceholder": "Enter first name",
-    "lastName": "Last Name",
     "lastNamePlaceholder": "Enter last name",
-    "email": "Email",
     "emailPlaceholder": "Enter email address",
-    "phone": "Phone Number",
     "phonePlaceholder": "Enter phone number",
     "subjectSpecialization": "Subject Specialization",
     "selectSpecialization": "Select specialization",
@@ -468,15 +462,75 @@
     "qualification": "Qualification",
     "selectQualification": "Select qualification",
     "qualificationDescription": "Select the highest educational qualification",
-
     "createSuccess": "Teacher created successfully",
     "createError": "Failed to create teacher",
     "errors": {
       "noSchool": "No school found. Please create a school first."
     }
   },
+  "addStudent": {
+    "create": "Create Student",
+    "createDesc": "Add a new student to your school",
+    "imgSectionTitle": "Student Profile Image",
+    "imgSectionDesc": "Upload a profile picture for the student",
+    "details": "Student Details",
+    "detailsDescription": "Enter the students's personal information",
+    "steps": {
+      "registerInfo": "Register Information",
+      "registerInfoDesc": "Create student account",
+      "personalInfo": "Personal Information",
+      "personalInfoDesc": "Student details and emergency info",
+      "parentsInfo": "Parents Information",
+      "parentsInfoDesc": "Add parents or guardians"
+    },
+    "fields": {
+      "studentId": "Student ID",
+      "idNumber": "ID Number",
+      "birthDate": "Birth Date",
+      "gradeLevel": "Grade Level",
+      "emergencyContact": "Emergency Contact",
+      "emergencyPhone": "Emergency Phone",
+      "medicalNotes": "Medical Notes"
+    },
+    "placeholders": {
+      "studentId": "Enter student ID",
+      "idNumber": "Enter national ID number",
+      "gradeLevel": "Select grade level",
+      "emergencyContact": "Emergency contact name",
+      "emergencyPhone": "Emergency phone number",
+      "medicalNotes": "Any medical conditions or allergies",
+      "notes": "Any note could be added here"
+    },
+    "parents": {
+      "addNew": "Add New Parent",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "occupation": "Occupation",
+      "addParent": "Add Parent",
+      "addedParents": "Added Parents",
+      "firstNamePlaceholder": "Enter first name",
+      "lastNamePlaceholder": "Enter last name",
+      "emailPlaceholder": "Enter email address",
+      "phonePlaceholder": "Enter phone number",
+      "occupationPlaceholder": "Enter occupation",
+      "completeRegistration": "Complete Registration",
+      "notes": "Notes"
+    }
+  },
   "students": {
-    "createStudent": "Create Student"
+    "title": "Students",
+    "subtitle": "Managing {count} students",
+    "searchPlaceholder": "Search by name, ID, or email...",
+    "gradeLevel": "Grade Level",
+    "class": "Class",
+    "noStudents": "No students found",
+    "noStudentsDescription": "Try adjusting your search or filters to find what you're looking for.",
+    "students": "students",
+    "yearsOld": "years old",
+    "emergencyContact": "Emergency Contact",
+    "medicalNotes": "Medical Notes"
   },
   "schedule": {
     "title": "Class Schedule",

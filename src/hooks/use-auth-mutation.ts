@@ -12,6 +12,7 @@ export const useLoginMutation = () => {
     onSuccess: (data) => {
       if (data.userId && data.token) {
         const userData: User = {
+          id: data.id,
           userId: data.userId!,
           firstName: data.firstName!,
           lastName: data.lastName!,

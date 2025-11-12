@@ -7,7 +7,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useLanguage } from "@/hooks/use-language";
-import { toast } from "sonner";
 import { OtpVerification } from "@/components/auth/otp-verification";
 import { UserPlus } from "lucide-react";
 import { type UserRoleType } from "@/types/role";
@@ -35,10 +34,6 @@ export default function Register() {
     role: UserRoleType;
     userId: string;
   }) => {
-    toast.success(t("toast.registerSuccess"), {
-      description: t("toast.redirectingDashboard"),
-    });
-
     setTimeout(() => {
       redirectToDashboard(userData.role);
     }, 2000);
@@ -79,12 +74,13 @@ export default function Register() {
           <CardHeader className="space-y-1">
             <UserPlus size={"70px"} className="m-auto" />
             <CardTitle className="text-2xl font-bold">
-              {t("register.title")}
+              {t("common.createAccount")}
             </CardTitle>
             <CardDescription>{t("register.subtitle")}</CardDescription>
           </CardHeader>
           <CardContent>
             <RegisterUserForm
+              rootPage
               registerForRole="OWNER"
               setStep={setStep}
               setUserId={setUserId}

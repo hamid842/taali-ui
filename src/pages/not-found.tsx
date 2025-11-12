@@ -22,7 +22,7 @@ export default function NotFound() {
             </div>
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-6xl font-bold text-primary bg-white/80 dark:bg-gray-800/80 px-6 py-3 rounded-2xl shadow-lg border">
-                {t("notFound.title") || "Page Not Found"}
+                {t("notFound.title")}
               </div>
             </div>
           </div>
@@ -59,14 +59,14 @@ export default function NotFound() {
             <Button asChild size="lg" className="gap-2">
               <Link to="/">
                 <Home className="h-4 w-4" />
-                {t("notFound.goHome") || "Go Home"}
+                {t("common.goHome")}
               </Link>
             </Button>
 
             <Button asChild variant="outline" size="lg" className="gap-2">
               <Link to={isRTL ? "/contact" : "/contact"}>
                 <Mail className="h-4 w-4" />
-                {t("notFound.contactSupport") || "Contact Support"}
+                {t("notFound.contactSupport")}
               </Link>
             </Button>
 
@@ -77,7 +77,7 @@ export default function NotFound() {
               onClick={() => window.history.back()}
             >
               <ArrowLeft className={isRTL ? "rotate-180 h-4 w-4" : "h-4 w-4"} />
-              {t("notFound.goBack") || "Go Back"}
+              {t("common.goBack")}
             </Button>
           </div>
 

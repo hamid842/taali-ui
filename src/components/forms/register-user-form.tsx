@@ -10,31 +10,35 @@ import { Button } from "../ui/button";
 import { ENGLISH_REGEX, FARSI_REGEX } from "@/constants";
 import { useLanguage } from "@/hooks/use-language";
 import { toast } from "sonner";
-import type { RegisterRequest } from "@/types/auth";
+import type { RegisterRequest, RegisterResponse } from "@/types/auth";
 import { useRegisterMutation } from "@/hooks/use-auth-mutation";
-import { useNavigate } from "react-router-dom";
 import { SchoolSelect } from "./school-select";
 import { useAppStore } from "@/stores/app-store";
 
 interface RegisterUserFormProps {
+  rootPage?: boolean;
   registerForRole: UserRoleType;
   setStep?: (value: SetStateAction<"register" | "verify">) => void;
   setUserId?: Dispatch<SetStateAction<string>>;
   setUserContact?: (contact: { email: string; phoneNumber: string }) => void;
   redirectPath?: string;
   profileImage?: string | null;
+  onSuccess?: (userData: RegisterResponse) => void;
+  showRedirect?: boolean;
 }
 
 export default function RegisterUserForm({
+  rootPage = false,
   registerForRole,
   setStep,
   setUserId,
   setUserContact,
   redirectPath,
   profileImage,
+  onSuccess,
+  showRedirect = true, 
 }: RegisterUserFormProps) {
   const { t, language } = useLanguage();
-  const navigate = useNavigate();
   const { currentSchool } = useAppStore();
   const registerMutation = useRegisterMutation();
 
@@ -57,7 +61,7 @@ export default function RegisterUserForm({
         .max(50, t("validation.lastName.max"))
         .regex(nameRegex, t("validation.lastName.regex")),
       phoneNumber: z.string().min(5, t("validation.phone.min")),
-      email: z.email(t("validation.email.format")),
+      email: z.string().email(t("validation.email.format")),
       role: z.enum([
         UserRole.OWNER,
         UserRole.ADMIN,
@@ -119,7 +123,16 @@ export default function RegisterUserForm({
           });
           setStep?.("verify");
         } else {
-          if (redirectPath) navigate(redirectPath);
+          // Call onSuccess callback for stepper flow
+          if (onSuccess) {
+            onSuccess(result);
+          }
+
+          // Only redirect if showRedirect is true (for standalone usage)
+          if (showRedirect && redirectPath) {
+            // You might want to use navigate here if needed
+            window.location.href = redirectPath;
+          }
         }
 
         if (registerForRole === UserRole.OWNER) {
@@ -137,7 +150,11 @@ export default function RegisterUserForm({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form
+      id="register-user-form"
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4"
+    >
       <div className="grid gap-4 grid-cols-2">
         <AppTextField
           label={t("register.form.firstName")}
@@ -168,6 +185,7 @@ export default function RegisterUserForm({
         required
         {...register("email")}
       />
+
       <div className="grid gap-4 grid-cols-2">
         <AppTextField
           type="password"
@@ -186,8 +204,10 @@ export default function RegisterUserForm({
           {...register("confirmPassword")}
         />
       </div>
+
       {passwordValue && <PasswordStrength password={passwordValue} />}
-      {registerForRole === UserRole.OWNER && (
+
+      {registerForRole === UserRole.OWNER && !rootPage && (
         <SchoolSelect
           required
           value={watch("schoolId") || ""}
@@ -195,11 +215,15 @@ export default function RegisterUserForm({
           label={t("register.form.selectSchool")}
         />
       )}
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
-        {isSubmitting
-          ? t("register.creatingAccount")
-          : t("register.createAccount")}
-      </Button>
+
+      {/* Remove the button if we're in stepper mode and let the parent handle it */}
+      {!onSuccess && (
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting
+            ? t("register.creatingAccount")
+            : t("common.createAccount")}
+        </Button>
+      )}
     </form>
   );
 }

@@ -1,3 +1,4 @@
+import type { Pagination } from "./pagination";
 import type { UserRoleType } from "./role";
 
 // types/user.ts
@@ -24,14 +25,7 @@ export interface IUser {
 
 export interface UserListResponse {
   items: IUser[];
-  pagination: {
-    page: number;
-    size: number;
-    totalElements: number;
-    totalPages: number;
-    hasNext: boolean;
-    hasPrevious: boolean;
-  };
+  pagination: Pagination;
 }
 
 export interface CreateUserRequest {

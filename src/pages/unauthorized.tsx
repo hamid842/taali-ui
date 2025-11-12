@@ -45,7 +45,7 @@ export default function Unauthorized() {
             <Button asChild size="lg" className="gap-2">
               <Link to="/">
                 <Home className="h-4 w-4" />
-                {t("unauthorized.goHome") || "Go Home"}
+                {t("common.goHome")}
               </Link>
             </Button>
 

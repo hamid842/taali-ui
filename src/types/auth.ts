@@ -55,6 +55,7 @@ export interface LoginResponse {
   message: string;
   token?: string;
   refreshToken?: string;
+  id: number;
   userId?: string;
   email?: string;
   firstName?: string;
@@ -69,6 +70,7 @@ export interface RegisterResponse {
   success: boolean;
   message: string;
   userId?: string;
+  studentId?: string;
   email?: string;
   otpCode?: string;
   requiresVerification?: boolean;

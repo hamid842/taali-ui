@@ -18,9 +18,9 @@ import EmptyData from "@/components/common/empty-data";
 import UsersListSkeleton from "@/components/skeleton/owner/users/users-list-skeleton";
 import { useNavigate } from "react-router-dom";
 import { useAppStore } from "@/stores/app-store";
-import NoSchoolContent from "@/components/owner/users-list/no-school-content";
+import NoSchoolContent from "@/components/dashboard/schools/no-school-content";
 import DisplayError from "@/components/common/display-error";
-import UserItem from "@/components/owner/users-list/user-item";
+import UserItem from "@/components/dashboard/users/user-item";
 
 export default function Users() {
   const { t } = useLanguage();
