@@ -29,7 +29,7 @@ export default function StatCard({
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">{value}</div>
-        <div className="flex items-center text-xs text-muted-foreground">
+        <div className="flex gap-2 items-center text-xs text-muted-foreground">
           <span>{description}</span>
           {trend && (
             <Badge

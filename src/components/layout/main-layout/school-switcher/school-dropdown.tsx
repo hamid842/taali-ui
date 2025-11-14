@@ -85,7 +85,7 @@ export default function SchoolDropdown({ schools }: { schools: ISchool[] }) {
             dir={dir}
           >
             <span className="truncate font-medium">
-              {activeSchool?.name || t("dashboard.schoolSwitcher.selectSchool")}
+              {activeSchool?.name || t("owner.dashboard.schoolSwitcher.selectSchool")}
             </span>
             <span className="truncate text-xs">{activeSchool?.code || ""}</span>
           </div>
@@ -99,7 +99,7 @@ export default function SchoolDropdown({ schools }: { schools: ISchool[] }) {
         sideOffset={4}
       >
         <DropdownMenuLabel dir={dir} className="text-muted-foreground text-xs">
-          {t("dashboard.schoolSwitcher.title") || "Your Schools"}
+          {t("owner.dashboard.schoolSwitcher.title") || "Your Schools"}
         </DropdownMenuLabel>
         {schools.map((school, index) => {
           const SchoolLogo = getLogoComponent();

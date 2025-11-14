@@ -38,7 +38,7 @@ export default function SchoolSwitcher() {
           <SidebarMenuButton size="lg" className="text-destructive" disabled>
             <Building className="h-4 w-4" />
             <span className="text-xs">
-              {t("dashboard.schoolSwitcher.failed")}
+              {t("owner.dashboard.schoolSwitcher.failed")}
             </span>
           </SidebarMenuButton>
         </SidebarMenuItem>

@@ -28,10 +28,10 @@ export default function EmptySchools() {
             )}
           >
             <span className="truncate font-medium">
-              {t("dashboard.schoolSwitcher.emptyTitle")}
+              {t("owner.dashboard.schoolSwitcher.emptyTitle")}
             </span>
             <span className="truncate text-xs">
-              {t("dashboard.schoolSwitcher.emptyDesc")}
+              {t("owner.dashboard.schoolSwitcher.emptyDesc")}
             </span>
           </div>
         </SidebarMenuButton>
