@@ -21,7 +21,7 @@ export const apiConfig = {
       login: `${API_BASE_URL}/auth/login`,
     },
     menu: {
-      getUserMenu: `${API_BASE_URL}/menu/user`,
+      getUserMenu:`${API_BASE_URL}/menu/user`,
     },
     schools: {
       getMySchools: `${API_BASE_URL}/schools/my-schools`,

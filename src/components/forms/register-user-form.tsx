@@ -207,14 +207,14 @@ export default function RegisterUserForm({
 
       {passwordValue && <PasswordStrength password={passwordValue} />}
 
-      {registerForRole === UserRole.OWNER && !rootPage && (
-        <SchoolSelect
-          required
-          value={watch("schoolId") || ""}
-          onChange={(id) => setValue("schoolId", id)}
-          label={t("register.form.selectSchool")}
-        />
-      )}
+      {registerForRole === UserRole.OWNER || registerForRole === UserRole.ADMIN && !rootPage && (
+          <SchoolSelect
+            required
+            value={watch("schoolId") || ""}
+            onChange={(id) => setValue("schoolId", id)}
+            label={t("register.form.selectSchool")}
+          />
+        )}
 
       {/* Remove the button if we're in stepper mode and let the parent handle it */}
       {!onSuccess && (

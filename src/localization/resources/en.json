@@ -40,7 +40,10 @@
     "refresh": "Refresh",
     "showing": "Showing",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "setup": "Setup",
+    "archived": "Archived",
+    "backToOwnerPanel": "Back to Owner Panel"
   },
   "nav": {
     "logoTitle": "Taali",
@@ -311,7 +314,8 @@
       "active": "Active",
       "setup": "Setup",
       "archived": "Archived"
-    }
+    },
+    "since": "Since"
   },
   "addSchoolAdmin": {
     "create": "Add School Admin",

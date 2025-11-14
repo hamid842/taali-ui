@@ -40,7 +40,10 @@
     "refresh": "بروزرسانی",
     "showing": "نمایش",
     "previous": "قبلی",
-    "next": "بعدی"
+    "next": "بعدی",
+    "setup": "در حال راه‌اندازی",
+    "archived": "آرشیو شده",
+    "backToOwnerPanel": "بازگشت به پنل مالک"
   },
   "nav": {
     "logoTitle": "تعــالی",
@@ -314,7 +317,8 @@
       "active": "فعال",
       "setup": "در حال راه‌اندازی",
       "archived": "آرشیو شده"
-    }
+    },
+    "since": "از سال"
   },
   "addSchoolAdmin": {
     "create": "اضافه کردن مدیر مدرسه",

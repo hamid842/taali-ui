@@ -1,22 +1,25 @@
+import { useLanguage } from "@/hooks/use-language";
+import { formatGregorian, formatJalali } from "@/lib/date-utils";
 import { useMemo } from "react";
 
-interface LocalizedDateProps {
-  locale: string; // e.g. "en" or "fa"
-}
+export default function LocalizedDate() {
+  const { language } = useLanguage();
 
-export default function LocalizedDate({ locale }: LocalizedDateProps) {
   const today = useMemo(() => {
-    const date = new Date();
-    const formatter = new Intl.DateTimeFormat(
-      locale === "fa" ? "fa-IR" : "en-GB",
-      {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      }
-    );
-    return formatter.format(date);
-  }, [locale]);
+    const now = new Date();
 
-  return <span className="hidden md:block text-sm text-muted-foreground">{today}</span>;
+    if (language === "fa") {
+      // Jalali format → example: "23 آبان 1404"
+      return formatJalali(now, "DD MMMM YYYY");
+    }
+
+    // Gregorian format → example: "14 November 2025"
+    return formatGregorian(now, "DD MMMM YYYY");
+  }, [language]);
+
+  return (
+    <span className="hidden md:block text-sm text-muted-foreground">
+      {today}
+    </span>
+  );
 }

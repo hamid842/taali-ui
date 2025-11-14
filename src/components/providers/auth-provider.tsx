@@ -19,9 +19,17 @@ const rolePermissions = {
 
 // Menu API (keep this since it's state-related)
 const menuApi = {
-  fetchUserMenu: async (role: string): Promise<MenuItemDto[]> => {
+  fetchUserMenu: async (
+    role: string,
+    schoolId?: number
+  ): Promise<MenuItemDto[]> => {
+    const params = new URLSearchParams({ role });
+    if (schoolId) {
+      params.append("schoolId", schoolId.toString());
+    }
+
     return apiClient.get<MenuItemDto[]>(
-      `${apiConfig.endpoints.menu.getUserMenu}?role=${role}`
+      `${apiConfig.endpoints.menu.getUserMenu}?${params}`
     );
   },
 };
@@ -29,6 +37,9 @@ const menuApi = {
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [currentRoleContext, setCurrentRoleContext] = useState<string | null>(
+    null
+  );
   const queryClient = useQueryClient();
 
   const logout = useCallback(() => {
@@ -60,8 +71,9 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
           // Prefetch menu when user is authenticated
           if (parsedUser.role) {
             queryClient.prefetchQuery({
-              queryKey: ["menu", parsedUser.role],
-              queryFn: () => menuApi.fetchUserMenu(parsedUser.role),
+              queryKey: ["menu", parsedUser.role, parsedUser.schoolId],
+              queryFn: () =>
+                menuApi.fetchUserMenu(parsedUser.role, parsedUser.schoolId),
             });
           }
         } catch (parseError) {
@@ -85,9 +97,12 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   // React Query for menu (state-related, so it stays)
   const menuQuery = useQuery({
-    queryKey: ["menu", user?.role],
-    queryFn: () => (user?.role ? menuApi.fetchUserMenu(user.role) : []),
-    enabled: !!user?.role,
+    queryKey: ["menu", currentRoleContext || user?.role, user?.schoolId],
+    queryFn: () => {
+      const roleToUse = currentRoleContext || user?.role;
+      return roleToUse ? menuApi.fetchUserMenu(roleToUse, user?.schoolId) : [];
+    },
+    enabled: !!(currentRoleContext || user?.role),
     staleTime: 5 * 60 * 1000,
   });
 
@@ -129,12 +144,45 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   // Function to manually refetch menu (e.g., when language changes)
   const refetchMenu = async () => {
     if (user?.role) {
-      await queryClient.invalidateQueries({ queryKey: ["menu", user.role] });
+      await queryClient.invalidateQueries({
+        queryKey: ["menu", user.role, user.schoolId],
+      });
     }
   };
 
+  // Update the updateSchoolContext function to handle role switching
+  const updateSchoolContext = useCallback(
+    (schoolId: number, roleContext?: string) => {
+      if (user) {
+        const updatedUser = { ...user, schoolId };
+        setUser(updatedUser);
+        localStorage.setItem("user_data", JSON.stringify(updatedUser));
+
+        // If roleContext is provided, switch the role context
+        if (roleContext) {
+          setCurrentRoleContext(roleContext);
+        }
+
+        // Refetch menu with new context
+        queryClient.invalidateQueries({
+          queryKey: ["menu", roleContext || user.role, schoolId],
+        });
+      }
+    },
+    [user, queryClient]
+  );
+
+  // Add function to reset role context (when going back to owner dashboard)
+  const resetRoleContext = useCallback(() => {
+    setCurrentRoleContext(null);
+    queryClient.invalidateQueries({
+      queryKey: ["menu", user?.role, user?.schoolId],
+    });
+  }, [user, queryClient]);
+
   const value: AuthContextType = {
     user,
+    currentRoleContext: currentRoleContext || user?.role,
     isLoading: menuQuery.isLoading, // Only menu loading now
     isAuthenticated: !!user,
     isInitialized,
@@ -145,7 +193,9 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     logout,
     updateUser,
     checkPermission,
-    refetchMenu, // Expose the refetch function
+    refetchMenu,
+    updateSchoolContext,
+    resetRoleContext,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useLanguage } from "@/hooks/use-language";
+import { formatGregorian, formatJalali } from "@/lib/date-utils";
 import type { ISchool } from "@/types/school";
 import {
   BookOpen,
@@ -39,7 +40,18 @@ export default function SchoolCard({
   onView,
   onEdit,
 }: SchoolCardProps) {
-  const { t } = useLanguage();
+  const { t, dir, language } = useLanguage();
+
+  const formatSinceDate = (date: string | Date) => {
+    if (language === "fa") {
+      // For Farsi, use Jalali calendar with year only
+      return formatJalali(date, "YYYY");
+    } else {
+      // For English and other languages, use Gregorian calendar with year only
+      return formatGregorian(date, "YYYY");
+    }
+  };
+
   const getStatusVariant = (status: string) => {
     switch (status) {
       case "active":
@@ -50,6 +62,19 @@ export default function SchoolCard({
         return "outline";
       default:
         return "default";
+    }
+  };
+
+  const getTranslatedStatus = (status: string) => {
+    switch (status) {
+      case "ACTIVE":
+        return t("schoolsPage.status.active");
+      case "SETUP":
+        return t("schoolsPage.status.setup");
+      case "ARCHIVED":
+        return t("schoolsPage.status.archived");
+      default:
+        return status;
     }
   };
 
@@ -107,38 +132,38 @@ export default function SchoolCard({
               </CardDescription>
             </div>
           </div>
-          <DropdownMenu>
+          <DropdownMenu dir={dir}>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                className="h-8 w-8 p-0 group-hover:opacity-100 transition-opacity"
               >
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align={dir === "rtl" ? "start" : "end"}>
               <DropdownMenuItem onClick={() => onView(school.id)}>
                 <Eye className="h-4 w-4 mr-2" />
-                View Details
+                {t("schoolsPage.actions.viewDetails")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => onEdit(school.id)}>
                 <Edit className="h-4 w-4 mr-2" />
-                Edit School
+                {t("schoolsPage.actions.editSchool")}
               </DropdownMenuItem>
               <DropdownMenuItem className="text-destructive">
                 <Trash2 className="h-4 w-4 mr-2" />
-                Delete School
+                {t("schoolsPage.actions.deleteSchool")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
         <div className="flex justify-between items-center mt-2">
           <Badge variant={getStatusVariant(school.status)}>
-            {school.status?.charAt(0).toUpperCase() + school.status?.slice(1)}
+            {getTranslatedStatus(school.status)}
           </Badge>
           <span className="text-xs text-muted-foreground">
-            Since {new Date(school.createdAt).getFullYear()}
+            {t("schoolsPage.since")} {formatSinceDate(school.createdAt)}
           </span>
         </div>
       </CardHeader>
@@ -178,7 +203,7 @@ export default function SchoolCard({
             onClick={() => onView(school.id)}
           >
             <Eye className="h-4 w-4 mr-1" />
-            Dashboard
+            {t("schoolsPage.actions.dashboard")}
           </Button>
           <Button variant="ghost" size="sm" onClick={() => onEdit(school.id)}>
             <Settings className="h-4 w-4" />

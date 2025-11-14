@@ -58,11 +58,86 @@ export const dashboardRoutes = [
       },
     ],
   },
+  // School-specific Admin Routes (with school context)
+  {
+    path: "/school/:schoolId/admin",
+    element: (
+      <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.OWNER]}>
+        <MainLayout /> 
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <AdminDashboard />,
+      },
+      {
+        path: "/school/:schoolId/admin/dashboard",
+        element: <AdminDashboard />,
+      },
+      {
+        path: "/school/:schoolId/admin/users",
+        element: <AdminUsers />,
+      },
+      {
+        path: "/school/:schoolId/admin/users/create",
+        element: <CreateAdminUser />,
+      },
+      {
+        path: "/school/:schoolId/admin/teachers",
+        element: <Teachers />,
+      },
+      {
+        path: "/school/:schoolId/admin/teachers/create",
+        element: <CreateTeacher />,
+      },
+      {
+        path: "/school/:schoolId/admin/classes",
+        element: <Classes />,
+      },
+      {
+        path: "/school/:schoolId/admin/classes/create",
+        element: <CreateClass />,
+      },
+      {
+        path: "/school/:schoolId/admin/classes/:classId/schedule",
+        element: <ClassSchedule />,
+      },
+      {
+        path: "/school/:schoolId/admin/students",
+        element: <Students />,
+      },
+      {
+        path: "/school/:schoolId/admin/students/create",
+        element: <CreateStudent />,
+      },
+      {
+        path: "/school/:schoolId/admin/parents",
+        element: <Parents />,
+      },
+      {
+        path: "/school/:schoolId/admin/parents/create",
+        element: <CreateParent />,
+      },
+      {
+        path: "/school/:schoolId/admin/finance/tuition",
+        element: <Tuition />,
+      },
+      {
+        path: "/school/:schoolId/admin/finance/invoice",
+        element: <Invoice />,
+      },
+      {
+        path: "/school/:schoolId/admin/finance/reports",
+        element: <Reports />,
+      },
+    ],
+  },
   // Admin Routes
   {
     path: "/admin",
     element: (
-      <ProtectedRoute allowedRoles={[UserRole.ADMIN]}>
+      <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.OWNER]}>
         <MainLayout />
       </ProtectedRoute>
     ),

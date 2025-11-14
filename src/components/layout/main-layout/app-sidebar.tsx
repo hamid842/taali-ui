@@ -1,6 +1,7 @@
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
@@ -11,17 +12,28 @@ import {
 import { useLanguage } from "@/hooks/use-language";
 import SchoolSwitcher from "./school-switcher/school-switcher";
 import { useAuth } from "@/hooks/use-auth";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SidebarSkeleton from "@/components/skeleton/layout/sidebar-skeleton";
 import type { MenuItemDto } from "@/types/menu";
 import { useEffect, useState } from "react";
 import CollapsibleMenuItem from "./collapsible-menu-item";
 import { useAppStore } from "@/stores/app-store";
 import SchoolTitle from "@/components/common/school-title";
+import { Button } from "@/components/ui/button";
+import { LayoutDashboard } from "lucide-react";
+import { UserRole } from "@/types/role";
+import { cn } from "@/lib/utils";
 
 export default function AppSidebar() {
-  const { dir } = useLanguage();
-  const { menuItems, isMenuLoading } = useAuth();
+  const { t, dir } = useLanguage();
+  const navigate = useNavigate();
+  const {
+    menuItems,
+    isMenuLoading,
+    user,
+    currentRoleContext,
+    resetRoleContext,
+  } = useAuth();
   const location = useLocation();
   const { role, currentSchool } = useAppStore();
   const [expandedItem, setExpandedItem] = useState<number | null>(null);
@@ -91,6 +103,16 @@ export default function AppSidebar() {
     });
   };
 
+  // Check if we should show the "Back to Owner Panel" button
+  const shouldShowOwnerSwitch =
+    user?.role === UserRole.OWNER && currentRoleContext === UserRole.ADMIN;
+
+  // Handle switching back to owner context
+  const handleBackToOwnerPanel = () => {
+    resetRoleContext();
+    navigate("/owner/dashboard");
+  };
+
   // Show skeleton while loading
   if (isMenuLoading) {
     return <SidebarSkeleton />;
@@ -134,6 +156,31 @@ export default function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      {/* Add Footer with Back to Owner Panel button */}
+      {shouldShowOwnerSwitch && (
+        <SidebarFooter>
+          <div className="border-t">
+            <Button
+              variant="ghost"
+              className={cn(
+                "w-full mt-2 justify-start gap-2 h-auto py-2 px-3 text-sm transition-all",
+                state === "collapsed" && "px-2"
+              )}
+              onClick={handleBackToOwnerPanel}
+            >
+              <LayoutDashboard className="size-4 shrink-0" />
+              <span
+                className={cn(
+                  "flex-1 transition-opacity duration-200",
+                  state === "collapsed" ? "opacity-0 w-0" : "opacity-100"
+                )}
+              >
+                {t("common.backToOwnerPanel")}
+              </span>
+            </Button>
+          </div>
+        </SidebarFooter>
+      )}
     </Sidebar>
   );
 }

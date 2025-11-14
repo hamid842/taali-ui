@@ -14,6 +14,7 @@ export interface User {
 
 export interface AuthContextType {
   // State only
+  currentRoleContext?: string,
   user: User | null;
   isLoading: boolean;
   isInitialized: boolean;
@@ -28,6 +29,8 @@ export interface AuthContextType {
   updateUser: (userData: Partial<User>) => void;
   checkPermission: (permission: string) => boolean;
   refetchMenu: () => Promise<unknown>;
+  updateSchoolContext: (schoolId: number,role?:UserRoleType) => void;
+  resetRoleContext: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);

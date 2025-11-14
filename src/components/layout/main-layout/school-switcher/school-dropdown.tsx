@@ -15,11 +15,16 @@ import { useLanguage } from "@/hooks/use-language";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import type { ISchool } from "@/types/school";
+import { useAuth } from "@/hooks/use-auth";
+import { UserRole, type UserRoleType } from "@/types/role";
+import { useRoleRedirect } from "@/hooks/use-role-redirect";
 
 export default function SchoolDropdown({ schools }: { schools: ISchool[] }) {
   const { t, dir } = useLanguage();
   const { isMobile } = useSidebar();
   const navigate = useNavigate();
+  const { user, updateSchoolContext } = useAuth();
+  const { redirectToDashboard } = useRoleRedirect();
 
   const [activeSchool, setActiveSchool] = useState<ISchool | null>(null);
 
@@ -32,6 +37,31 @@ export default function SchoolDropdown({ schools }: { schools: ISchool[] }) {
 
   // Get the active school's logo component
   const ActiveLogo = activeSchool ? getLogoComponent() : School;
+
+  const handleSchoolSelect = (school: ISchool) => {
+    setActiveSchool(school);
+
+    // For OWNER, switch to ADMIN role context when selecting a school
+    if (user?.role === UserRole.OWNER) {
+      // Update school context AND switch to ADMIN role for menu purposes
+      if (updateSchoolContext) {
+        updateSchoolContext(school.id, UserRole.ADMIN);
+      }
+      navigate(`/school/${school.id}/admin/dashboard`);
+    } else if (user?.role === UserRole.ADMIN) {
+      // Regular admin just updates school context
+      if (updateSchoolContext) {
+        updateSchoolContext(school.id);
+      }
+      navigate(`/school/${school.id}/admin/dashboard`);
+    } else {
+      // Other roles
+      if (updateSchoolContext) {
+        updateSchoolContext(school.id);
+      }
+      redirectToDashboard(user?.role as UserRoleType);
+    }
+  };
 
   return (
     <DropdownMenu>
@@ -76,7 +106,7 @@ export default function SchoolDropdown({ schools }: { schools: ISchool[] }) {
           return (
             <DropdownMenuItem
               key={school.id}
-              onClick={() => setActiveSchool(school)}
+              onClick={() => handleSchoolSelect(school)}
               className="gap-4 p-2"
               dir={dir}
             >

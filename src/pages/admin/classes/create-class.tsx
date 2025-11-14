@@ -69,7 +69,7 @@ const CreateClassPage: FC = () => {
       if (!user?.schoolId) return;
       setStudentsLoading(true);
       const data = await studentApi.getBySchool(user.schoolId);
-      setStudents(data);
+      setStudents(data.items);
     } catch (error) {
       console.error("Error loading students:", error);
     } finally {
@@ -207,7 +207,7 @@ const CreateClassPage: FC = () => {
                     handleInputChange("gradeLevel", value)
                   }
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder={t("classes.selectGradeLevel")} />
                   </SelectTrigger>
                   <SelectContent>
@@ -230,7 +230,7 @@ const CreateClassPage: FC = () => {
                     handleInputChange("academicYear", value)
                   }
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -266,7 +266,7 @@ const CreateClassPage: FC = () => {
                 ) : teachers.length === 0 ? (
                   <div className="space-y-2">
                     <Select disabled>
-                      <SelectTrigger>
+                      <SelectTrigger className="w-full">
                         <SelectValue
                           placeholder={t("classes.noTeachersAvailable")}
                         />
@@ -289,7 +289,7 @@ const CreateClassPage: FC = () => {
                       handleInputChange("mainTeacherId", parseInt(value))
                     }
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue
                         placeholder={t("classes.selectMainTeacher")}
                       />
@@ -337,39 +337,42 @@ const CreateClassPage: FC = () => {
                     <Link to="/admin/students/create">
                       <Button variant="outline" size="sm">
                         <Plus className="w-4 h-4 mr-2" />
-                        {t("students.createStudent")}
+                        {t("addStudent.create")}
                       </Button>
                     </Link>
                   </div>
                 ) : (
                   <>
                     <div className="border rounded-lg max-h-48 overflow-y-auto">
-                      {students.map((student) => (
-                        <div
-                          key={student.id}
-                          className="flex items-center gap-3 p-3 border-b last:border-b-0"
-                        >
-                          <input
-                            type="checkbox"
-                            checked={formData.studentIds.includes(student.id)}
-                            onChange={(e) =>
-                              handleStudentSelection(
-                                student.id,
-                                e.target.checked
-                              )
-                            }
-                            className="rounded"
-                          />
-                          <div className="flex-1">
-                            <div className="font-medium">
-                              {student.firstName} {student.lastName}
-                            </div>
-                            <div className="text-sm text-muted-foreground">
-                              {student.studentCode}
+                      {students &&
+                        students.map((student) => (
+                          <div
+                            key={student.id}
+                            className="flex items-center gap-3 p-3 border-b last:border-b-0"
+                          >
+                            <input
+                              type="checkbox"
+                              checked={formData.studentIds.includes(
+                                student.id!
+                              )}
+                              onChange={(e) =>
+                                handleStudentSelection(
+                                  student.id!,
+                                  e.target.checked
+                                )
+                              }
+                              className="rounded"
+                            />
+                            <div className="flex-1">
+                              <div className="font-medium">
+                                {student.firstName} {student.lastName}
+                              </div>
+                              <div className="text-sm text-muted-foreground">
+                                {student.studentCode}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Users className="w-4 h-4" />
@@ -422,7 +425,8 @@ const CreateClassPage: FC = () => {
                           />
                           <div className="flex-1">
                             <div className="font-medium">
-                              {teacher?.user?.firstName} {teacher?.user?.lastName}
+                              {teacher?.user?.firstName}{" "}
+                              {teacher?.user?.lastName}
                             </div>
                             <div className="text-sm text-muted-foreground">
                               {teacher.specializations}
