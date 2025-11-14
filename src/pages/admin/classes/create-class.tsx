@@ -20,10 +20,8 @@ import {
 import { AlertCircle, Plus, Save, Users } from "lucide-react";
 import { classApi } from "@/lib/api/class-api";
 import { teacherApi } from "@/lib/api/teacher-api";
-import { studentApi } from "@/lib/api/student-api";
 import { useLanguage } from "@/hooks/use-language";
 import type { Teacher } from "@/types/teacher";
-import type { Student } from "@/types/student";
 import type { CreateSchoolClassRequest } from "@/types/class";
 import { useAuth } from "@/hooks/use-auth";
 import FormHeader from "@/components/common/form-header";
@@ -32,13 +30,11 @@ import { toast } from "sonner";
 
 const CreateClassPage: FC = () => {
   const { user } = useAuth();
-  const { t } = useLanguage();
+  const { t, dir } = useLanguage();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [teachers, setTeachers] = useState<Teacher[]>([]);
-  const [students, setStudents] = useState<Student[]>([]);
   const [teachersLoading, setTeachersLoading] = useState(true);
-  const [studentsLoading, setStudentsLoading] = useState(true);
 
   const [formData, setFormData] = useState<CreateSchoolClassRequest>({
     name: "",
@@ -47,7 +43,6 @@ const CreateClassPage: FC = () => {
     capacity: 30,
     schoolId: user?.schoolId || 0,
     mainTeacherId: undefined,
-    studentIds: [],
     teacherIds: [],
   });
 
@@ -64,26 +59,12 @@ const CreateClassPage: FC = () => {
     }
   }, [user?.schoolId]);
 
-  const loadStudents = useCallback(async () => {
-    try {
-      if (!user?.schoolId) return;
-      setStudentsLoading(true);
-      const data = await studentApi.getBySchool(user.schoolId);
-      setStudents(data.items);
-    } catch (error) {
-      console.error("Error loading students:", error);
-    } finally {
-      setStudentsLoading(false);
-    }
-  }, [user?.schoolId]);
-
   useEffect(() => {
     if (user?.schoolId) {
       loadTeachers();
-      loadStudents();
       setFormData((prev) => ({ ...prev, schoolId: user.schoolId! }));
     }
-  }, [user, loadTeachers, loadStudents]);
+  }, [user, loadTeachers]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -121,15 +102,6 @@ const CreateClassPage: FC = () => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
-    }));
-  };
-
-  const handleStudentSelection = (studentId: number, checked: boolean) => {
-    setFormData((prev) => ({
-      ...prev,
-      studentIds: checked
-        ? [...prev.studentIds, studentId]
-        : prev.studentIds.filter((id) => id !== studentId),
     }));
   };
 
@@ -294,7 +266,7 @@ const CreateClassPage: FC = () => {
                         placeholder={t("classes.selectMainTeacher")}
                       />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent dir={dir}>
                       {teachers.map((teacher) => (
                         <SelectItem
                           key={teacher.id}
@@ -321,69 +293,6 @@ const CreateClassPage: FC = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Students Selection */}
-              <div className="space-y-3">
-                <Label>{t("classes.students")}</Label>
-                {studentsLoading ? (
-                  <div className="text-sm text-muted-foreground py-4 text-center">
-                    {t("common.loading")}
-                  </div>
-                ) : students.length === 0 ? (
-                  <div className="text-center py-6 border rounded-lg">
-                    <Users className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
-                    <p className="text-sm text-muted-foreground mb-2">
-                      {t("classes.noStudentsAvailable")}
-                    </p>
-                    <Link to="/admin/students/create">
-                      <Button variant="outline" size="sm">
-                        <Plus className="w-4 h-4 mr-2" />
-                        {t("addStudent.create")}
-                      </Button>
-                    </Link>
-                  </div>
-                ) : (
-                  <>
-                    <div className="border rounded-lg max-h-48 overflow-y-auto">
-                      {students &&
-                        students.map((student) => (
-                          <div
-                            key={student.id}
-                            className="flex items-center gap-3 p-3 border-b last:border-b-0"
-                          >
-                            <input
-                              type="checkbox"
-                              checked={formData.studentIds.includes(
-                                student.id!
-                              )}
-                              onChange={(e) =>
-                                handleStudentSelection(
-                                  student.id!,
-                                  e.target.checked
-                                )
-                              }
-                              className="rounded"
-                            />
-                            <div className="flex-1">
-                              <div className="font-medium">
-                                {student.firstName} {student.lastName}
-                              </div>
-                              <div className="text-sm text-muted-foreground">
-                                {student.studentCode}
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Users className="w-4 h-4" />
-                      {t("classes.selectedCount", {
-                        count: formData.studentIds.length,
-                      })}
-                    </div>
-                  </>
-                )}
-              </div>
-
               {/* Teachers Selection */}
               <div className="space-y-3">
                 <Label>{t("classes.teachers")}</Label>

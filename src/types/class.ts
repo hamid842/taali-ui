@@ -34,8 +34,9 @@ export interface CreateSchoolClassRequest {
   capacity: number;
   schoolId: number;
   mainTeacherId?: number;
-  studentIds: number[];
+  studentIds?: number[];
   teacherIds: number[];
+  classId?: string;
 }
 
 export interface UpdateSchoolClassRequest {

@@ -43,7 +43,9 @@
     "next": "بعدی",
     "setup": "در حال راه‌اندازی",
     "archived": "آرشیو شده",
-    "backToOwnerPanel": "بازگشت به پنل مالک"
+    "backToOwnerPanel": "بازگشت به پنل مالک",
+    "students": "دانش‌آموزان",
+    "teachers": "معلمان"
   },
   "nav": {
     "logoTitle": "تعــالی",
@@ -231,6 +233,83 @@
     "editSupervisor": "ویرایش ناظم",
     "settings": "تنظیمات"
   },
+  "owner": {
+    "dashboard": {
+      "title": "داشبورد ",
+      "description": "خوش آمدید، {{name}}! اینجا نمای کلی شماست.",
+      "error": {
+        "title": "بارگذاری داشبورد ممکن نیست",
+        "loading": "بارگذاری اطلاعات داشبورد ناموفق بود"
+      },
+      "stats": {
+        "totalSchools": "مجموع مدارس",
+        "totalStudents": "مجموع دانش آموزان",
+        "totalTeachers": "مجموع معلمان",
+        "totalClasses": "مجموع کلاس‌ها",
+        "activeSchools": "{{count}} فعال",
+        "acrossAllSchools": "در تمام مدارس",
+        "activeClasses": "کلاس‌های فعال",
+        "avgStudentsPerSchool": "میانگین دانش‌آموز در هر مدرسه",
+        "avgTeachersPerSchool": "میانگین معلم در هر مدرسه",
+        "avgClassesPerSchool": "میانگین کلاس در هر مدرسه",
+        "studentTeacherRatio": "نسبت دانش‌آموز به معلم",
+        "capacityUtilization": "میزان استفاده از ظرفیت"
+      },
+      "recentActivity": "فعالیت‌های اخیر",
+      "recentActivityDescription": "آخرین فعالیت‌ها در مدارس شما",
+      "schoolDistribution": "توزیع مدارس",
+      "schoolDistributionDescription": "مدارس بر اساس مقاطع تحصیلی",
+      "growthOverview": "نمای رشد",
+      "growthOverviewDescription": "رشد ماهانه در شبکه شما",
+      "quickActions": "اقدامات سریع",
+      "noActivity": "هیچ فعالیتی ثبت نشده",
+      "activity": {
+        "schoolCreated": "مدرسه جدید ایجاد شد: {{school}}",
+        "userAdded": "کاربر جدید اضافه شد: {{user}}",
+        "schoolUpdated": "مدرسه به‌روزرسانی شد: {{school}}",
+        "studentRegistered": "دانش‌آموز جدید ثبت‌نام کرد: {{student}} در {{school}}",
+        "teacherAdded": "معلم جدید اضافه شد: {{teacher}} در {{school}}",
+        "classCreated": "کلاس جدید ایجاد شد: {{class}} در {{school}}"
+      },
+      "topSchools": "مدارس برتر",
+      "recentRegistrations": "ثبت‌نام‌های اخیر",
+      "recentRegistrationsDescription": "آخرین ثبت‌نام‌ها در شبکه شما"
+    }
+  },
+  "schools": {
+    "createSchool": "ایجاد مدرسه",
+    "manage": "مدیریت مدارس"
+  },
+  "users": {
+    "manage": "مدیریت کاربران",
+    "title": "مدیریت کاربران",
+    "subtitleAdmins": "مدیریت مدیران و ناظران",
+    "addAdmin": "افزودن کاربر",
+    "searchAdmins": "جستجوی کاربران...",
+    "selectRole": "انتخاب نقش",
+    "adminList": "لیست کاربران",
+    "adminsFound": "کاربر یافت شد",
+    "updating": "در حال بروزرسانی...",
+    "noAdminsFound": "هیچ کاربری یافت نشد",
+    "tryChangingFilters": "سعی کنید جستجو یا فیلترهای خود را تغییر دهید",
+    "getStartedByAdding": "با افزودن اولین کاربر شروع کنید",
+    "addFirstAdmin": "افزودن اولین کاربر",
+    "active": "فعال",
+    "inactive": "غیرفعال",
+    "viewDetails": "مشاهده جزئیات",
+    "editProfile": "ویرایش پروفایل",
+    "noSchoolAssigned": "مدرسه ای اختصاص داده نشده",
+    "deactivate": "غیرفعال کردن",
+    "activate": "فعال کردن",
+    "showing": "نمایش",
+    "of": "از",
+    "previous": "قبلی",
+    "next": "بعدی",
+    "errorLoading": "خطا در بارگذاری کاربران. لطفا دوباره تلاش کنید.",
+    "noSchoolWarningTitle": "هنوز مدرسه ای ایجاد نشده",
+    "noSchoolWarningDesc": "برای افزودن مدیران، ابتدا باید یک مدرسه ایجاد کنید. لطفاً اولین مدرسه خود را ایجاد کنید.",
+    "createSchoolButton": "ایجاد مدرسه"
+  },
   "dashboard": {
     "schoolSwitcher": {
       "emptyTitle": "ایجاد مدرسه",
@@ -336,35 +415,6 @@
     "noSchoolDesc": "لطفا ابتدا مدرسه ای ایجاد کنید",
     "noSchoolBtn": "ایجاد اولین مدرسه"
   },
-  "users": {
-    "title": "مدیریت کاربران",
-    "subtitleAdmins": "مدیریت مدیران و ناظران",
-    "addAdmin": "افزودن کاربر",
-    "searchAdmins": "جستجوی کاربران...",
-    "selectRole": "انتخاب نقش",
-    "adminList": "لیست کاربران",
-    "adminsFound": "کاربر یافت شد",
-    "updating": "در حال بروزرسانی...",
-    "noAdminsFound": "هیچ کاربری یافت نشد",
-    "tryChangingFilters": "سعی کنید جستجو یا فیلترهای خود را تغییر دهید",
-    "getStartedByAdding": "با افزودن اولین کاربر شروع کنید",
-    "addFirstAdmin": "افزودن اولین کاربر",
-    "active": "فعال",
-    "inactive": "غیرفعال",
-    "viewDetails": "مشاهده جزئیات",
-    "editProfile": "ویرایش پروفایل",
-    "noSchoolAssigned": "مدرسه ای اختصاص داده نشده",
-    "deactivate": "غیرفعال کردن",
-    "activate": "فعال کردن",
-    "showing": "نمایش",
-    "of": "از",
-    "previous": "قبلی",
-    "next": "بعدی",
-    "errorLoading": "خطا در بارگذاری کاربران. لطفا دوباره تلاش کنید.",
-    "noSchoolWarningTitle": "هنوز مدرسه ای ایجاد نشده",
-    "noSchoolWarningDesc": "برای افزودن مدیران، ابتدا باید یک مدرسه ایجاد کنید. لطفاً اولین مدرسه خود را ایجاد کنید.",
-    "createSchoolButton": "ایجاد مدرسه"
-  },
   "classes": {
     "title": "کلاس‌ها",
     "description": "مدیریت کلاس‌های مدرسه و انتساب دانش‌آموزان",
@@ -384,8 +434,8 @@
     "createDescription": "یک کلاس جدید ایجاد کرده و دانش‌آموزان و معلمان را انتساب دهید",
     "basicInformation": "اطلاعات پایه",
     "basicInformationDesc": "جزئیات پایه کلاس را وارد کنید",
-    "studentsAndTeachers": "دانش‌آموزان و معلمان",
-    "studentsAndTeachersDesc": "دانش‌آموزان و معلمان را به این کلاس انتساب دهید",
+    "studentsAndTeachers": "معلمان",
+    "studentsAndTeachersDesc": "معلمان را به این کلاس انتساب دهید",
     "className": "نام کلاس",
     "classNamePlaceholder": "نام کلاس را وارد کنید",
     "selectGradeLevel": "انتخاب مقطع تحصیلی",

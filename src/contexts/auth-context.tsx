@@ -1,16 +1,7 @@
+import type { User } from "@/types/auth";
 import type { MenuItemDto } from "@/types/menu";
 import type { UserRoleType } from "@/types/role";
 import { createContext } from "react";
-
-export interface User {
-  id: number;
-  userId: string;
-  email: string;
-  role: UserRoleType;
-  firstName: string;
-  lastName: string;
-  schoolId?: number;
-}
 
 export interface AuthContextType {
   // State only

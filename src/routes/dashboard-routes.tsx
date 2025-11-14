@@ -21,6 +21,7 @@ import Reports from "@/pages/admin/finance/reports";
 import ClassSchedule from "@/pages/admin/classes/class-schedule";
 import Teachers from "@/pages/admin/teachers/teachers";
 import OwnerSchools from "@/pages/owner/schools";
+import TeacherDashboard from "@/pages/teacher/dashboard";
 
 export const dashboardRoutes = [
   // Owner Routes
@@ -63,7 +64,7 @@ export const dashboardRoutes = [
     path: "/school/:schoolId/admin",
     element: (
       <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.OWNER]}>
-        <MainLayout /> 
+        <MainLayout />
       </ProtectedRoute>
     ),
     children: [
@@ -205,6 +206,27 @@ export const dashboardRoutes = [
       {
         path: "/admin/finance/reports",
         element: <Reports />,
+      },
+    ],
+  },
+  // Teacher Routes
+  {
+    path: "/teacher",
+    element: (
+      <ProtectedRoute
+        allowedRoles={[UserRole.ADMIN, UserRole.OWNER, UserRole.TEACHER]}
+      >
+        <MainLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <TeacherDashboard />,
+      },
+      {
+        path: "/teacher/dashboard",
+        element: <TeacherDashboard />,
       },
     ],
   },

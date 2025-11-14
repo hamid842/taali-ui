@@ -49,7 +49,7 @@ export default function Users() {
   }
 
   if (isError) {
-    return <DisplayError text={t("users.errorLoading")} />;
+    return <DisplayError text={t("owner.users.errorLoading")} />;
   }
 
   return (
@@ -58,13 +58,13 @@ export default function Users() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
-            {t("users.title")}
+            {t("owner.users.title")}
           </h1>
-          <p className="text-muted-foreground">{t("users.subtitleAdmins")}</p>
+          <p className="text-muted-foreground">{t("owner.users.subtitleAdmins")}</p>
         </div>
         <Button onClick={handleClickAddAdmin}>
           <UserPlus className="w-4 h-4 mr-2" />
-          {t("users.addAdmin")}
+          {t("owner.users.addAdmin")}
         </Button>
       </div>
 
@@ -75,7 +75,7 @@ export default function Users() {
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder={t("users.searchAdmins")}
+                placeholder={t("owner.users.searchAdmins")}
                 className="pl-10"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -86,7 +86,7 @@ export default function Users() {
               onValueChange={(value) => setRole(value as UserRoleType)}
             >
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder={t("users.selectRole")} />
+                <SelectValue placeholder={t("owner.users.selectRole")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value={UserRole.ADMIN}>
@@ -105,12 +105,12 @@ export default function Users() {
       <div>
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-xl font-semibold">{t("users.adminList")}</h2>
+            <h2 className="text-xl font-semibold">{t("owner.users.adminList")}</h2>
             <p className="text-sm text-muted-foreground">
-              {data?.pagination.totalElements || 0} {t("users.adminsFound")}
+              {data?.pagination.totalElements || 0} {t("owner.users.adminsFound")}
               {isFetching && (
                 <span className="ml-2 text-xs text-muted-foreground">
-                  {t("users.updating")}
+                  {t("owner.users.updating")}
                 </span>
               )}
             </p>
@@ -121,16 +121,16 @@ export default function Users() {
           <UsersListSkeleton />
         ) : data?.items.length === 0 ? (
           <EmptyData
-            title={t("users.noAdminsFound")}
+            title={t("owner.users.noAdminsFound")}
             desc={
               search || role !== UserRole.ADMIN
-                ? t("users.tryChangingFilters")
-                : t("users.getStartedByAdding")
+                ? t("owner.users.tryChangingFilters")
+                : t("owner.users.getStartedByAdding")
             }
             actions={
               <Button onClick={handleClickAddAdmin}>
                 <UserPlus className="w-4 h-4 mr-2" />
-                {t("users.addFirstAdmin")}
+                {t("owner.users.addFirstAdmin")}
               </Button>
             }
           />
@@ -146,9 +146,9 @@ export default function Users() {
         {data && data.pagination.totalPages > 1 && (
           <div className="flex items-center justify-between mt-8">
             <div className="text-sm text-muted-foreground">
-              {t("users.showing")} {(page - 1) * size + 1}-
+              {t("owner.users.showing")} {(page - 1) * size + 1}-
               {Math.min(page * size, data.pagination.totalElements)}{" "}
-              {t("users.of")} {data.pagination.totalElements}
+              {t("owner.users.of")} {data.pagination.totalElements}
             </div>
             <div className="flex gap-2">
               <Button
@@ -157,7 +157,7 @@ export default function Users() {
                 onClick={() => setPage(page - 1)}
                 disabled={page === 1 || isLoading}
               >
-                {t("users.previous")}
+                {t("owner.users.previous")}
               </Button>
               <Button
                 variant="outline"
@@ -165,7 +165,7 @@ export default function Users() {
                 onClick={() => setPage(page + 1)}
                 disabled={page === data.pagination.totalPages || isLoading}
               >
-                {t("users.next")}
+                {t("owner.users.next")}
               </Button>
             </div>
           </div>

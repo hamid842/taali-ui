@@ -43,7 +43,9 @@
     "next": "Next",
     "setup": "Setup",
     "archived": "Archived",
-    "backToOwnerPanel": "Back to Owner Panel"
+    "backToOwnerPanel": "Back to Owner Panel",
+    "students": "Students",
+    "teachers": "Teachers"
   },
   "nav": {
     "logoTitle": "Taali",
@@ -229,6 +231,83 @@
     "editSupervisor": "Edit Supervisor",
     "settings": "Settings"
   },
+  "owner": {
+    "dashboard": {
+      "title": "Owner Dashboard",
+      "description": "Welcome back, {{name}}! Here's your overview.",
+      "error": {
+        "title": "Unable to load dashboard",
+        "loading": "Failed to load dashboard data"
+      },
+      "stats": {
+        "totalSchools": "Total Schools",
+        "totalStudents": "Total Students",
+        "totalTeachers": "Total Teachers",
+        "totalClasses": "Total Classes",
+        "activeSchools": "{{count}} active",
+        "acrossAllSchools": "Across all schools",
+        "activeClasses": "Active classes",
+        "avgStudentsPerSchool": "Avg Students/School",
+        "avgTeachersPerSchool": "Avg Teachers/School",
+        "avgClassesPerSchool": "Avg Classes/School",
+        "studentTeacherRatio": "Student-Teacher Ratio",
+        "capacityUtilization": "Capacity Utilization"
+      },
+      "recentActivity": "Recent Activity",
+      "recentActivityDescription": "Latest activities across your schools",
+      "schoolDistribution": "School Distribution",
+      "schoolDistributionDescription": "Schools by grade levels",
+      "growthOverview": "Growth Overview",
+      "growthOverviewDescription": "Monthly growth across your network",
+      "quickActions": "Quick Actions",
+      "noActivity": "No recent activity",
+      "activity": {
+        "schoolCreated": "New school created: {{school}}",
+        "userAdded": "New user added: {{user}}",
+        "schoolUpdated": "School updated: {{school}}",
+        "studentRegistered": "New student registered: {{student}} at {{school}}",
+        "teacherAdded": "New teacher added: {{teacher}} at {{school}}",
+        "classCreated": "New class created: {{class}} at {{school}}"
+      },
+      "topSchools": "Top Schools",
+      "recentRegistrations": "Recent Registrations",
+      "recentRegistrationsDescription": "Latest registrations across your network"
+    }
+  },
+  "schools": {
+    "createSchool": "Create School",
+    "manage": "Manage Schools"
+  },
+  "users": {
+    "manage": "Manage Users",
+    "title": "User Management",
+    "subtitleAdmins": "Manage administrators and supervisors",
+    "addAdmin": "Add User",
+    "searchAdmins": "Search users...",
+    "selectRole": "Select role",
+    "adminList": "Users List",
+    "adminsFound": "users found",
+    "updating": "Updating...",
+    "noAdminsFound": "No users found",
+    "tryChangingFilters": "Try changing your search or filters",
+    "getStartedByAdding": "Get started by adding your first user",
+    "addFirstAdmin": "Add First User",
+    "active": "Active",
+    "inactive": "Inactive",
+    "viewDetails": "View details",
+    "editProfile": "Edit profile",
+    "noSchoolAssigned": "No school assigned",
+    "deactivate": "Deactivate",
+    "activate": "Activate",
+    "showing": "Showing",
+    "of": "of",
+    "previous": "Previous",
+    "next": "Next",
+    "errorLoading": "Failed to load users. Please try again.",
+    "noSchoolWarningTitle": "No School Created Yet",
+    "noSchoolWarningDesc": "You need to create a school before you can add administrators. Please create your first school to get started.",
+    "createSchoolButton": "Create School"
+  },
   "dashboard": {
     "schoolSwitcher": {
       "emptyTitle": "Create School",
@@ -333,35 +412,6 @@
     "noSchoolDesc": "Please create the first school",
     "noSchoolBtn": "Create your first school"
   },
-  "users": {
-    "title": "User Management",
-    "subtitleAdmins": "Manage administrators and supervisors",
-    "addAdmin": "Add User",
-    "searchAdmins": "Search users...",
-    "selectRole": "Select role",
-    "adminList": "Users List",
-    "adminsFound": "users found",
-    "updating": "Updating...",
-    "noAdminsFound": "No users found",
-    "tryChangingFilters": "Try changing your search or filters",
-    "getStartedByAdding": "Get started by adding your first user",
-    "addFirstAdmin": "Add First User",
-    "active": "Active",
-    "inactive": "Inactive",
-    "viewDetails": "View details",
-    "editProfile": "Edit profile",
-    "noSchoolAssigned": "No school assigned",
-    "deactivate": "Deactivate",
-    "activate": "Activate",
-    "showing": "Showing",
-    "of": "of",
-    "previous": "Previous",
-    "next": "Next",
-    "errorLoading": "Failed to load users. Please try again.",
-    "noSchoolWarningTitle": "No School Created Yet",
-    "noSchoolWarningDesc": "You need to create a school before you can add administrators. Please create your first school to get started.",
-    "createSchoolButton": "Create School"
-  },
   "classes": {
     "title": "Classes",
     "description": "Manage school classes and student assignments",
@@ -381,8 +431,8 @@
     "createDescription": "Create a new class and assign students and teachers",
     "basicInformation": "Basic Information",
     "basicInformationDesc": "Enter the basic details of the class",
-    "studentsAndTeachers": "Students & Teachers",
-    "studentsAndTeachersDesc": "Assign students and teachers to this class",
+    "studentsAndTeachers": "Teachers",
+    "studentsAndTeachersDesc": "Assign teachers to this class",
     "className": "Class Name",
     "classNamePlaceholder": "Enter class name",
     "selectGradeLevel": "Select grade level",
