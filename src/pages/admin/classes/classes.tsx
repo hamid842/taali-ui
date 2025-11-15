@@ -24,10 +24,12 @@ import { classApi } from "@/lib/api/class-api";
 import { useLanguage } from "@/hooks/use-language";
 import { useRoles } from "@/hooks/use-roles";
 import type { SchoolClass } from "@/types/class";
+import { useAppStore } from "@/stores/app-store";
 
 const ClassesPage: React.FC = () => {
-  const { canManageClasses, user } = useRoles();
+  const { canManageClasses } = useRoles();
   const { t } = useLanguage();
+  const { currentSchool } = useAppStore();
   const [classes, setClasses] = useState<SchoolClass[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,19 +38,19 @@ const ClassesPage: React.FC = () => {
 
   const loadClasses = useCallback(async () => {
     try {
-      if (!user?.currentSchool?.id) {
+      if (!currentSchool?.id) {
         console.error("No school ID found");
         return;
       }
 
-      const data = await classApi.getClassesBySchool(user.currentSchool.id);
+      const data = await classApi.getClassesBySchool(currentSchool.id);
       setClasses(data);
     } catch (error) {
       console.error(t("admin.classes.errors.loadFailed"), error);
     } finally {
       setLoading(false);
     }
-  }, [user?.currentSchool, t]);
+  }, [currentSchool, t]);
 
   useEffect(() => {
     loadClasses();

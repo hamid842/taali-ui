@@ -21,7 +21,7 @@ export const apiConfig = {
       login: `${API_BASE_URL}/auth/login`,
     },
     menu: {
-      getUserMenu:`${API_BASE_URL}/menu/user`,
+      getUserMenu: `${API_BASE_URL}/menu/user`,
     },
     schools: {
       getMySchools: `${API_BASE_URL}/schools/my-schools`,
@@ -89,6 +89,18 @@ export const apiConfig = {
       getBySubject: `${API_BASE_URL}/teachers/by-subject`,
       getActiveBySchool: (schoolId: number) =>
         `${API_BASE_URL}/teachers/school/${schoolId}/active`,
+      getDashboardStats: (id: number) =>
+        `${API_BASE_URL}/teachers/${id}/dashboard/stats`,
+      getTeacherClasses: (id: number) =>
+        `${API_BASE_URL}/teachers/${id}/classes`,
+      getUpcomingClasses: (id: number) =>
+        `${API_BASE_URL}/teachers/${id}/upcoming-classes`,
+      getTodaySchedule: (id: number) =>
+        `${API_BASE_URL}/teachers/${id}/today-schedule`,
+      getRecentActivity: (id: number) =>
+        `${API_BASE_URL}/teachers/${id}/recent-activity`,
+      assignClass: (teacherId: number) =>
+        `${API_BASE_URL}/teachers/${teacherId}/assign-classes`,
     },
     students: {
       getBySchool: (schoolId: number) =>
@@ -104,6 +116,11 @@ export const apiConfig = {
       getGradeLevels: (schoolId: number) =>
         `${API_BASE_URL}/students/school/${schoolId}/grade-levels`,
       getClasses: (schoolId: number) => `/students/school/${schoolId}/classes`,
+      assignClass: (studentId: number) =>
+        `${API_BASE_URL}/students/${studentId}/assign-class`,
+      removeFromClass: (studentId: number) =>
+        `${API_BASE_URL}/students/${studentId}/class`,
+      bulkAssign: `${API_BASE_URL}/students/bulk-assign-class`,
     },
   },
   headers: {

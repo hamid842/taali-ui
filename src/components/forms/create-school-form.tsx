@@ -84,11 +84,11 @@ export function CreateSchoolForm({
     if (!message) return undefined;
 
     const translationKeys: Record<string, string> = {
-      "validation.nameRequired": "addSchool.validation.nameRequired",
-      "validation.codeRequired": "addSchool.validation.codeRequired",
-      "validation.codePattern": "addSchool.validation.codePattern",
-      "validation.emailInvalid": "addSchool.validation.emailInvalid",
-      "validation.phoneInvalid": "addSchool.validation.phoneInvalid",
+      "validation.nameRequired": "owner.addSchool.validation.nameRequired",
+      "validation.codeRequired": "owner.addSchool.validation.codeRequired",
+      "validation.codePattern": "owner.addSchool.validation.codePattern",
+      "validation.emailInvalid": "owner.addSchool.validation.emailInvalid",
+      "validation.phoneInvalid": "owner.addSchool.validation.phoneInvalid",
     };
 
     const translationKey = translationKeys[message] || message;
@@ -104,27 +104,27 @@ export function CreateSchoolForm({
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
       <div className="flex gap-4">
         <AppTextField
-          label={t("addSchool.name")}
+          label={t("owner.addSchool.name")}
           {...register("name")}
           error={getErrorMessage(errors.name)}
           required
-          placeholder={t("addSchool.name")}
+          placeholder={t("owner.addSchool.name")}
           disabled={isLoading}
           autoFocus
         />
         <AppTextField
-          label={t("addSchool.code")}
+          label={t("owner.addSchool.code")}
           {...register("code")}
           error={getErrorMessage(errors.code)}
           required
           placeholder="SCHOOL123"
-          helperText={t("addSchool.validation.codePattern")}
+          helperText={t("owner.addSchool.validation.codePattern")}
           disabled={isLoading}
         />
       </div>
 
       <AppTextField
-        label={t("addSchool.email")}
+        label={t("owner.addSchool.email")}
         type="email"
         {...register("email")}
         error={getErrorMessage(errors.email)}
@@ -133,17 +133,17 @@ export function CreateSchoolForm({
       />
 
       <InternationalPhoneInput
-        label={t("addSchool.phone")}
+        label={t("owner.addSchool.phone")}
         value={watch("phone") || ""}
         onChange={handlePhoneChange}
         error={getErrorMessage(errors.phone)}
       />
 
       <AppTextField
-        label={t("addSchool.address")}
+        label={t("owner.addSchool.address")}
         {...register("address")}
         error={getErrorMessage(errors.address)}
-        placeholder={t("addSchool.address")}
+        placeholder={t("owner.addSchool.address")}
         disabled={isLoading}
       />
 
@@ -160,7 +160,7 @@ export function CreateSchoolForm({
           className="flex-1 gap-2"
         >
           {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
-          {isLoading ? t("common.uploading") : t("addSchool.submit")}
+          {isLoading ? t("common.uploading") : t("owner.addSchool.submit")}
         </Button>
 
         {onCancel && (
@@ -171,7 +171,7 @@ export function CreateSchoolForm({
             disabled={isLoading}
             className="flex-1"
           >
-            {t("addSchool.cancel")}
+            {t("owner.addSchool.cancel")}
           </Button>
         )}
       </div>

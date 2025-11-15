@@ -25,6 +25,7 @@ export interface Student {
   userEmail?: string;
   className?: string;
   profileImageUrl?: string;
+  classId?: number | null;
 }
 
 export interface CreateStudentRequest {
@@ -71,4 +72,9 @@ export interface ParentAssociationRequest {
 export interface StudentListResponse {
   items: Student[];
   pagination: Pagination;
+}
+
+export interface AssignClassRequest {
+  studentId: number;
+  classId: number;
 }

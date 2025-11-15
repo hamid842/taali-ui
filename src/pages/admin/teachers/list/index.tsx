@@ -19,17 +19,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, Edit, Trash2, Eye, Mail } from "lucide-react";
+import { Plus, Mail } from "lucide-react";
 import { teacherApi } from "@/lib/api/teacher-api";
 import { useLanguage } from "@/hooks/use-language";
 import { useRoles } from "@/hooks/use-roles";
-import type { Teacher } from "@/types/teacher";
+import type { TeacherListResponse } from "@/types/teacher";
 import { ImageDisplay } from "@/components/common/image-display";
+import { useAppStore } from "@/stores/app-store";
+import TeachersTableActions from "@/components/dashboard/admin/teachers-table-actions";
 
 export default function TeachersPage() {
-  const { canManageTeachers, user } = useRoles();
+  const { canManageTeachers } = useRoles();
+  const { currentSchool } = useAppStore();
   const { t } = useLanguage();
-  const [teachers, setTeachers] = useState<Teacher[]>([]);
+  const [teachers, setTeachers] = useState<TeacherListResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -37,49 +40,35 @@ export default function TeachersPage() {
 
   const loadTeachers = useCallback(async () => {
     try {
-      if (!user?.currentSchool?.id) {
+      if (!currentSchool?.id) {
         console.error("No school ID found");
         return;
       }
 
-      const data = await teacherApi.getBySchool(user?.currentSchool?.id);
+      const data = await teacherApi.getBySchool(currentSchool?.id);
       setTeachers(data);
     } catch (error) {
       console.error(t("admin.teachers.errors.loadFailed"), error);
     } finally {
       setLoading(false);
     }
-  }, [user?.currentSchool?.id, t]);
+  }, [currentSchool, t]);
 
   useEffect(() => {
     loadTeachers();
   }, [loadTeachers]);
 
-  const handleDeleteTeacher = async (teacherId: number) => {
-    if (!confirm(t("admin.teachers.confirmDelete"))) {
-      return;
-    }
-
-    try {
-      await teacherApi.delete(teacherId);
-      // Remove the teacher from the local state
-      setTeachers(teachers.filter((teacher) => teacher.id !== teacherId));
-    } catch (error) {
-      console.error(t("admin.teachers.errors.deleteFailed"), error);
-      alert(t("admin.teachers.errors.deleteFailed"));
-    }
-  };
-
   const filteredTeachers = teachers.filter((teacher) => {
     const matchesSearch =
-      teacher.user?.firstName
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
-      teacher?.user?.email?.toLowerCase().includes(searchTerm.toLowerCase());
+      teacher.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      teacher.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      teacher.email?.toLowerCase().includes(searchTerm.toLowerCase());
+
     const matchesStatus =
       statusFilter === "all" ||
       (statusFilter === "active" && teacher.isActive) ||
       (statusFilter === "inactive" && !teacher.isActive);
+
     const matchesSubject =
       subjectFilter === "all" || teacher.subjects?.includes(subjectFilter);
 
@@ -103,7 +92,9 @@ export default function TeachersPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">{t("admin.teachers.title")}</h1>
-          <p className="text-muted-foreground">{t("admin.teachers.description")}</p>
+          <p className="text-muted-foreground">
+            {t("admin.teachers.description")}
+          </p>
         </div>
         {canManageTeachers() && (
           <Link to="/admin/teachers/create">
@@ -132,7 +123,9 @@ export default function TeachersPage() {
                   <SelectValue placeholder={t("common.status")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">{t("admin.teachers.allStatus")}</SelectItem>
+                  <SelectItem value="all">
+                    {t("admin.teachers.allStatus")}
+                  </SelectItem>
                   <SelectItem value="active">{t("common.active")}</SelectItem>
                   <SelectItem value="inactive">
                     {t("common.inactive")}
@@ -171,9 +164,9 @@ export default function TeachersPage() {
                 <TableHead className="text-center">
                   {t("admin.teachers.subjects")}
                 </TableHead>
-                {/* <TableHead className="text-center">
+                <TableHead className="text-center">
                   {t("admin.teachers.classes")}
-                </TableHead> */}
+                </TableHead>
                 <TableHead className="text-center">
                   {t("common.status")}
                 </TableHead>
@@ -198,18 +191,19 @@ export default function TeachersPage() {
                     <TableCell className="font-medium">
                       <div className="flex items-center gap-1">
                         <ImageDisplay
-                          imageUrl={teacher.user.profileImage}
+                          imageUrl={teacher.profileImage} // Changed from teacher.user.profileImage
                           size="xs"
                         />
                         <span>
-                          {teacher.user.firstName} {teacher.user.lastName}
+                          {teacher.firstName} {teacher.lastName}{" "}
+                          {/* Changed from teacher.user.firstName/lastName */}
                         </span>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center justify-center gap-1">
                         <Mail className="w-4 h-4" />
-                        {teacher.email}
+                        {teacher.email} {/* Changed from teacher.user.email */}
                       </div>
                     </TableCell>
                     <TableCell>
@@ -224,14 +218,21 @@ export default function TeachersPage() {
                             +{teacher.subjects.length - 2}
                           </Badge>
                         )}
+                        {(!teacher.subjects ||
+                          teacher.subjects.length === 0) && (
+                          <span className="text-muted-foreground text-sm">
+                            {t("admin.teachers.noSubjects")}
+                          </span>
+                        )}
                       </div>
                     </TableCell>
-                    {/* <TableCell>
-                      <div className="flex items-center justify-center gap-1">
-                        <BookOpen className="w-4 h-4" />
-                        {teacher.classCount || 0}
+                    <TableCell>
+                      <div className="flex items-center justify-center">
+                        <Badge variant="outline">
+                          {teacher.classCount || 0}
+                        </Badge>
                       </div>
-                    </TableCell> */}
+                    </TableCell>
                     <TableCell>
                       <Badge
                         variant={teacher.isActive ? "default" : "secondary"}
@@ -242,33 +243,7 @@ export default function TeachersPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-center">
-                      <div className="flex items-center justify-center gap-2">
-                        <Link to={`/teachers/${teacher.id}`}>
-                          <Button variant="outline" size="sm">
-                            <Eye className="w-4 h-4 mr-1" />
-                            {t("common.view")}
-                          </Button>
-                        </Link>
-                        {canManageTeachers() && (
-                          <>
-                            <Link to={`/admin/teachers/edit/${teacher.id}`}>
-                              <Button variant="outline" size="sm">
-                                <Edit className="w-4 h-4 mr-1" />
-                                {t("common.edit")}
-                              </Button>
-                            </Link>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => handleDeleteTeacher(teacher.id)}
-                              className="text-red-600 hover:text-red-700"
-                            >
-                              <Trash2 className="w-4 h-4 mr-1" />
-                              {t("common.delete")}
-                            </Button>
-                          </>
-                        )}
-                      </div>
+                      <TeachersTableActions teacherId={teacher.id} />
                     </TableCell>
                   </TableRow>
                 ))

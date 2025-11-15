@@ -31,7 +31,7 @@ export default function AddSchool() {
       // Combine form data with the uploaded logo
       const schoolData = {
         ...data,
-        ownerId:user?.id,
+        ownerId: user?.id,
         image: schoolLogo || data.image, // Use uploaded logo if available
       };
 
@@ -64,10 +64,8 @@ export default function AddSchool() {
     <div className="container mx-auto py-6 max-w-4xl">
       {/* Header */}
       <FormHeader
-        title={t("addSchool.create") || "Create School"}
-        desc={
-          t("addSchool.createDescription") || "Add a new school to your account"
-        }
+        title={t("owner.addSchool.create")}
+        desc={t("owner.addSchool.createDescription")}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -75,8 +73,10 @@ export default function AddSchool() {
         <ImageUploadSection
           uploadType="school-logo"
           icon={<School className="h-5 w-5" />}
-          title={t("addSchool.logo") || "School Logo"}
-          desc={t("addSchool.logoDescription") || "Upload your school's logo"}
+          title={t("owner.addSchool.logo") || "School Logo"}
+          desc={
+            t("owner.addSchool.logoDescription") || "Upload your school's logo"
+          }
           onImageChange={handleLogoChange}
         />
 
@@ -84,12 +84,9 @@ export default function AddSchool() {
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
-              <CardTitle>
-                {t("addSchool.details") || "School Details"}
-              </CardTitle>
+              <CardTitle>{t("owner.addSchool.details")}</CardTitle>
               <CardDescription>
-                {t("addSchool.detailsDescription") ||
-                  "Enter the basic information for your school"}
+                {t("owner.addSchool.detailsDescription")}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -106,9 +103,7 @@ export default function AddSchool() {
       {/* Quick Tips Section */}
       <Card className="mt-6">
         <CardHeader>
-          <CardTitle className="text-lg">
-            {t("addSchool.tips") || "Tips for creating a school"}
-          </CardTitle>
+          <CardTitle className="text-lg">{t("addSchool.tips")}</CardTitle>
         </CardHeader>
         <CardContent>
           <ul

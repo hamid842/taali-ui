@@ -97,7 +97,9 @@ export default function StudentsList() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">{t("admin.students.title")}</h1>
+          <h1 className="text-3xl font-bold mb-2">
+            {t("admin.students.title")}
+          </h1>
           <p className="text-muted-foreground">
             {t("admin.students.subtitle", { count: pagination.totalElements })}
           </p>

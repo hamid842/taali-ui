@@ -43,8 +43,8 @@ export default function OwnerSchools() {
     return (
       <div className="container mx-auto p-6">
         <EmptyData
-          title={t("schoolsPage.errorTitle") || "Failed to load schools"}
-          desc={t("schoolsPage.errorDescription") || "Please try again later"}
+          title={t("owner.schoolsPage.errorTitle") || "Failed to load schools"}
+          desc={t("owner.schoolsPage.errorDescription") || "Please try again later"}
           actions={
             <div>
               <Button>{t("")}</Button>
@@ -61,16 +61,16 @@ export default function OwnerSchools() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
-            {t("schoolsPage.title") || "My Schools"}
+            {t("owner.schoolsPage.title") || "My Schools"}
           </h1>
           <p className="text-muted-foreground mt-1">
-            {t("schoolsPage.subtitle") ||
+            {t("owner.schoolsPage.subtitle") ||
               "Manage all your educational institutions"}
           </p>
         </div>
         <Button onClick={handleCreateSchool} className="gap-2">
           <Plus className="h-4 w-4" />
-          {t("addSchool.create") || "Create School"}
+          {t("owner.addSchool.create")}
         </Button>
       </div>
 
@@ -78,28 +78,28 @@ export default function OwnerSchools() {
       {!isLoading && schools && schools.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <StatCard
-            title={t("schoolsPage.stats.total")}
+            title={t("owner.schoolsPage.stats.total")}
             value={schools.length}
             icon={Building}
-            description={t("schoolsPage.descriptions.total")}
+            description={t("owner.schoolsPage.descriptions.total")}
           />
           <StatCard
-            title={t("schoolsPage.stats.active")}
+            title={t("owner.schoolsPage.stats.active")}
             value={schools.filter((s) => s.status === "active").length}
             icon={Users}
-            description={t("schoolsPage.descriptions.active")}
+            description={t("owner.schoolsPage.descriptions.active")}
           />
           <StatCard
-            title={t("schoolsPage.stats.setup")}
+            title={t("owner.schoolsPage.stats.setup")}
             value={schools.filter((s) => s.status === "setup").length}
             icon={Settings}
-            description={t("schoolsPage.descriptions.setup")}
+            description={t("owner.schoolsPage.descriptions.setup")}
           />
           <StatCard
-            title={t("schoolsPage.stats.archived")}
+            title={t("owner.schoolsPage.stats.archived")}
             value={schools.filter((s) => s.status === "archived").length}
             icon={Building}
-            description={t("schoolsPage.descriptions.archived")}
+            description={t("owner.schoolsPage.descriptions.archived")}
           />
         </div>
       )}
@@ -129,11 +129,11 @@ export default function OwnerSchools() {
           </div>
         ) : (
           <EmptyData
-            title={t("schoolsPage.emptyTitle") || "No schools found"}
+            title={t("owner.schoolsPage.emptyTitle") || "No schools found"}
             desc={
               searchTerm || statusFilter !== "all"
-                ? t("schoolsPage.filters.searchNoResults")
-                : t("schoolsPage.filters.emptyDescription")
+                ? t("owner.schoolsPage.filters.searchNoResults")
+                : t("owner.schoolsPage.filters.emptyDescription")
             }
             actions={
               <Button onClick={handleCreateSchool} className="gap-2">

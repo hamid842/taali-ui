@@ -45,7 +45,12 @@
     "archived": "آرشیو شده",
     "backToOwnerPanel": "بازگشت به پنل مالک",
     "students": "دانش‌آموزان",
-    "teachers": "معلمان"
+    "teachers": "معلمان",
+    "assignClass": "تعیین کلاس",
+    "saveChanges": "ذخیره تغییرات",
+    "changeClass": "تغییر کلاس",
+    "saving": "در حال ذخیره ...",
+    "removing": "در حال حذف ..."
   },
   "nav": {
     "logoTitle": "تعــالی",
@@ -422,7 +427,7 @@
       "noUpcomingClasses": "کلاسی در پیش نیست",
       "studentDistribution": "توزیع دانش‌آموزان",
       "studentDistributionDescription": "دانش‌آموزان بر اساس مقطع تحصیلی",
-       "recentActivity": "فعالیت‌های اخیر",
+      "recentActivity": "فعالیت‌های اخیر",
       "recentActivityDescription": "آخرین فعالیت‌ها در مدرسه شما",
       "noActivity": "هیچ فعالیتی ثبت نشده",
       "quickActions": "اقدامات سریع",
@@ -495,7 +500,7 @@
         "nameRequired": "نام کلاس الزامی است",
         "academicYearRequired": "سال تحصیلی الزامی است",
         "schoolRequired": "مدرسه الزامی است",
-        "createFailed": "ایجاد کلاس با شکست مواجه شد",
+        "createFailed": "ایجاد کلاس ناموفق بود!",
         "loadFailed": "بارگذاری کلاس‌ها با شکست مواجه شد",
         "updateFailed": "بروزرسانی کلاس با شکست مواجه شد",
         "deleteFailed": "حذف کلاس با شکست مواجه شد"
@@ -524,8 +529,19 @@
       "subject": "درس",
       "errors": {
         "loadFailed": "خطا در بارگذاری معلمان",
-        "deleteFailed": "خطا در حذف معلم"
-      }
+        "deleteFailed": "خطا در حذف معلم",
+        "assignClassesFailed": "اختصاص کلاس‌ها با خطا مواجه شد"
+      },
+      "assignClasses": "اختصاص کلاس‌ها",
+      "assigningTo": "در حال اختصاص کلاس‌ها به",
+      "availableClasses": "کلاس‌های موجود",
+      "assignedClasses": "کلاس‌های اختصاص‌داده‌شده",
+      "searchClasses": "جستجوی کلاس...",
+      "noClassesAvailable": "هیچ کلاسی موجود نیست",
+      "noClassesMatchSearch": "هیچ کلاسی با جستجوی شما مطابقت ندارد",
+      "noClassesAssigned": "هنوز هیچ کلاسی اختصاص داده نشده است",
+      "assignedClassesDescription": "کلاس‌هایی که در حال حاضر به این معلم اختصاص داده شده‌اند",
+      "teacherInformation": "اطلاعات معلم"
     },
     "addTeacher": {
       "create": "ایجاد معلم",
@@ -613,17 +629,37 @@
     },
     "students": {
       "manage": "مدیریت دانش‌آموزان",
-      "title": "دانش آموزان",
-      "subtitle": "مدیریت {count} دانش آموز",
-      "searchPlaceholder": "جستجو بر اساس نام، شماره دانش آموزی یا ایمیل...",
-      "gradeLevel": "پایه تحصیلی",
+      "title": "دانش‌آموزان",
+      "subtitle": "مدیریت {count} دانش‌آموز",
+      "searchPlaceholder": "جستجو بر اساس نام، شناسه یا ایمیل...",
+      "gradeLevel": "مقطع تحصیلی",
       "class": "کلاس",
-      "noStudents": "دانش آموزی یافت نشد",
-      "noStudentsDescription": "سعی کنید جستجو یا فیلترهای خود را تغییر دهید.",
-      "students": "دانش آموز",
-      "yearsOld": "ساله",
-      "emergencyContact": "مخاطب اضطراری",
-      "medicalNotes": "یادداشت‌های پزشکی"
+      "noStudents": "دانش‌آموزی یافت نشد",
+      "noStudentsDescription": "برای یافتن نتیجه، عبارت جستجو یا فیلترهای خود را تغییر دهید.",
+      "students": "دانش‌آموز",
+      "emergencyContact": "تماس اضطراری",
+      "medicalNotes": "یادداشت‌های پزشکی",
+      "assignClass": "اختصاص کلاس",
+      "assigningTo": "در حال اختصاص کلاس به",
+      "changeClass": "تغییر کلاس",
+      "removeFromClass": "حذف از کلاس",
+      "assignToClass": "اختصاص به کلاس",
+      "currentClass": "کلاس فعلی",
+      "selectClass": "انتخاب کلاس",
+      "chooseClass": "یک کلاس انتخاب کنید",
+      "noClass": "بدون کلاس (حذف از کلاس فعلی)",
+      "classInfo": "اطلاعات کلاس",
+      "notAssigned": "اختصاص داده نشده",
+      "yearsOld": "سال سن",
+      "success": {
+        "assignToClass": "دانش‌آموز با موفقیت به کلاس اختصاص یافت",
+        "removeFromClass": "دانش‌آموز با موفقیت از کلاس حذف شد"
+      },
+      "errors": {
+        "assignClassFailed": "اختصاص کلاس انجام نشد",
+        "removeClassFailed": "حذف از کلاس انجام نشد",
+        "loadClassesFailed": "بارگذاری کلاس‌ها انجام نشد"
+      }
     },
     "schedule": {
       "title": "برنامه کلاسی",
@@ -648,6 +684,50 @@
         "saveFailed": "ذخیره برنامه با خطا مواجه شد",
         "deleteFailed": "حذف برنامه با خطا مواجه شد"
       }
+    }
+  },
+  "teacher": {
+    "dashboard": {
+      "welcome": "خوش آمدید",
+      "subtitle": "نمای کلی تدریس شما برای امروز",
+      "viewAllClasses": "مشاهده تمام کلاس‌ها",
+      "takeAttendance": "ثبت حضور و غیاب",
+      "quickActions": "اقدامات سریع",
+      "students": "دانش‌آموز",
+      "inProgress": "در حال برگزاری",
+      "inMinutes": "در {minutes} دقیقه",
+      "inHours": "در {hours} ساعت",
+      "minutesAgo": "{minutes} دقیقه پیش",
+      "hoursAgo": "{hours} ساعت پیش",
+      "daysAgo": "{days} روز پیش",
+      "stats": {
+        "totalStudents": "کل دانش‌آموزان",
+        "acrossAllClasses": "در تمام کلاس‌ها",
+        "totalClasses": "کل کلاس‌ها",
+        "assignedClasses": "کلاس‌های اختصاص یافته",
+        "upcomingClasses": "کلاس‌های پیش‌رو",
+        "today": "امروز",
+        "attendanceRate": "نرخ حضور",
+        "overallAttendance": "میانگین حضور و غیاب"
+      },
+      "todaySchedule": "برنامه امروز",
+      "myClasses": "کلاس‌های من",
+      "recentActivity": "فعالیت‌های اخیر",
+      "noClasses": "هیچ کلاسی اختصاص داده نشده",
+      "noSchedule": "هیچ کلاسی برای امروز برنامه‌ریزی نشده",
+      "noActivity": "هیچ فعالیتی ثبت نشده"
+    },
+    "attendance": {
+      "take": "ثبت حضور و غیاب"
+    },
+    "grading": {
+      "enter": "ثبت نمرات"
+    },
+    "assignments": {
+      "create": "ایجاد تکلیف"
+    },
+    "messages": {
+      "send": "ارسال پیام"
     }
   },
 

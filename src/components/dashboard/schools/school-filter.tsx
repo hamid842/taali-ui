@@ -32,7 +32,7 @@ export default function SchoolFilter({
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
               placeholder={
-                t("schoolsPage.searchPlaceholder") ||
+                t("owner.schoolsPage.searchPlaceholder") ||
                 "Search schools by name or code..."
               }
               value={searchTerm}

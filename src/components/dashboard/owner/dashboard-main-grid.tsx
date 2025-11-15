@@ -134,7 +134,7 @@ export default function DashboardMainGrid({
                 className="justify-start"
               >
                 <Building2 className="h-4 w-4 mr-2" />
-                {t("schools.manage")}
+                {t("owner.schools.manage")}
               </Button>
               <Button
                 variant="outline"
@@ -143,7 +143,7 @@ export default function DashboardMainGrid({
                 className="justify-start"
               >
                 <Users className="h-4 w-4 mr-2" />
-                {t("users.manage")}
+                {t("owner.users.manage")}
               </Button>
             </div>
           </div>

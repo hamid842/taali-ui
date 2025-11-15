@@ -122,3 +122,9 @@
 [dir="rtl"] .breadcrumb-separator {
   transform: rotate(180deg);
 }
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}

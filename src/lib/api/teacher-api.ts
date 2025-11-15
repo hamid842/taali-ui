@@ -1,15 +1,17 @@
-import type { Teacher } from "@/types/teacher";
+import type { Teacher, TeacherDetailResponse, TeacherListResponse } from "@/types/teacher";
 import { apiClient, apiConfig } from "./api-config";
 
 export const teacherApi = {
-  getBySchool: async (schoolId: number): Promise<Teacher[]> => {
-    return apiClient.get<Teacher[]>(
+  getBySchool: async (schoolId: number): Promise<TeacherListResponse[]> => {
+    return apiClient.get<TeacherListResponse[]>(
       apiConfig.endpoints.teachers.getBySchool(schoolId)
     );
   },
 
-  getById: async (id: number): Promise<Teacher> => {
-    return apiClient.get<Teacher>(apiConfig.endpoints.teachers.getById(id));
+  getById: async (id: number): Promise<TeacherDetailResponse> => {
+    return apiClient.get<TeacherDetailResponse>(
+      apiConfig.endpoints.teachers.getById(id)
+    );
   },
 
   create: async (
@@ -59,5 +61,11 @@ export const teacherApi = {
         apiConfig.endpoints.teachers.getBySubject
       }?schoolId=${schoolId}&subject=${encodeURIComponent(subject)}`
     );
+  },
+
+  assignClass: async (teacherId: number, classIds: number[]): Promise<void> => {
+    return apiClient.post(apiConfig.endpoints.teachers.assignClass(teacherId), {
+      classIds,
+    });
   },
 };

@@ -28,16 +28,16 @@ export default function AddSchoolAdmin() {
         <>
           {/* Header */}
           <FormHeader
-            title={t("addSchoolAdmin.create")}
-            desc={t("addSchoolAdmin.createDesc")}
+            title={t("owner.addSchoolAdmin.create")}
+            desc={t("owner.addSchoolAdmin.createDesc")}
           />
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Logo Upload Section */}
             <ImageUploadSection
               uploadType="profile-image"
-              title={t("addSchoolAdmin.imgSectionTitle")}
-              desc={t("addSchoolAdmin.imgSectionDesc")}
+              title={t("owner.addSchoolAdmin.imgSectionTitle")}
+              desc={t("owner.addSchoolAdmin.imgSectionDesc")}
               onImageChange={handleLogoChange}
             />
 
@@ -45,9 +45,9 @@ export default function AddSchoolAdmin() {
             <div className="lg:col-span-2">
               <Card>
                 <CardHeader>
-                  <CardTitle>{t("addSchoolAdmin.details")}</CardTitle>
+                  <CardTitle>{t("owner.addSchoolAdmin.details")}</CardTitle>
                   <CardDescription>
-                    {t("addSchoolAdmin.detailsDescription")}
+                    {t("owner.addSchoolAdmin.detailsDescription")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -65,7 +65,7 @@ export default function AddSchoolAdmin() {
           <Card className="mt-6">
             <CardHeader>
               <CardTitle className="text-lg">
-                {t("addSchoolAdmin.tips")}
+                {t("owner.addSchoolAdmin.tips")}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -74,10 +74,10 @@ export default function AddSchoolAdmin() {
                   dir === "rtl" ? "list-disc pr-4" : "list-disc pl-4"
                 }`}
               >
-                <li>{t("addSchoolAdmin.tipCode")}</li>
-                <li>{t("addSchoolAdmin.tipName")}</li>
-                <li>{t("addSchoolAdmin.tipContact")}</li>
-                <li>{t("addSchoolAdmin.tipLogo")}</li>
+                <li>{t("owner.addSchoolAdmin.tipCode")}</li>
+                <li>{t("owner.addSchoolAdmin.tipName")}</li>
+                <li>{t("owner.addSchoolAdmin.tipContact")}</li>
+                <li>{t("owner.addSchoolAdmin.tipLogo")}</li>
               </ul>
             </CardContent>
           </Card>

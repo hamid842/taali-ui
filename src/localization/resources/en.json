@@ -45,7 +45,12 @@
     "archived": "Archived",
     "backToOwnerPanel": "Back to Owner Panel",
     "students": "Students",
-    "teachers": "Teachers"
+    "teachers": "Teachers",
+    "assignClass": "Assign Class",
+    "saveChanges": "Save Changes",
+    "changeClass": "Change Class",
+    "saving": "Saving...",
+    "removing": "Removing..."
   },
   "nav": {
     "logoTitle": "Taali",
@@ -522,8 +527,19 @@
       "subject": "Subject",
       "errors": {
         "loadFailed": "Failed to load teachers",
-        "deleteFailed": "Failed to delete teacher"
-      }
+        "deleteFailed": "Failed to delete teacher",
+        "assignClassesFailed": "Failed to assign classes"
+      },
+      "assignClasses": "Assign Classes",
+      "assigningTo": "Assigning classes to",
+      "availableClasses": "Available Classes",
+      "assignedClasses": "Assigned Classes",
+      "searchClasses": "Search classes...",
+      "noClassesAvailable": "No classes available",
+      "noClassesMatchSearch": "No classes match your search",
+      "noClassesAssigned": "No classes assigned yet",
+      "assignedClassesDescription": "Classes currently assigned to this teacher",
+      "teacherInformation": "Teacher Information"
     },
     "addTeacher": {
       "create": "Create Teacher",
@@ -618,9 +634,29 @@
       "noStudents": "No students found",
       "noStudentsDescription": "Try adjusting your search or filters to find what you're looking for.",
       "students": "students",
-      "yearsOld": "years old",
       "emergencyContact": "Emergency Contact",
-      "medicalNotes": "Medical Notes"
+      "medicalNotes": "Medical Notes",
+      "assignClass": "Assign Class",
+      "assigningTo": "Assigning class to",
+      "changeClass": "Change Class",
+      "removeFromClass": "Remove from Class",
+      "assignToClass": "Assign to Class",
+      "currentClass": "Current Class",
+      "selectClass": "Select Class",
+      "chooseClass": "Choose a class",
+      "noClass": "No Class (Remove from current class)",
+      "classInfo": "Class Information",
+      "notAssigned": "Not Assigned",
+      "yearsOld": "years old",
+      "success": {
+        "assignToClass": "Student assigned to class successfully",
+        "removeFromClass": "Student removed from class successfully"
+      },
+      "errors": {
+        "assignClassFailed": "Failed to assign class",
+        "removeClassFailed": "Failed to remove from class",
+        "loadClassesFailed": "Failed to load classes"
+      }
     },
     "schedule": {
       "title": "Class Schedule",
@@ -650,6 +686,49 @@
       "manage": "Manage Attendance"
     }
   },
+  "teacher": {
+    "dashboard": {
+      "welcome": "Welcome",
+      "subtitle": "Here's your teaching overview for today",
+      "viewAllClasses": "View All Classes",
+      "takeAttendance": "Take Attendance",
+      "quickActions": "Quick Actions",
+      "students": "students",
+      "inProgress": "In progress",
+      "inMinutes": "in {minutes}m",
+      "inHours": "in {hours}h",
+      "minutesAgo": "{minutes}m ago",
+      "hoursAgo": "{hours}h ago",
+      "daysAgo": "{days}d ago",
+      "todaySchedule": "Today's Schedule",
+      "myClasses": "My Classes",
+      "recentActivity": "Recent Activity",
+      "noClasses": "No classes assigned",
+      "noSchedule": "No classes scheduled for today",
+      "noActivity": "No recent activity",
+      "stats": {
+        "totalStudents": "Total Students",
+        "acrossAllClasses": "Across all classes",
+        "totalClasses": "Total Classes",
+        "assignedClasses": "Assigned classes",
+        "upcomingClasses": "Upcoming Classes",
+        "today": "Today",
+        "attendanceRate": "Attendance Rate",
+        "overallAttendance": "Overall attendance"
+      }
+    },
+    "attendance": {
+      "take": "Take Attendance"
+    },
+    "grading": {
+      "enter": "Enter Grades"
+    },
+    "assignments": {},
+    "messages": {
+      "send": "Send Message"
+    }
+  },
+
   "loading": {
     "checkAuth": "Checking authentication..."
   },

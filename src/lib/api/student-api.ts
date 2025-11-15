@@ -90,4 +90,26 @@ export const studentApi = {
       parentData
     );
   },
+
+  assignToClass: async (studentId: number, classId: number): Promise<void> => {
+    return apiClient.post(apiConfig.endpoints.students.assignClass(studentId), {
+      classId,
+    });
+  },
+
+  removeFromClass: async (studentId: number): Promise<void> => {
+    return apiClient.delete(
+      apiConfig.endpoints.students.removeFromClass(studentId)
+    );
+  },
+
+  bulkAssignStudentsToClass: async (
+    studentIds: number[],
+    classId: number
+  ): Promise<any> => {
+    return apiClient.post(apiConfig.endpoints.students.bulkAssign, {
+      studentIds,
+      classId,
+    });
+  },
 };

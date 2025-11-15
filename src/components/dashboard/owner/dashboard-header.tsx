@@ -24,7 +24,7 @@ export default function DashboardHeader({ user }: { user: User | null }) {
 
       <Button onClick={() => navigate("/owner/schools/create")}>
         <Plus className="h-4 w-4 mr-2" />
-        {t("schools.createSchool")}
+        {t("owner.addSchool.create")}
       </Button>
     </div>
   );

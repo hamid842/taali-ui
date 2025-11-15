@@ -23,13 +23,13 @@ import { teacherApi } from "@/lib/api/teacher-api";
 import { useLanguage } from "@/hooks/use-language";
 import type { Teacher } from "@/types/teacher";
 import type { CreateSchoolClassRequest } from "@/types/class";
-import { useAuth } from "@/hooks/use-auth";
 import FormHeader from "@/components/common/form-header";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { toast } from "sonner";
+import { useAppStore } from "@/stores/app-store";
 
 const CreateClassPage: FC = () => {
-  const { user } = useAuth();
+  const { currentSchool } = useAppStore();
   const { t, dir } = useLanguage();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -41,33 +41,33 @@ const CreateClassPage: FC = () => {
     gradeLevel: "",
     academicYear: "1403-1404",
     capacity: 30,
-    schoolId: user?.currentSchool?.id || 0,
+    schoolId: currentSchool?.id || 0,
     mainTeacherId: undefined,
     teacherIds: [],
   });
 
   const loadTeachers = useCallback(async () => {
     try {
-      if (!user?.currentSchool?.id) return;
+      if (!currentSchool?.id) return;
       setTeachersLoading(true);
-      const data = await teacherApi.getBySchool(user?.currentSchool?.id);
+      const data = await teacherApi.getBySchool(currentSchool?.id);
       setTeachers(data);
     } catch (error) {
       console.error("Error loading teachers:", error);
     } finally {
       setTeachersLoading(false);
     }
-  }, [user?.currentSchool]);
+  }, [currentSchool]);
 
   useEffect(() => {
-    if (user?.currentSchool?.id) {
+    if (currentSchool?.id) {
       loadTeachers();
       setFormData((prev) => ({
         ...prev,
-        schoolId: Number(user.currentSchool?.id),
+        schoolId: Number(currentSchool?.id),
       }));
     }
-  }, [user, loadTeachers]);
+  }, [currentSchool, loadTeachers]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

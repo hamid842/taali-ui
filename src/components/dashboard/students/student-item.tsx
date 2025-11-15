@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguage } from "@/hooks/use-language";
 import type { Student } from "@/types/student";
 import { BookOpen, Calendar, Mail, Phone, User } from "lucide-react";
+import AssignClassModal from "../admin/assign-to-class-dialog";
+import { useState } from "react";
 
 type StudentItemProps = {
   student: Student;
@@ -12,6 +14,7 @@ type StudentItemProps = {
 
 export default function StudentItem({ student }: StudentItemProps) {
   const { t } = useLanguage();
+  const [openClassModal, setOpenClassModal] = useState(false);
 
   const getInitials = (firstName: string, lastName: string) => {
     return `${firstName?.[0] || ""}${lastName?.[0] || ""}`.toUpperCase();
@@ -130,8 +133,23 @@ export default function StudentItem({ student }: StudentItemProps) {
           <Button size="sm" className="flex-1">
             {t("common.edit")}
           </Button>
+          <Button
+            size="sm"
+            className="flex-1"
+            onClick={() => setOpenClassModal(true)}
+          >
+            {student.classId
+              ? t("common.changeClass")
+              : t("common.assignClass")}
+          </Button>
         </div>
       </CardContent>
+      <AssignClassModal
+        student={student}
+        isOpen={openClassModal}
+        onClose={() => setOpenClassModal(false)}
+        onSuccess={() => console.log}
+      />
     </Card>
   );
 }
