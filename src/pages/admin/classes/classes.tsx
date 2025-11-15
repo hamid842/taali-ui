@@ -36,19 +36,19 @@ const ClassesPage: React.FC = () => {
 
   const loadClasses = useCallback(async () => {
     try {
-      if (!user?.schoolId) {
+      if (!user?.currentSchool?.id) {
         console.error("No school ID found");
         return;
       }
 
-      const data = await classApi.getClassesBySchool(user.schoolId.toString());
+      const data = await classApi.getClassesBySchool(user.currentSchool.id);
       setClasses(data);
     } catch (error) {
-      console.error(t("classes.errors.loadFailed"), error);
+      console.error(t("admin.classes.errors.loadFailed"), error);
     } finally {
       setLoading(false);
     }
-  }, [user?.schoolId, t]);
+  }, [user?.currentSchool, t]);
 
   useEffect(() => {
     loadClasses();
@@ -74,7 +74,7 @@ const ClassesPage: React.FC = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-lg">{t("classes.loading")}</div>
+        <div className="text-lg">{t("admin.classes.loading")}</div>
       </div>
     );
   }
@@ -83,14 +83,14 @@ const ClassesPage: React.FC = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">{t("classes.title")}</h1>
-          <p className="text-muted-foreground">{t("classes.description")}</p>
+          <h1 className="text-3xl font-bold">{t("admin.classes.title")}</h1>
+          <p className="text-muted-foreground">{t("admin.classes.description")}</p>
         </div>
         {canManageClasses() && (
           <Link to="/admin/classes/create">
             <Button>
               <Plus className="w-4 h-4 mr-2" />
-              {t("classes.createClass")}
+              {t("admin.classes.createClass")}
             </Button>
           </Link>
         )}
@@ -101,7 +101,7 @@ const ClassesPage: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <Input
-                placeholder={t("classes.searchPlaceholder")}
+                placeholder={t("admin.classes.searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="max-w-sm"
@@ -113,7 +113,7 @@ const ClassesPage: React.FC = () => {
                   <SelectValue placeholder={t("common.status")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">{t("classes.allStatus")}</SelectItem>
+                  <SelectItem value="all">{t("admin.classes.allStatus")}</SelectItem>
                   <SelectItem value="active">{t("common.active")}</SelectItem>
                   <SelectItem value="inactive">
                     {t("common.inactive")}
@@ -126,10 +126,10 @@ const ClassesPage: React.FC = () => {
                 onValueChange={setAcademicYearFilter}
               >
                 <SelectTrigger className="w-[150px]">
-                  <SelectValue placeholder={t("classes.academicYear")} />
+                  <SelectValue placeholder={t("admin.classes.academicYear")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">{t("classes.allYears")}</SelectItem>
+                  <SelectItem value="all">{t("admin.classes.allYears")}</SelectItem>
                   {academicYears.map((year) => (
                     <SelectItem key={year} value={year}>
                       {year}
@@ -145,19 +145,19 @@ const ClassesPage: React.FC = () => {
             <TableHeader>
               <TableRow>
                 <TableHead className="text-center">
-                  {t("classes.name")}
+                  {t("admin.classes.name")}
                 </TableHead>
                 <TableHead className="text-center">
-                  {t("classes.gradeLevel")}
+                  {t("admin.classes.gradeLevel")}
                 </TableHead>
                 <TableHead className="text-center">
-                  {t("classes.academicYear")}
+                  {t("admin.classes.academicYear")}
                 </TableHead>
                 <TableHead className="text-center">
-                  {t("classes.students")}
+                  {t("admin.classes.students")}
                 </TableHead>
                 <TableHead className="text-center">
-                  {t("classes.teachers")}
+                  {t("admin.classes.teachers")}
                 </TableHead>
                 <TableHead className="text-center">
                   {t("common.status")}
@@ -174,7 +174,7 @@ const ClassesPage: React.FC = () => {
                     colSpan={7}
                     className="text-center py-8 text-muted-foreground"
                   >
-                    {t("classes.noClassesFound")}
+                    {t("admin.classes.noClassesFound")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -212,7 +212,7 @@ const ClassesPage: React.FC = () => {
                         <Link to={`/admin/classes/${classItem.id}/schedule`}>
                           <Button variant="outline" size="sm">
                             <Calendar className="w-4 h-4 mr-1" />
-                            {t("classes.schedule")}
+                            {t("admin.classes.schedule")}
                           </Button>
                         </Link>
                       </div>

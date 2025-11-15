@@ -61,35 +61,35 @@ export default function StudentParentsForm({
         onSubmit={handleSubmit(addParent)}
         className="space-y-4 p-4 border rounded-lg"
       >
-        <h3 className="font-medium">{t("addStudent.parents.addNew")}</h3>
+        <h3 className="font-medium">{t("admin.addStudent.parents.addNew")}</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <AppTextField
-            label={t("addStudent.parents.firstName")}
-            placeholder={t("addStudent.parents.firstNamePlaceholder")}
+            label={t("admin.addStudent.parents.firstName")}
+            placeholder={t("admin.addStudents.parents.firstNamePlaceholder")}
             error={errors.firstName && t("common.required")}
             required
             {...register("firstName", { required: true })}
           />
 
           <AppTextField
-            label={t("addStudent.parents.lastName")}
-            placeholder={t("addStudent.parents.lastNamePlaceholder")}
+            label={t("admin.addStudent.parents.lastName")}
+            placeholder={t("admin.addStudents.parents.lastNamePlaceholder")}
             error={errors.lastName && t("common.required")}
             required
             {...register("lastName", { required: true })}
           />
 
           <AppTextField
-            label={t("addStudent.parents.email")}
+            label={t("admin.addStudent.parents.email")}
             type="email"
-            placeholder={t("addStudent.parents.emailPlaceholder")}
+            placeholder={t("admin.addStudents.parents.emailPlaceholder")}
             error={errors.email && t("common.required")}
             required
             {...register("email", { required: true })}
           />
           <InternationalPhoneInput
-            label={t("addStudent.parents.phone")}
+            label={t("admin.addStudent.parents.phone")}
             value={watch("phoneNumber")}
             onChange={(value) => setValue("phoneNumber", value)}
             error={errors.phoneNumber?.message}
@@ -98,16 +98,16 @@ export default function StudentParentsForm({
 
           <div className="md:col-span-2">
             <AppTextField
-              label={t("addStudent.parents.occupation")}
-              placeholder={t("addStudent.parents.occupationPlaceholder")}
+              label={t("admin.addStudents.parents.occupation")}
+              placeholder={t("admin.addStudents.parents.occupationPlaceholder")}
               {...register("occupation")}
             />
           </div>
 
           <div className="md:col-span-2">
             <AppTextArea
-              label={t("addStudent.parents.notes")}
-              placeholder={t("addStudent.parents.notesPlaceholder")}
+              label={t("admin.addStudent.parents.notes")}
+              placeholder={t("admin.addStudent.parents.notesPlaceholder")}
               {...register("notes")}
             />
           </div>
@@ -115,7 +115,7 @@ export default function StudentParentsForm({
 
         <Button type="submit" size="sm" disabled={isSubmitting}>
           <Plus className="w-4 h-4 mr-2" />
-          {t("addStudent.parents.addParent")}
+          {t("admin.addStudents.parents.addParent")}
         </Button>
       </form>
 
@@ -123,7 +123,7 @@ export default function StudentParentsForm({
       {parents.length > 0 && (
         <div className="space-y-3">
           <h3 className="font-medium">
-            {t("addStudent.parents.addedParents")}
+            {t("admin.addStudents.parents.addedParents")}
           </h3>
           {parents.map((parent, index) => (
             <div

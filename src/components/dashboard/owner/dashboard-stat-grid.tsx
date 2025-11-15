@@ -1,4 +1,4 @@
-import StatCard from "@/components/dashboard/owner/dashboard-stat-card";
+import StatCard from "@/components/common/dashboard-stat-card";
 import { Building2, Users, GraduationCap, BookOpen } from "lucide-react";
 import { useLanguage } from "@/hooks/use-language";
 import type { DashboardStats } from "@/types/owner-dashboard";

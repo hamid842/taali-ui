@@ -25,12 +25,14 @@ export interface ActivityItem {
     | "school_updated"
     | "student_registered"
     | "teacher_added"
-    | "class_created";
+    | "class_created"
+    | "attendance_taken";
   description: string;
   timestamp: string;
   schoolName?: string;
   userName?: string;
   itemName?: string;
+  className?: string;
 }
 
 export interface SchoolDistribution {
@@ -41,7 +43,7 @@ export interface SchoolDistribution {
 
 export interface MonthlyGrowth {
   month: string;
-  schools: number;
+  schools?: number;
   students: number;
   teachers: number;
   classes: number;
@@ -89,6 +91,6 @@ export interface SchoolDataItem {
   studentCount: number;
   teacherCount: number;
   classCount: number;
-  classes: SchoolClass[]; 
-  students?: Student[]; 
+  classes: SchoolClass[];
+  students?: Student[];
 }

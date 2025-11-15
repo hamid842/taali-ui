@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useLanguage } from "@/hooks/use-language";
-import { formatGregorian, formatJalali } from "@/lib/date-utils";
+import { formatGregorian, formatJalali } from "@/lib/utils/date-utils";
 import type { ISchool } from "@/types/school";
 import {
   BookOpen,

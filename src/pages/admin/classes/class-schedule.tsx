@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback, type FC } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
+import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -52,7 +52,6 @@ import {
 
 export default function ClassSchedule() {
   const { classId } = useParams<{ classId: string }>();
-  const navigate = useNavigate();
   const { user } = useAuth();
   const { t } = useLanguage();
 
@@ -112,7 +111,7 @@ export default function ClassSchedule() {
       console.log("Loading data for class:", classId);
 
       // Load class details first
-      const classData = await classApi.getClassById(classId);
+      const classData = await classApi.getClassById(+classId);
       console.log("Class data:", classData);
       setClassDetail(classData);
 
@@ -122,8 +121,8 @@ export default function ClassSchedule() {
           console.error("Error loading schedules:", err);
           return [];
         }),
-        user?.schoolId
-          ? teacherApi.getBySchool(user.schoolId.toString()).catch((err) => {
+        user?.currentSchool?.id
+          ? teacherApi.getBySchool(user.currentSchool.id).catch((err) => {
               console.error("Error loading teachers:", err);
               return [];
             })
@@ -138,31 +137,31 @@ export default function ClassSchedule() {
 
       // Load lessons based on grade level
       if (classData.gradeLevel) {
-       try {
-         console.log("Loading lessons for grade level:", classData.gradeLevel);
-         console.log(
-           "Encoded grade level:",
-           encodeURIComponent(classData.gradeLevel)
-         );
+        try {
+          console.log("Loading lessons for grade level:", classData.gradeLevel);
+          console.log(
+            "Encoded grade level:",
+            encodeURIComponent(classData.gradeLevel)
+          );
 
-         const lessonsData = await lessonApi.getByGradeLevel(
-           classData.gradeLevel
-         );
-         console.log("Lessons API response:", lessonsData);
-         setLessons(lessonsData);
-       } catch (error) {
-         console.error("Error loading lessons:", error);
-         console.error("Error details:", {
-           message: error instanceof Error ? error.message : "Unknown error",
-           gradeLevel: classData.gradeLevel,
-           encodedGradeLevel: encodeURIComponent(classData.gradeLevel),
-         });
+          const lessonsData = await lessonApi.getByGradeLevel(
+            classData.gradeLevel
+          );
+          console.log("Lessons API response:", lessonsData);
+          setLessons(lessonsData);
+        } catch (error) {
+          console.error("Error loading lessons:", error);
+          console.error("Error details:", {
+            message: error instanceof Error ? error.message : "Unknown error",
+            gradeLevel: classData.gradeLevel,
+            encodedGradeLevel: encodeURIComponent(classData.gradeLevel),
+          });
 
-         // Fallback to default lessons if API not available
-         const defaultLessons = getDefaultLessons(classData.gradeLevel);
-         console.log("Using default lessons:", defaultLessons);
-         setLessons(defaultLessons);
-       }
+          // Fallback to default lessons if API not available
+          const defaultLessons = getDefaultLessons(classData.gradeLevel);
+          console.log("Using default lessons:", defaultLessons);
+          setLessons(defaultLessons);
+        }
       } else {
         console.log("No grade level found for class");
         setLessons(getDefaultLessons("ابتدایی دوره اول")); // Default fallback
@@ -177,7 +176,7 @@ export default function ClassSchedule() {
     } finally {
       setLoading(false);
     }
-  }, [classId, user?.schoolId]);
+  }, [classId, user?.currentSchool]);
 
   // Default lessons fallback
   const getDefaultLessons = (gradeLevel: string): Lesson[] => {
@@ -274,7 +273,7 @@ export default function ClassSchedule() {
       loadData(); // Reload schedules
     } catch (error) {
       console.error("Error saving schedule:", error);
-      alert(t("schedule.errors.saveFailed"));
+      alert(t("admin.schedule.errors.saveFailed"));
     }
   };
 
@@ -363,13 +362,11 @@ export default function ClassSchedule() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-lg text-red-600">
-          {t("schedule.errors.classNotFound")}
+          {t("admin.schedule.errors.classNotFound")}
         </div>
       </div>
     );
   }
-    
-    
 
   return (
     <div className="space-y-6">
@@ -382,7 +379,7 @@ export default function ClassSchedule() {
             </Button>
           </Link>
           <div>
-            <h1 className="text-3xl font-bold">{t("schedule.title")}</h1>
+            <h1 className="text-3xl font-bold">{t("admin.schedule.title")}</h1>
             <p className="text-muted-foreground">
               {classDetail.name} - {classDetail.gradeLevel}
             </p>
@@ -390,7 +387,7 @@ export default function ClassSchedule() {
         </div>
         <Button onClick={() => setIsDialogOpen(true)}>
           <Plus className="w-4 h-4 mr-2" />
-          {t("schedule.addSchedule")}
+          {t("admin.schedule.addSchedule")}
         </Button>
       </div>
 
@@ -436,10 +433,10 @@ export default function ClassSchedule() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <CalendarIcon className="w-5 h-5" />
-            {t("schedule.weeklyTimetable")}
+            {t("admin.schedule.weeklyTimetable")}
           </CardTitle>
           <CardDescription>
-            {t("schedule.timetableDescription")}
+            {t("admin.schedule.timetableDescription")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -448,7 +445,7 @@ export default function ClassSchedule() {
               {/* Days Header */}
               <div className="grid grid-cols-8 border-b">
                 <div className="p-4 font-semibold border-r bg-gray-50">
-                  {t("schedule.time")}
+                  {t("admin.schedule.time")}
                 </div>
                 {daysOrder.map((day) => (
                   <div
@@ -544,18 +541,18 @@ export default function ClassSchedule() {
           <DialogHeader>
             <DialogTitle>
               {editingSchedule
-                ? t("schedule.editSchedule")
-                : t("schedule.addSchedule")}
+                ? t("admin.schedule.editSchedule")
+                : t("admin.schedule.addSchedule")}
             </DialogTitle>
             <DialogDescription>
-              {t("schedule.formDescription")}
+              {t("admin.schedule.formDescription")}
             </DialogDescription>
           </DialogHeader>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="dayOfWeek">{t("schedule.dayOfWeek")}</Label>
+                <Label htmlFor="dayOfWeek">{t("admin.schedule.dayOfWeek")}</Label>
                 <Select
                   value={formData.dayOfWeek}
                   onValueChange={(value: DayOfWeek) =>
@@ -576,7 +573,7 @@ export default function ClassSchedule() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="subjectName">{t("schedule.subject")}</Label>
+                <Label htmlFor="subjectName">{t("admin.schedule.subject")}</Label>
                 <Select
                   value={formData.subjectName}
                   onValueChange={(value) =>
@@ -584,7 +581,7 @@ export default function ClassSchedule() {
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder={t("schedule.selectSubject")} />
+                    <SelectValue placeholder={t("admin.schedule.selectSubject")} />
                   </SelectTrigger>
                   <SelectContent>
                     {lessons.map((lesson) => (
@@ -599,7 +596,7 @@ export default function ClassSchedule() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="startTime">{t("schedule.startTime")}</Label>
+                <Label htmlFor="startTime">{t("admin.schedule.startTime")}</Label>
                 <Input
                   type="time"
                   value={formData.startTime}
@@ -614,7 +611,7 @@ export default function ClassSchedule() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="endTime">{t("schedule.endTime")}</Label>
+                <Label htmlFor="endTime">{t("admin.schedule.endTime")}</Label>
                 <Input
                   type="time"
                   value={formData.endTime}
@@ -631,7 +628,7 @@ export default function ClassSchedule() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="teacherId">{t("schedule.teacher")}</Label>
+                <Label htmlFor="teacherId">{t("admin.schedule.teacher")}</Label>
                 <Select
                   value={formData.teacherId?.toString()}
                   onValueChange={(value) =>
@@ -642,7 +639,7 @@ export default function ClassSchedule() {
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder={t("schedule.selectTeacher")} />
+                    <SelectValue placeholder={t("admin.schedule.selectTeacher")} />
                   </SelectTrigger>
                   <SelectContent>
                     {teachers.map((teacher) => (
@@ -658,7 +655,7 @@ export default function ClassSchedule() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="roomNumber">{t("schedule.room")}</Label>
+                <Label htmlFor="roomNumber">{t("admin.schedule.room")}</Label>
                 <Input
                   value={formData.roomNumber}
                   onChange={(e) =>
@@ -667,7 +664,7 @@ export default function ClassSchedule() {
                       roomNumber: e.target.value,
                     }))
                   }
-                  placeholder={t("schedule.roomPlaceholder")}
+                  placeholder={t("admin.schedule.roomPlaceholder")}
                 />
               </div>
             </div>
@@ -685,7 +682,7 @@ export default function ClassSchedule() {
                 {t("common.cancel")}
               </Button>
               <Button type="submit">
-                {editingSchedule ? t("common.save") : t("schedule.addSchedule")}
+                {editingSchedule ? t("common.save") : t("admin.schedule.addSchedule")}
               </Button>
             </DialogFooter>
           </form>
@@ -693,5 +690,4 @@ export default function ClassSchedule() {
       </Dialog>
     </div>
   );
-};
-
+}

@@ -32,16 +32,16 @@ export default function CreateTeacher() {
         <>
           {/* Header */}
           <FormHeader
-            title={t("addTeacher.create")}
-            desc={t("addTeacher.createDesc")}
+            title={t("admin.addTeacher.create")}
+            desc={t("admin.addTeacher.createDesc")}
           />
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Logo Upload Section */}
             <ImageUploadSection
               uploadType="profile-image"
-              title={t("addTeacher.imgSectionTitle")}
-              desc={t("addTeacher.imgSectionDesc")}
+              title={t("admin.addTeacher.imgSectionTitle")}
+              desc={t("admin.addTeacher.imgSectionDesc")}
               onImageChange={handleLogoChange}
             />
 
@@ -49,9 +49,9 @@ export default function CreateTeacher() {
             <div className="lg:col-span-2">
               <Card>
                 <CardHeader>
-                  <CardTitle>{t("addTeacher.details")}</CardTitle>
+                  <CardTitle>{t("admin.addTeacher.details")}</CardTitle>
                   <CardDescription>
-                    {t("addTeacher.detailsDescription")}
+                    {t("admin.addTeacher.detailsDescription")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -68,7 +68,7 @@ export default function CreateTeacher() {
           {/* Quick Tips Section */}
           <Card className="mt-6">
             <CardHeader>
-              <CardTitle className="text-lg">{t("addTeacher.tips")}</CardTitle>
+              <CardTitle className="text-lg">{t("admin.addTeacher.tips")}</CardTitle>
             </CardHeader>
             <CardContent>
               <ul
@@ -76,21 +76,21 @@ export default function CreateTeacher() {
                   dir === "rtl" ? "list-disc pr-4" : "list-disc pl-4"
                 }`}
               >
-                <li>{t("addTeacher.tipSpecialization")}</li>
-                <li>{t("addTeacher.tipQualification")}</li>
-                <li>{t("addTeacher.tipContact")}</li>
-                <li>{t("addTeacher.tipProfile")}</li>
+                <li>{t("admin.addTeacher.tipSpecialization")}</li>
+                <li>{t("admin.addTeacher.tipQualification")}</li>
+                <li>{t("admin.addTeacher.tipContact")}</li>
+                <li>{t("admin.addTeacher.tipProfile")}</li>
               </ul>
             </CardContent>
           </Card>
         </>
       ) : (
         <EmptyData
-          title={t("addTeacher.noSchoolTitle")}
-          desc={t("addTeacher.noSchoolDesc")}
+          title={t("admin.addTeacher.noSchoolTitle")}
+          desc={t("admin.addTeacher.noSchoolDesc")}
           actions={
             <Link to={"/admin/schools/create"}>
-              <Button>{t("addTeacher.noSchoolBtn")}</Button>
+              <Button>{t("admin.addTeacher.noSchoolBtn")}</Button>
             </Link>
           }
         />

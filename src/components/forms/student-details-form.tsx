@@ -48,14 +48,14 @@ export default function StudentDetailsForm({
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <AppTextField
-          label={t("addStudent.fields.studentId")}
-          placeholder={t("addStudent.placeholders.studentId")}
+          label={t("admin.addStudent.fields.studentId")}
+          placeholder={t("admin.addStudent.placeholders.studentId")}
           {...register("studentId")}
         />
 
         <AppTextField
-          label={t("addStudent.fields.idNumber")}
-          placeholder={t("addStudent.placeholders.idNumber")}
+          label={t("admin.addStudent.fields.idNumber")}
+          placeholder={t("admin.addStudent.placeholders.idNumber")}
           {...register("idNumber")}
         />
         <Controller
@@ -63,8 +63,8 @@ export default function StudentDetailsForm({
           control={control}
           render={({ field }) => (
             <AppEnDateField
-              label={t("addStudent.fields.birthDate")}
-              placeholder={t("addStudent.placeholders.birthDate")}
+              label={t("admin.addStudent.fields.birthDate")}
+              placeholder={t("admin.addStudent.placeholders.birthDate")}
               value={field.value}
               onChange={field.onChange}
             />
@@ -72,27 +72,27 @@ export default function StudentDetailsForm({
         />
 
         <AppTextField
-          label={t("addStudent.fields.gradeLevel")}
-          placeholder={t("addStudent.placeholders.gradeLevel")}
+          label={t("admin.addStudent.fields.gradeLevel")}
+          placeholder={t("admin.addStudent.placeholders.gradeLevel")}
           {...register("gradeLevel")}
         />
 
         <AppTextField
-          label={t("addStudent.fields.emergencyContact")}
-          placeholder={t("addStudent.placeholders.emergencyContact")}
+          label={t("admin.addStudent.fields.emergencyContact")}
+          placeholder={t("admin.addStudent.placeholders.emergencyContact")}
           {...register("emergencyContact")}
         />
 
         <AppTextField
-          label={t("addStudent.fields.emergencyPhone")}
-          placeholder={t("addStudent.placeholders.emergencyPhone")}
+          label={t("admin.addStudent.fields.emergencyPhone")}
+          placeholder={t("admin.addStudent.placeholders.emergencyPhone")}
           {...register("emergencyPhone")}
         />
       </div>
       <AppTextArea
         {...register("medicalNotes")}
-        label={t("addStudent.fields.medicalNotes")}
-        placeholder={t("addStudent.placeholders.medicalNotes")}
+        label={t("admin.addStudent.fields.medicalNotes")}
+        placeholder={t("admin.addStudent.placeholders.medicalNotes")}
       />
       <div className="flex justify-between pt-4">
         <Button type="button" variant="outline" onClick={onBack}>

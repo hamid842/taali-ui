@@ -41,28 +41,31 @@ const CreateClassPage: FC = () => {
     gradeLevel: "",
     academicYear: "1403-1404",
     capacity: 30,
-    schoolId: user?.schoolId || 0,
+    schoolId: user?.currentSchool?.id || 0,
     mainTeacherId: undefined,
     teacherIds: [],
   });
 
   const loadTeachers = useCallback(async () => {
     try {
-      if (!user?.schoolId) return;
+      if (!user?.currentSchool?.id) return;
       setTeachersLoading(true);
-      const data = await teacherApi.getBySchool(user.schoolId);
+      const data = await teacherApi.getBySchool(user?.currentSchool?.id);
       setTeachers(data);
     } catch (error) {
       console.error("Error loading teachers:", error);
     } finally {
       setTeachersLoading(false);
     }
-  }, [user?.schoolId]);
+  }, [user?.currentSchool]);
 
   useEffect(() => {
-    if (user?.schoolId) {
+    if (user?.currentSchool?.id) {
       loadTeachers();
-      setFormData((prev) => ({ ...prev, schoolId: user.schoolId! }));
+      setFormData((prev) => ({
+        ...prev,
+        schoolId: Number(user.currentSchool?.id),
+      }));
     }
   }, [user, loadTeachers]);
 
@@ -70,17 +73,17 @@ const CreateClassPage: FC = () => {
     e.preventDefault();
 
     if (!formData.schoolId) {
-      toast.warning(t("classes.errors.schoolRequired"));
+      toast.warning(t("admin.classes.errors.schoolRequired"));
       return;
     }
 
     if (!formData.name.trim()) {
-      toast.warning(t("classes.errors.nameRequired"));
+      toast.warning(t("admin.classes.errors.nameRequired"));
       return;
     }
 
     if (!formData.academicYear.trim()) {
-      toast.warning(t("classes.errors.academicYearRequired"));
+      toast.warning(t("admin.classes.errors.academicYearRequired"));
       return;
     }
 
@@ -88,11 +91,11 @@ const CreateClassPage: FC = () => {
 
     try {
       await classApi.createClass(formData);
-      toast.success(t("classes.success.created"));
+      toast.success(t("admin.classes.success.created"));
       navigate("/admin/classes");
     } catch (error) {
-      console.error(t("classes.errors.createFailed"), error);
-      toast.error(t("classes.errors.createFailed"));
+      console.error(t("admin.classes.errors.createFailed"), error);
+      toast.error(t("admin.classes.errors.createFailed"));
     } finally {
       setLoading(false);
     }
@@ -115,23 +118,23 @@ const CreateClassPage: FC = () => {
   };
 
   const gradeLevels = [
-    { value: "مهد کودک", label: t("classes.gradeLevels.kindergarten") },
-    { value: "پیش دبستانی", label: t("classes.gradeLevels.preschool") },
+    { value: "مهد کودک", label: t("admin.classes.gradeLevels.kindergarten") },
+    { value: "پیش دبستانی", label: t("admin.classes.gradeLevels.preschool") },
     {
       value: "ابتدایی دوره اول",
-      label: t("classes.gradeLevels.primaryFirst"),
+      label: t("admin.classes.gradeLevels.primaryFirst"),
     },
     {
       value: "ابتدایی دوره دوم",
-      label: t("classes.gradeLevels.primarySecond"),
+      label: t("admin.classes.gradeLevels.primarySecond"),
     },
     {
       value: "متوسطه دوره اول",
-      label: t("classes.gradeLevels.secondaryFirst"),
+      label: t("admin.classes.gradeLevels.secondaryFirst"),
     },
     {
       value: "متوسطه دوره دوم",
-      label: t("classes.gradeLevels.secondarySecond"),
+      label: t("admin.classes.gradeLevels.secondarySecond"),
     },
   ];
 
@@ -140,13 +143,13 @@ const CreateClassPage: FC = () => {
   return (
     <div className="space-y-6">
       <FormHeader
-        title={t("classes.createClass")}
-        desc={t("classes.createDescription")}
+        title={t("admin.classes.createClass")}
+        desc={t("admin.classes.createDescription")}
       />
       {/* Information Alert */}
       <Alert>
         <AlertCircle className="w-4 h-4" />
-        <AlertDescription>{t("classes.createInfo")}</AlertDescription>
+        <AlertDescription>{t("admin.classes.createInfo")}</AlertDescription>
       </Alert>
 
       <form onSubmit={handleSubmit}>
@@ -154,25 +157,27 @@ const CreateClassPage: FC = () => {
           {/* Basic Information Card */}
           <Card>
             <CardHeader>
-              <CardTitle>{t("classes.basicInformation")}</CardTitle>
+              <CardTitle>{t("admin.classes.basicInformation")}</CardTitle>
               <CardDescription>
-                {t("classes.basicInformationDesc")}
+                {t("admin.classes.basicInformationDesc")}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">{t("classes.className")} *</Label>
+                <Label htmlFor="name">{t("admin.classes.className")} *</Label>
                 <Input
                   id="name"
                   value={formData.name}
                   onChange={(e) => handleInputChange("name", e.target.value)}
-                  placeholder={t("classes.classNamePlaceholder")}
+                  placeholder={t("admin.classes.classNamePlaceholder")}
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="gradeLevel">{t("classes.gradeLevel")}</Label>
+                <Label htmlFor="gradeLevel">
+                  {t("admin.classes.gradeLevel")}
+                </Label>
                 <Select
                   value={formData.gradeLevel}
                   onValueChange={(value) =>
@@ -180,7 +185,9 @@ const CreateClassPage: FC = () => {
                   }
                 >
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder={t("classes.selectGradeLevel")} />
+                    <SelectValue
+                      placeholder={t("admin.classes.selectGradeLevel")}
+                    />
                   </SelectTrigger>
                   <SelectContent>
                     {gradeLevels.map((level) => (
@@ -194,7 +201,7 @@ const CreateClassPage: FC = () => {
 
               <div className="space-y-2">
                 <Label htmlFor="academicYear">
-                  {t("classes.academicYear")} *
+                  {t("admin.classes.academicYear")} *
                 </Label>
                 <Select
                   value={formData.academicYear}
@@ -216,7 +223,7 @@ const CreateClassPage: FC = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="capacity">{t("classes.capacity")}</Label>
+                <Label htmlFor="capacity">{t("admin.classes.capacity")}</Label>
                 <Input
                   id="capacity"
                   type="number"
@@ -230,7 +237,9 @@ const CreateClassPage: FC = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="mainTeacher">{t("classes.mainTeacher")}</Label>
+                <Label htmlFor="mainTeacher">
+                  {t("admin.classes.mainTeacher")}
+                </Label>
                 {teachersLoading ? (
                   <div className="text-sm text-muted-foreground">
                     {t("common.loading")}
@@ -240,12 +249,12 @@ const CreateClassPage: FC = () => {
                     <Select disabled>
                       <SelectTrigger className="w-full">
                         <SelectValue
-                          placeholder={t("classes.noTeachersAvailable")}
+                          placeholder={t("admin.classes.noTeachersAvailable")}
                         />
                       </SelectTrigger>
                     </Select>
                     <p className="text-sm text-muted-foreground">
-                      {t("classes.noTeachersMessage")}
+                      {t("admin.classes.noTeachersMessage")}
                     </p>
                     <Link to="/admin/teachers/create">
                       <Button variant="outline" size="sm" className="mt-2">
@@ -263,7 +272,7 @@ const CreateClassPage: FC = () => {
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue
-                        placeholder={t("classes.selectMainTeacher")}
+                        placeholder={t("admin.classes.selectMainTeacher")}
                       />
                     </SelectTrigger>
                     <SelectContent dir={dir}>
@@ -287,15 +296,15 @@ const CreateClassPage: FC = () => {
           {/* Students and Teachers Card */}
           <Card>
             <CardHeader>
-              <CardTitle>{t("classes.studentsAndTeachers")}</CardTitle>
+              <CardTitle>{t("admin.classes.studentsAndTeachers")}</CardTitle>
               <CardDescription>
-                {t("classes.studentsAndTeachersDesc")}
+                {t("admin.classes.studentsAndTeachersDesc")}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Teachers Selection */}
               <div className="space-y-3">
-                <Label>{t("classes.teachers")}</Label>
+                <Label>{t("admin.classes.teachers")}</Label>
                 {teachersLoading ? (
                   <div className="text-sm text-muted-foreground py-4 text-center">
                     {t("common.loading")}
@@ -304,7 +313,7 @@ const CreateClassPage: FC = () => {
                   <div className="text-center py-6 border rounded-lg">
                     <Users className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
                     <p className="text-sm text-muted-foreground mb-2">
-                      {t("classes.noTeachersAvailable")}
+                      {t("admin.classes.noTeachersAvailable")}
                     </p>
                     <Link to="/admin/teachers/create">
                       <Button variant="outline" size="sm">
@@ -346,7 +355,7 @@ const CreateClassPage: FC = () => {
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Users className="w-4 h-4" />
-                      {t("classes.selectedCount", {
+                      {t("admin.classes.selectedCount", {
                         count: formData.teacherIds.length,
                       })}
                     </div>
@@ -365,7 +374,9 @@ const CreateClassPage: FC = () => {
           </Link>
           <Button type="submit" disabled={loading}>
             <Save className="w-4 h-4 mr-2" />
-            {loading ? t("classes.creating") : t("classes.createClass")}
+            {loading
+              ? t("admin.classes.creating")
+              : t("admin.classes.createClass")}
           </Button>
         </div>
       </form>

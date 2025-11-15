@@ -43,20 +43,20 @@ export default function CreateStudent() {
   const steps = [
     {
       id: 1,
-      title: t("addStudent.steps.registerInfo"),
-      description: t("addStudent.steps.registerInfoDesc"),
+      title: t("admin.addStudent.steps.registerInfo"),
+      description: t("admin.addStudent.steps.registerInfoDesc"),
       icon: User,
     },
     {
       id: 2,
-      title: t("addStudent.steps.personalInfo"),
-      description: t("addStudent.steps.personalInfoDesc"),
+      title: t("admin.addStudent.steps.personalInfo"),
+      description: t("admin.addStudent.steps.personalInfoDesc"),
       icon: UserCheck,
     },
     {
       id: 3,
-      title: t("addStudent.steps.parentsInfo"),
-      description: t("addStudent.steps.parentsInfoDesc"),
+      title: t("admin.addStudent.steps.parentsInfo"),
+      description: t("admin.addStudent.steps.parentsInfoDesc"),
       icon: Users,
     },
   ];
@@ -78,7 +78,7 @@ export default function CreateStudent() {
 
   const handleStep3Complete = (parentsData: Student) => {
     if (parentsData) {
-      toast.success(t("addStudent.success"));
+      toast.success(t("admin.addStudent.success"));
       navigate("/admin/students");
     }
   };
@@ -139,11 +139,11 @@ export default function CreateStudent() {
   if (!ownerHasSchool) {
     return (
       <EmptyData
-        title={t("addStudent.noSchoolTitle")}
-        desc={t("addStudent.noSchoolDesc")}
+        title={t("admin.addStudent.noSchoolTitle")}
+        desc={t("admin.addStudent.noSchoolDesc")}
         actions={
           <Link to={"/admin/schools/create"}>
-            <Button>{t("addStudent.noSchoolBtn")}</Button>
+            <Button>{t("admin.addStudent.noSchoolBtn")}</Button>
           </Link>
         }
       />
@@ -154,8 +154,8 @@ export default function CreateStudent() {
     <div className="container mx-auto py-6 max-w-4xl">
       {/* Header */}
       <FormHeader
-        title={t("addStudent.create")}
-        desc={t("addStudent.createDesc")}
+        title={t("admin.addStudent.create")}
+        desc={t("admin.addStudent.createDesc")}
       />
 
       {/* Stepper */}
@@ -236,8 +236,8 @@ export default function CreateStudent() {
         {currentStep === 1 && (
           <ImageUploadSection
             uploadType="profile-image"
-            title={t("addStudent.imgSectionTitle")}
-            desc={t("addStudent.imgSectionDesc")}
+            title={t("admin.addStudent.imgSectionTitle")}
+            desc={t("admin.addStudent.imgSectionDesc")}
             onImageChange={handleLogoChange}
           />
         )}

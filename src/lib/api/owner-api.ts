@@ -2,18 +2,18 @@ import { schoolApi } from "./school-api";
 import { studentApi } from "./student-api";
 import { teacherApi } from "./teacher-api";
 import { classApi } from "./class-api";
-import type { ISchool } from "@/types/school";
 import type {
   ActivityItem,
   DashboardStats,
-  MonthlyGrowth,
-  PerformanceMetrics,
   RecentRegistration,
   SchoolDataItem,
   SchoolDistribution,
   SchoolPerformance,
   TopSchool,
 } from "@/types/owner-dashboard";
+import { dashboardUtils } from "@/lib/utils/dashboard-utils";
+import { activityUtils } from "@/lib/utils/activity-utils";
+import type { ISchool } from "@/types/school";
 import type { StudentListResponse } from "@/types/student";
 import type { Teacher } from "@/types/teacher";
 import type { ClassResponse } from "@/types/class";
@@ -24,11 +24,10 @@ export const ownerApi = {
     try {
       const schools = await schoolApi.getMySchools();
 
-      // Fetch data for all schools in parallel
       const schoolPromises = schools.map(async (school) => {
         try {
           const [studentsResponse, teachers, classes] = await Promise.all([
-            studentApi.getBySchool(school.id, { size: 1 }), // Just get count
+            studentApi.getBySchool(school.id, { size: 1 }),
             teacherApi.getBySchool(school.id),
             classApi.getClassesBySchool(school.id),
           ]);
@@ -38,7 +37,7 @@ export const ownerApi = {
             studentCount: studentsResponse.pagination.totalElements,
             teacherCount: teachers.length,
             classCount: classes.length,
-            classes, // We need class details for capacity calculation
+            classes,
           };
         } catch (error) {
           console.error(`Error fetching data for school ${school.id}:`, error);
@@ -54,7 +53,7 @@ export const ownerApi = {
 
       const schoolData = await Promise.all(schoolPromises);
 
-      // Calculate totals
+      // Calculate totals using shared utility
       const totalStudents = schoolData.reduce(
         (sum, data) => sum + data.studentCount,
         0
@@ -68,19 +67,21 @@ export const ownerApi = {
         0
       );
 
-      // Calculate capacity utilization
-      const totalCapacity = schoolData.reduce((sum, data) => {
-        const schoolCapacity = data.classes.reduce(
-          (classSum, classItem) => classSum + (classItem.capacity || 0),
-          0
-        );
-        return sum + schoolCapacity;
-      }, 0);
+      // Calculate capacity using shared utility
+      const totalCapacity = dashboardUtils.calculateCapacityUtilization(
+        schoolData.flatMap((data) => data.classes)
+      );
 
-      const capacityUtilization =
-        totalCapacity > 0 ? (totalStudents / totalCapacity) * 100 : 0;
+      // Calculate performance metrics using shared utility
+      const performanceMetrics = dashboardUtils.calculatePerformanceMetrics(
+        totalStudents,
+        totalTeachers,
+        totalClasses,
+        totalCapacity,
+        schools.length 
+      );
 
-      // Prepare top schools (sorted by student count)
+      // Prepare top schools
       const topSchools: TopSchool[] = schoolData
         .map((data) => ({
           id: data.school.id,
@@ -88,44 +89,34 @@ export const ownerApi = {
           studentCount: data.studentCount,
           teacherCount: data.teacherCount,
           classCount: data.classCount,
-          growth: Math.floor(Math.random() * 20) + 5, // Simulated growth percentage
+          growth: Math.floor(Math.random() * 20) + 5,
         }))
         .sort((a, b) => b.studentCount - a.studentCount)
         .slice(0, 5);
 
-      // Get school distribution by type/level
+      // Get school distribution
       const schoolDistribution = calculateSchoolDistribution(schools);
 
-      // Get recent activity (simulated - you can replace with actual activity logs)
-      const recentActivity = await generateRecentActivity(schools);
+      // Generate recent activity using shared utility
+      const recentActivity = activityUtils.generateRecentActivity(schools, [
+        "school_created",
+        "student_registered",
+        "teacher_added",
+        "class_created",
+      ]);
 
-      // Get recent registrations (last 7 days)
+      // Get recent registrations
       const recentRegistrations = await generateRecentRegistrations(schoolData);
 
-      // Get monthly growth data (last 6 months)
-      const monthlyGrowth = generateMonthlyGrowth(schoolData);
-
-      // Calculate performance metrics
-      const performanceMetrics: PerformanceMetrics = {
-        averageStudentsPerSchool:
-          schools.length > 0 ? Math.round(totalStudents / schools.length) : 0,
-        averageTeachersPerSchool:
-          schools.length > 0 ? Math.round(totalTeachers / schools.length) : 0,
-        averageClassesPerSchool:
-          schools.length > 0 ? Math.round(totalClasses / schools.length) : 0,
-        studentTeacherRatio:
-          totalTeachers > 0
-            ? Number((totalStudents / totalTeachers).toFixed(1))
-            : 0,
-        capacityUtilization: Number(capacityUtilization.toFixed(1)),
-      };
+      // Get monthly growth data using shared utility
+      const monthlyGrowth = dashboardUtils.generateMonthlyGrowth(schoolData);
 
       return {
         totalSchools: schools.length,
         totalStudents,
         totalTeachers,
         totalClasses,
-        activeSchools: schools.length, // Assuming all are active
+        activeSchools: schools.length,
         recentActivity,
         schoolDistribution,
         monthlyGrowth,
@@ -160,20 +151,20 @@ export const ownerApi = {
         studentApi.getBySchool(schoolId, { size: 1 }),
         teacherApi.getBySchool(schoolId),
         classApi.getClassesBySchool(schoolId),
-        studentApi.getBySchool(schoolId, { size: 10, page: 0 }),
       ]);
 
-      // Calculate capacity utilization for this school
-      const totalCapacity = classes.reduce(
-        (sum, classItem) => sum + (classItem.capacity || 0),
-        0
-      );
-      const capacityUtilization =
-        totalCapacity > 0
-          ? (students.pagination.totalElements / totalCapacity) * 100
-          : 0;
+      const totalCapacity =
+        dashboardUtils.calculateCapacityUtilization(classes);
 
-      // Generate recent activity for this school
+      // Use shared utility for consistency
+      const performanceMetrics = dashboardUtils.calculatePerformanceMetrics(
+        students.pagination.totalElements,
+        teachers.length,
+        classes.length,
+        totalCapacity,
+        1 // Single school for admin-like view
+      );
+
       const recentActivity = await generateSchoolActivity(
         school,
         students,
@@ -187,13 +178,8 @@ export const ownerApi = {
         studentCount: students.pagination.totalElements,
         teacherCount: teachers.length,
         classCount: classes.length,
-        studentTeacherRatio:
-          teachers.length > 0
-            ? Number(
-                (students.pagination.totalElements / teachers.length).toFixed(1)
-              )
-            : 0,
-        capacityUtilization: Number(capacityUtilization.toFixed(1)),
+        studentTeacherRatio: performanceMetrics.studentTeacherRatio,
+        capacityUtilization: performanceMetrics.capacityUtilization,
         recentActivity,
       };
     } catch (error) {
@@ -215,18 +201,10 @@ export const ownerApi = {
 
     return Promise.all(performancePromises);
   },
-
-  // Get growth analytics for the last 12 months
-  getGrowthAnalytics: async (): Promise<MonthlyGrowth[]> => {
-    // This would typically come from a dedicated analytics endpoint
-    // For now, we'll generate simulated data
-    return generateMonthlyGrowth([]);
-  },
 };
 
 // Helper function to calculate school distribution
 function calculateSchoolDistribution(schools: ISchool[]): SchoolDistribution[] {
-  // Group schools by type or level (you might need to adjust based on your school model)
   const distribution: { [key: string]: number } = {};
 
   schools.forEach((school) => {
@@ -240,70 +218,9 @@ function calculateSchoolDistribution(schools: ISchool[]): SchoolDistribution[] {
   return Object.entries(distribution).map(([gradeLevel, count]) => ({
     gradeLevel,
     count,
-    percentage: total > 0 ? Number(((count / total) * 100).toFixed(1)) : 0,
+    // Use shared utility for consistency
+    percentage: dashboardUtils.calculatePercentage(count, total),
   }));
-}
-
-// Helper function to generate recent activity
-async function generateRecentActivity(
-  schools: ISchool[]
-): Promise<ActivityItem[]> {
-  const activities: ActivityItem[] = [];
-  const activityTypes: ActivityItem["type"][] = [
-    "school_created",
-    "student_registered",
-    "teacher_added",
-    "class_created",
-  ];
-
-  // Generate activities for the last 30 days
-  for (let i = 0; i < 15; i++) {
-    const school = schools[Math.floor(Math.random() * schools.length)];
-    const activityType =
-      activityTypes[Math.floor(Math.random() * activityTypes.length)];
-    const daysAgo = Math.floor(Math.random() * 30);
-    const timestamp = new Date(
-      Date.now() - daysAgo * 24 * 60 * 60 * 1000
-    ).toISOString();
-
-    let description = "";
-    let itemName = "";
-
-    switch (activityType) {
-      case "school_created":
-        description = `New school registered: ${school.name}`;
-        break;
-      case "student_registered":
-        itemName = `Student ${Math.floor(Math.random() * 1000) + 1}`;
-        description = `New student registered: ${itemName}`;
-        break;
-      case "teacher_added":
-        itemName = `Teacher ${Math.floor(Math.random() * 100) + 1}`;
-        description = `New teacher added: ${itemName}`;
-        break;
-      case "class_created":
-        itemName = `Class ${Math.floor(Math.random() * 50) + 1}`;
-        description = `New class created: ${itemName}`;
-        break;
-    }
-
-    activities.push({
-      id: i + 1,
-      type: activityType,
-      description,
-      timestamp,
-      schoolName: school.name,
-      itemName,
-    });
-  }
-
-  // Sort by timestamp (newest first)
-  return activities
-    .sort(
-      (a, b) =>
-        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-    )
-    .slice(0, 10); // Return only last 10 activities
 }
 
 // Helper function to generate recent registrations
@@ -356,54 +273,6 @@ async function generateRecentRegistrations(
   );
 }
 
-// Helper function to generate monthly growth data
-function generateMonthlyGrowth(schoolData: SchoolDataItem[]): MonthlyGrowth[] {
-  const months = [];
-  const currentDate = new Date();
-
-  // Generate data for the last 6 months
-  for (let i = 5; i >= 0; i--) {
-    const date = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth() - i,
-      1
-    );
-    const monthName = date.toLocaleString("default", {
-      month: "short",
-      year: "2-digit",
-    });
-
-    // Simulate growth (in a real app, this would come from historical data)
-    const baseSchools = Math.max(1, schoolData.length - (5 - i));
-    const baseStudents = Math.max(
-      10,
-      schoolData.reduce((sum, data) => sum + data.studentCount, 0) -
-        (5 - i) * 50
-    );
-    const baseTeachers = Math.max(
-      2,
-      schoolData.reduce((sum, data) => sum + data.teacherCount, 0) -
-        (5 - i) * 10
-    );
-    const baseClasses = Math.max(
-      1,
-      schoolData.reduce((sum, data) => sum + data.classCount, 0) - (5 - i) * 5
-    );
-
-    const growthFactor = 1 + i * 0.1; // Increasing growth over months
-
-    months.push({
-      month: monthName,
-      schools: Math.floor(baseSchools * growthFactor),
-      students: Math.floor(baseStudents * growthFactor),
-      teachers: Math.floor(baseTeachers * growthFactor),
-      classes: Math.floor(baseClasses * growthFactor),
-    });
-  }
-
-  return months;
-}
-
 // Helper function to generate school-specific activity
 async function generateSchoolActivity(
   school: ISchool,
@@ -418,7 +287,7 @@ async function generateSchoolActivity(
   if (students.pagination.totalElements > 0) {
     activities.push({
       id: 1,
-      type: "student_registered",
+      type: "student_registered" as const,
       description: `${students.pagination.totalElements} students currently enrolled`,
       timestamp: now.toISOString(),
       schoolName: school.name,
@@ -429,7 +298,7 @@ async function generateSchoolActivity(
   if (teachers.length > 0) {
     activities.push({
       id: 2,
-      type: "teacher_added",
+      type: "teacher_added" as const,
       description: `${teachers.length} teachers currently teaching`,
       timestamp: new Date(
         now.getTime() - 2 * 24 * 60 * 60 * 1000
@@ -442,7 +311,7 @@ async function generateSchoolActivity(
   if (classes.length > 0) {
     activities.push({
       id: 3,
-      type: "class_created",
+      type: "class_created" as const,
       description: `${classes.length} active classes`,
       timestamp: new Date(
         now.getTime() - 5 * 24 * 60 * 60 * 1000

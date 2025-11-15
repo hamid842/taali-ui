@@ -1,5 +1,5 @@
 import { useLanguage } from "@/hooks/use-language";
-import { formatGregorian, formatJalali } from "@/lib/date-utils";
+import { formatGregorian, formatJalali } from "@/lib/utils/date-utils";
 import { useMemo } from "react";
 
 export default function LocalizedDate() {

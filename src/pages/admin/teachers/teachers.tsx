@@ -37,26 +37,26 @@ export default function TeachersPage() {
 
   const loadTeachers = useCallback(async () => {
     try {
-      if (!user?.schoolId) {
+      if (!user?.currentSchool?.id) {
         console.error("No school ID found");
         return;
       }
 
-      const data = await teacherApi.getBySchool(user.schoolId);
+      const data = await teacherApi.getBySchool(user?.currentSchool?.id);
       setTeachers(data);
     } catch (error) {
-      console.error(t("teachers.errors.loadFailed"), error);
+      console.error(t("admin.teachers.errors.loadFailed"), error);
     } finally {
       setLoading(false);
     }
-  }, [user?.schoolId, t]);
+  }, [user?.currentSchool?.id, t]);
 
   useEffect(() => {
     loadTeachers();
   }, [loadTeachers]);
 
   const handleDeleteTeacher = async (teacherId: number) => {
-    if (!confirm(t("teachers.confirmDelete"))) {
+    if (!confirm(t("admin.teachers.confirmDelete"))) {
       return;
     }
 
@@ -65,8 +65,8 @@ export default function TeachersPage() {
       // Remove the teacher from the local state
       setTeachers(teachers.filter((teacher) => teacher.id !== teacherId));
     } catch (error) {
-      console.error(t("teachers.errors.deleteFailed"), error);
-      alert(t("teachers.errors.deleteFailed"));
+      console.error(t("admin.teachers.errors.deleteFailed"), error);
+      alert(t("admin.teachers.errors.deleteFailed"));
     }
   };
 
@@ -93,7 +93,7 @@ export default function TeachersPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-lg">{t("teachers.loading")}</div>
+        <div className="text-lg">{t("admin.teachers.loading")}</div>
       </div>
     );
   }
@@ -102,14 +102,14 @@ export default function TeachersPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">{t("teachers.title")}</h1>
-          <p className="text-muted-foreground">{t("teachers.description")}</p>
+          <h1 className="text-3xl font-bold">{t("admin.teachers.title")}</h1>
+          <p className="text-muted-foreground">{t("admin.teachers.description")}</p>
         </div>
         {canManageTeachers() && (
           <Link to="/admin/teachers/create">
             <Button>
               <Plus className="w-4 h-4 mr-2" />
-              {t("teachers.createTeacher")}
+              {t("admin.teachers.createTeacher")}
             </Button>
           </Link>
         )}
@@ -120,7 +120,7 @@ export default function TeachersPage() {
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <Input
-                placeholder={t("teachers.searchPlaceholder")}
+                placeholder={t("admin.teachers.searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="max-w-sm"
@@ -132,7 +132,7 @@ export default function TeachersPage() {
                   <SelectValue placeholder={t("common.status")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">{t("teachers.allStatus")}</SelectItem>
+                  <SelectItem value="all">{t("admin.teachers.allStatus")}</SelectItem>
                   <SelectItem value="active">{t("common.active")}</SelectItem>
                   <SelectItem value="inactive">
                     {t("common.inactive")}
@@ -142,11 +142,11 @@ export default function TeachersPage() {
 
               <Select value={subjectFilter} onValueChange={setSubjectFilter}>
                 <SelectTrigger className="w-[150px]">
-                  <SelectValue placeholder={t("teachers.subject")} />
+                  <SelectValue placeholder={t("admin.teachers.subject")} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">
-                    {t("teachers.allSubjects")}
+                    {t("admin.teachers.allSubjects")}
                   </SelectItem>
                   {allSubjects.map((subject) => (
                     <SelectItem key={subject} value={subject}>
@@ -163,16 +163,16 @@ export default function TeachersPage() {
             <TableHeader>
               <TableRow>
                 <TableHead className="text-center">
-                  {t("teachers.name")}
+                  {t("admin.teachers.name")}
                 </TableHead>
                 <TableHead className="text-center">
-                  {t("teachers.email")}
+                  {t("admin.teachers.email")}
                 </TableHead>
                 <TableHead className="text-center">
-                  {t("teachers.subjects")}
+                  {t("admin.teachers.subjects")}
                 </TableHead>
                 {/* <TableHead className="text-center">
-                  {t("teachers.classes")}
+                  {t("admin.teachers.classes")}
                 </TableHead> */}
                 <TableHead className="text-center">
                   {t("common.status")}
@@ -189,7 +189,7 @@ export default function TeachersPage() {
                     colSpan={6}
                     className="text-center py-8 text-muted-foreground"
                   >
-                    {t("teachers.noTeachersFound")}
+                    {t("admin.teachers.noTeachersFound")}
                   </TableCell>
                 </TableRow>
               ) : (
