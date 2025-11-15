@@ -717,6 +717,27 @@
       "noSchedule": "هیچ کلاسی برای امروز برنامه‌ریزی نشده",
       "noActivity": "هیچ فعالیتی ثبت نشده"
     },
+    "myClasses": {
+      "title": "کلاس‌های من",
+      "description": "مدیریت و مشاهده تمام کلاس‌های اختصاص‌داده‌شده",
+      "nextClass": "کلاس بعدی",
+      "totalClasses": "مجموع کلاس‌ها",
+      "totalStudents": "مجموع دانش‌آموزان",
+      "upcomingToday": "برنامه امروز",
+      "searchPlaceholder": "جستجو در کلاس‌ها یا دروس...",
+      "allSubjects": "تمام دروس",
+      "allGrades": "تمام مقاطع",
+      "allClasses": "تمام کلاس‌ها",
+      "withStudents": "دارای دانش‌آموز",
+      "noStudents": "بدون دانش‌آموز",
+      "noClassesFound": "کلاسی یافت نشد",
+      "noClassesDescription": "هیچ کلاسی با فیلترهای فعلی مطابقت ندارد",
+      "students": "دانش‌آموز",
+      "attendance": "حضور و غیاب",
+      "errors": {
+        "loadFailed": "بارگذاری کلاس‌ها انجام نشد"
+      }
+    },
     "attendance": {
       "take": "ثبت حضور و غیاب"
     },

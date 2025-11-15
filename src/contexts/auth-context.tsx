@@ -1,12 +1,12 @@
-import type { User } from "@/types/auth";
+import type { LoginResponse, User } from "@/types/auth";
 import type { MenuItemDto } from "@/types/menu";
 import type { UserRoleType } from "@/types/role";
 import { createContext } from "react";
 
 export interface AuthContextType {
   // State only
-  currentRoleContext?: string,
-  user: User | null;
+  currentRoleContext?: string;
+  user: LoginResponse | null;
   isLoading: boolean;
   isInitialized: boolean;
   isAuthenticated: boolean;
@@ -15,12 +15,16 @@ export interface AuthContextType {
   isMenuError: boolean;
 
   // State setters only (no API calls)
-  login: (token: string, userData: User, refreshToken?: string) => void;
+  login: (
+    token: string,
+    userData: LoginResponse,
+    refreshToken?: string
+  ) => void;
   logout: () => void;
   updateUser: (userData: Partial<User>) => void;
   checkPermission: (permission: string) => boolean;
   refetchMenu: () => Promise<unknown>;
-  updateSchoolContext: (schoolId: number,role?:UserRoleType) => void;
+  updateSchoolContext: (schoolId: number, role?: UserRoleType) => void;
   resetRoleContext: () => void;
 }
 

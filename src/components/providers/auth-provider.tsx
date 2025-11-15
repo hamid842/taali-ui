@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
-import type { AuthContextType, User } from "@/contexts/auth-context";
+import type { AuthContextType } from "@/contexts/auth-context";
 import AuthContext from "@/contexts/auth-context";
 import { apiClient, apiConfig } from "@/lib/api/api-config";
 import type { MenuItemDto } from "@/types/menu";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import type { LoginResponse, User } from "@/types/auth";
 
 // Mock permissions for each role (you can expand this)
 const rolePermissions = {
@@ -35,7 +36,7 @@ const menuApi = {
 };
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<LoginResponse | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
   const [currentRoleContext, setCurrentRoleContext] = useState<string | null>(
     null
@@ -97,17 +98,19 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   // React Query for menu (state-related, so it stays)
   const menuQuery = useQuery({
-    queryKey: ["menu", currentRoleContext || user?.role, user?.schoolId],
+    queryKey: ["menu", currentRoleContext || user?.role, user?.currentSchool?.id],
     queryFn: () => {
       const roleToUse = currentRoleContext || user?.role;
-      return roleToUse ? menuApi.fetchUserMenu(roleToUse, user?.schoolId) : [];
+      return roleToUse
+        ? menuApi.fetchUserMenu(roleToUse, user?.currentSchool?.id)
+        : [];
     },
     enabled: !!(currentRoleContext || user?.role),
     staleTime: 5 * 60 * 1000,
   });
 
   // State setters only - no API calls!
-  const login = (token: string, userData: User, refreshToken?: string) => {
+  const login = (token: string, userData: LoginResponse, refreshToken?: string) => {
     // Store auth data
     localStorage.setItem("auth_token", token);
     localStorage.setItem("user_data", JSON.stringify(userData));
@@ -145,7 +148,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const refetchMenu = async () => {
     if (user?.role) {
       await queryClient.invalidateQueries({
-        queryKey: ["menu", user.role, user.schoolId],
+        queryKey: ["menu", user.role, user.currentSchool?.id],
       });
     }
   };
@@ -176,7 +179,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const resetRoleContext = useCallback(() => {
     setCurrentRoleContext(null);
     queryClient.invalidateQueries({
-      queryKey: ["menu", user?.role, user?.schoolId],
+      queryKey: ["menu", user?.role, user?.currentSchool?.id],
     });
   }, [user, queryClient]);
 

@@ -51,8 +51,8 @@ export interface ResendOtpRequest {
 
 // Response types (what we receive from the API)
 export interface LoginResponse {
-  success: boolean;
-  message: string;
+  success?: boolean;
+  message?: string;
   token?: string;
   refreshToken?: string;
   id: number;
@@ -61,8 +61,8 @@ export interface LoginResponse {
   firstName?: string;
   lastName?: string;
   role?: UserRoleType;
-  permissions: string[];
-  availableSchools: ISchool[];
+  permissions?: string[];
+  availableSchools?: ISchool[];
   currentSchool?: ISchool;
 }
 
@@ -95,3 +95,5 @@ export interface ResendOtpResponse {
   otpCode?: string;
   requiresVerification?: boolean;
 }
+
+

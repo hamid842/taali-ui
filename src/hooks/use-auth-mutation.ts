@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { authService } from "@/services/auth-service";
 import { useAuth } from "./use-auth";
-import type { User } from "@/contexts/auth-context";
 import type { UserRoleType } from "@/types/role";
+import type { LoginResponse } from "@/types/auth";
 
 export const useLoginMutation = () => {
   const { login } = useAuth();
@@ -11,14 +11,15 @@ export const useLoginMutation = () => {
     mutationFn: authService.login,
     onSuccess: (data) => {
       if (data.userId && data.token) {
-        const userData: User = {
+        const userData: LoginResponse = {
           id: data.id,
           userId: data.userId!,
           firstName: data.firstName!,
           lastName: data.lastName!,
           role: data.role! as UserRoleType,
           email: data.email!,
-          schoolId: data.currentSchool?.id,
+          currentSchool: data.currentSchool,
+          permissions:data.permissions
         };
         // Use the context login to update state
         login(data.token, userData, data.refreshToken);

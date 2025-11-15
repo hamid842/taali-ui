@@ -717,6 +717,27 @@
         "overallAttendance": "Overall attendance"
       }
     },
+    "myClasses": {
+      "title": "My Classes",
+      "description": "Manage and view all your assigned classes",
+      "nextClass": "Next Class",
+      "totalClasses": "Total Classes",
+      "totalStudents": "Total Students",
+      "upcomingToday": "Upcoming Today",
+      "searchPlaceholder": "Search classes or subjects...",
+      "allSubjects": "All Subjects",
+      "allGrades": "All Grades",
+      "allClasses": "All Classes",
+      "withStudents": "With Students",
+      "noStudents": "No Students",
+      "noClassesFound": "No classes found",
+      "noClassesDescription": "No classes match your current filters",
+      "students": "students",
+      "attendance": "Attendance",
+      "errors": {
+        "loadFailed": "Failed to load classes"
+      }
+    },
     "attendance": {
       "take": "Take Attendance"
     },

@@ -2,6 +2,8 @@ import { lazy } from "react";
 import { ProtectedRoute } from "@/components/auth/protected-route";
 import MainLayout from "@/components/layout/main-layout";
 import { UserRole } from "@/types/role";
+import ClassDetail from "@/pages/teacher/classes/class-detail";
+import Attendance from "@/pages/teacher/attendance";
 
 const TeacherDashboard = lazy(() => import("@/pages/teacher/dashboard"));
 const TeacherClasses = lazy(() => import("@/pages/teacher/classes"));
@@ -29,5 +31,7 @@ export const teacherRoutes = {
     { path: "assignments", element: <TeacherAssignments /> },
     { path: "grades", element: <TeacherGrades /> },
     { path: "lesson-plans", element: <TeacherLessonPlans /> },
+    { path: "classes/:classId", element: <ClassDetail /> },
+    { path: "classes/:classId/attendance", element: <Attendance /> },
   ],
 };

@@ -1,5 +1,11 @@
-import type { Teacher, TeacherDetailResponse, TeacherListResponse } from "@/types/teacher";
+import type {
+  Teacher,
+  TeacherDetailResponse,
+  TeacherListResponse,
+} from "@/types/teacher";
 import { apiClient, apiConfig } from "./api-config";
+import type { TeacherActivity, TeacherClassDetail, TeacherDashboardStats, UpcomingClass } from "@/types/teacher-dashboard";
+import type { SchoolClass } from "@/types/class";
 
 export const teacherApi = {
   getBySchool: async (schoolId: number): Promise<TeacherListResponse[]> => {
@@ -63,9 +69,61 @@ export const teacherApi = {
     );
   },
 
-  assignClass: async (teacherId: number, classIds: number[]): Promise<void> => {
-    return apiClient.post(apiConfig.endpoints.teachers.assignClass(teacherId), {
-      classIds,
-    });
+  assignClasses: async (
+    teacherId: number,
+    classIds: number[]
+  ): Promise<void> => {
+    return apiClient.post<void>(
+      apiConfig.endpoints.teachers.assignClass(teacherId),
+      { classIds }
+    );
+  },
+
+  // NEW METHODS:
+
+  getActiveBySchool: async (
+    schoolId: number
+  ): Promise<TeacherListResponse[]> => {
+    return apiClient.get<TeacherListResponse[]>(
+      apiConfig.endpoints.teachers.getActiveBySchool(schoolId)
+    );
+  },
+
+  getDashboardStats: async (id: number): Promise<TeacherDashboardStats> => {
+    return apiClient.get<TeacherDashboardStats>(
+      apiConfig.endpoints.teachers.getDashboardStats(id)
+    );
+  },
+
+  getTeacherClasses: async (id: number): Promise<SchoolClass[]> => {
+    return apiClient.get<SchoolClass[]>(
+      apiConfig.endpoints.teachers.getTeacherClasses(id)
+    );
+  },
+
+  getTeacherClassesWithDetails: async (
+    id: number
+  ): Promise<TeacherClassDetail[]> => {
+    return apiClient.get<TeacherClassDetail[]>(
+      apiConfig.endpoints.teachers.getTeacherClasses(id)
+    );
+  },
+
+  getUpcomingClasses: async (id: number): Promise<UpcomingClass[]> => {
+    return apiClient.get<UpcomingClass[]>(
+      apiConfig.endpoints.teachers.getUpcomingClasses(id)
+    );
+  },
+
+  getTodaySchedule: async (id: number): Promise<UpcomingClass[]> => {
+    return apiClient.get<UpcomingClass[]>(
+      apiConfig.endpoints.teachers.getTodaySchedule(id)
+    );
+  },
+
+  getRecentActivity: async (id: number): Promise<TeacherActivity[]> => {
+    return apiClient.get<TeacherActivity[]>(
+      apiConfig.endpoints.teachers.getRecentActivity(id)
+    );
   },
 };
