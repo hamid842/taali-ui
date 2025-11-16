@@ -9,10 +9,16 @@ import SchoolsGridSkeleton from "@/components/skeleton/owner/schools/school-grid
 import SchoolCard from "@/components/dashboard/schools/school-item-card";
 import StatCard from "@/components/dashboard/schools/school-stat";
 import SchoolFilter from "@/components/dashboard/schools/school-filter";
+import { UserRole, type UserRoleType } from "@/types/role";
+import { useAuth } from "@/hooks/use-auth";
+import { useRoleRedirect } from "@/hooks/use-role-redirect";
 
 export default function OwnerSchools() {
   const { t } = useLanguage();
   const navigate = useNavigate();
+  const { user, updateSchoolContext } = useAuth();
+  const { redirectToDashboard } = useRoleRedirect();
+
   const { data: schools, isLoading, error } = useSchools();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
@@ -32,11 +38,30 @@ export default function OwnerSchools() {
   };
 
   const handleViewSchool = (schoolId: number) => {
-    navigate(`/owner/schools/${schoolId}`);
+    // For OWNER, switch to MANAGER role context when selecting a school
+    if (user?.role === UserRole.OWNER) {
+      // Update school context AND switch to ADMIN role for menu purposes
+      if (updateSchoolContext) {
+        updateSchoolContext(schoolId, UserRole.SCHOOL_MANAGER);
+      }
+      navigate(`/school/${schoolId}/manager/dashboard`);
+    } else if (user?.role === UserRole.SCHOOL_MANAGER) {
+      // Regular admin just updates school context
+      if (updateSchoolContext) {
+        updateSchoolContext(schoolId);
+      }
+      navigate(`/school/${schoolId}/manager/dashboard`);
+    } else {
+      // Other roles
+      if (updateSchoolContext) {
+        updateSchoolContext(schoolId);
+      }
+      redirectToDashboard(user?.role as UserRoleType);
+    }
   };
 
   const handleEditSchool = (schoolId: number) => {
-    navigate(`/owner/schools/${schoolId}/edit`);
+    navigate(`/owner/schools/${schoolId}/profile`);
   };
 
   if (error) {
@@ -44,7 +69,9 @@ export default function OwnerSchools() {
       <div className="container mx-auto p-6">
         <EmptyData
           title={t("owner.schoolsPage.errorTitle") || "Failed to load schools"}
-          desc={t("owner.schoolsPage.errorDescription") || "Please try again later"}
+          desc={
+            t("owner.schoolsPage.errorDescription") || "Please try again later"
+          }
           actions={
             <div>
               <Button>{t("")}</Button>

@@ -11,7 +11,7 @@ interface AppState {
   ownerHasSchool: boolean;
   setOwnerHasSchool: (value: boolean) => void;
   currentSchool: ISchool | null;
-  setCurrentSchool: (currentSchool: ISchool) => void;
+  setCurrentSchool: (currentSchool: ISchool | null) => void;
 }
 
 export const useAppStore = create(
@@ -21,7 +21,8 @@ export const useAppStore = create(
       ownerHasSchool: false,
       role: null,
       currentSchool: null,
-      setCurrentSchool: (currentSchool) => set({ currentSchool }),
+      setCurrentSchool: (currentSchool: ISchool | null) =>
+        set({ currentSchool }),
       setRole: (role) => set({ role }),
       setIsRTL: (isRTL) => set({ isRTL }),
       setOwnerHasSchool: (value) => set({ ownerHasSchool: value }),

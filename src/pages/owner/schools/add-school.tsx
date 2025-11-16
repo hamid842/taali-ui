@@ -103,7 +103,7 @@ export default function AddSchool() {
       {/* Quick Tips Section */}
       <Card className="mt-6">
         <CardHeader>
-          <CardTitle className="text-lg">{t("addSchool.tips")}</CardTitle>
+          <CardTitle className="text-lg">{t("owner.addSchool.tips")}</CardTitle>
         </CardHeader>
         <CardContent>
           <ul
@@ -112,18 +112,18 @@ export default function AddSchool() {
             }`}
           >
             <li>
-              {t("addSchool.tipCode") ||
+              {t("owner.addSchool.tipCode") ||
                 "School code should be unique and easy to remember"}
             </li>
             <li>
-              {t("addSchool.tipName") || "Use the official name of your school"}
+              {t("owner.addSchool.tipName") || "Use the official name of your school"}
             </li>
             <li>
-              {t("addSchool.tipContact") ||
+              {t("owner.addSchool.tipContact") ||
                 "Provide accurate contact information for communication"}
             </li>
             <li>
-              {t("addSchool.tipLogo") ||
+              {t("owner.addSchool.tipLogo") ||
                 "A high-quality logo helps with brand recognition"}
             </li>
           </ul>

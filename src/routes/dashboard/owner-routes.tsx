@@ -2,6 +2,7 @@ import { lazy } from "react";
 import { ProtectedRoute } from "@/components/auth/protected-route";
 import MainLayout from "@/components/layout/main-layout";
 import { UserRole } from "@/types/role";
+import SchoolProfile from "@/pages/owner/schools/school-profile";
 
 const OwnerDashboard = lazy(() => import("@/pages/owner/dashboard"));
 const OwnerSchools = lazy(() => import("@/pages/owner/schools"));
@@ -23,6 +24,7 @@ export const ownerRoutes = {
     { path: "dashboard", element: <OwnerDashboard /> },
     { path: "schools", element: <OwnerSchools /> },
     { path: "schools/create", element: <AddSchool /> },
+    { path: "schools/:schoolId/profile", element: <SchoolProfile /> },
     { path: "users", element: <Users /> },
     { path: "users/create", element: <AddSchoolAdmin /> },
   ],

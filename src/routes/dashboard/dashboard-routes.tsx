@@ -1,11 +1,11 @@
-import { adminRoutes } from "./admin-routes";
+import { managerRoutes } from "./manager-routes";
 import { ownerRoutes } from "./owner-routes";
-import { schoolAdminRoutes } from "./school-specific-admin-routes";
+import { schoolManagerRoutes } from "./school-specific-manager-routes";
 import { teacherRoutes } from "./teacher-routes";
 
 export const dashboardRoutes = [
   ownerRoutes,
-  schoolAdminRoutes,
-  adminRoutes,
+  schoolManagerRoutes,
+  managerRoutes,
   teacherRoutes,
 ];

@@ -23,10 +23,10 @@ const Tuition = lazy(() => import("@/pages/admin/finance/tuition"));
 const Invoice = lazy(() => import("@/pages/admin/finance/invoice"));
 const Reports = lazy(() => import("@/pages/admin/finance/reports"));
 
-export const schoolAdminRoutes = {
-  path: "/school/:schoolId/admin",
+export const schoolManagerRoutes = {
+  path: "/school/:schoolId/manager",
   element: (
-    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.OWNER]}>
+    <ProtectedRoute allowedRoles={[UserRole.SCHOOL_MANAGER, UserRole.OWNER]}>
       <MainLayout />
     </ProtectedRoute>
   ),

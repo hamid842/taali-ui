@@ -18,11 +18,13 @@ import type { ISchool } from "@/types/school";
 import { useAuth } from "@/hooks/use-auth";
 import { UserRole, type UserRoleType } from "@/types/role";
 import { useRoleRedirect } from "@/hooks/use-role-redirect";
+import { useAppStore } from "@/stores/app-store";
 
 export default function SchoolDropdown({ schools }: { schools: ISchool[] }) {
   const { t, dir } = useLanguage();
   const { isMobile } = useSidebar();
   const navigate = useNavigate();
+  const { setCurrentSchool } = useAppStore();
   const { user, updateSchoolContext } = useAuth();
   const { redirectToDashboard } = useRoleRedirect();
 
@@ -40,20 +42,20 @@ export default function SchoolDropdown({ schools }: { schools: ISchool[] }) {
 
   const handleSchoolSelect = (school: ISchool) => {
     setActiveSchool(school);
-
-    // For OWNER, switch to ADMIN role context when selecting a school
+    setCurrentSchool(school);
+    // For OWNER, switch to MANAGER role context when selecting a school
     if (user?.role === UserRole.OWNER) {
       // Update school context AND switch to ADMIN role for menu purposes
       if (updateSchoolContext) {
-        updateSchoolContext(school.id, UserRole.ADMIN);
+        updateSchoolContext(school.id, UserRole.SCHOOL_MANAGER);
       }
-      navigate(`/school/${school.id}/admin/dashboard`);
-    } else if (user?.role === UserRole.ADMIN) {
+      navigate(`/school/${school.id}/manager/dashboard`);
+    } else if (user?.role === UserRole.SCHOOL_MANAGER) {
       // Regular admin just updates school context
       if (updateSchoolContext) {
         updateSchoolContext(school.id);
       }
-      navigate(`/school/${school.id}/admin/dashboard`);
+      navigate(`/school/${school.id}/manager/dashboard`);
     } else {
       // Other roles
       if (updateSchoolContext) {
@@ -85,7 +87,8 @@ export default function SchoolDropdown({ schools }: { schools: ISchool[] }) {
             dir={dir}
           >
             <span className="truncate font-medium">
-              {activeSchool?.name || t("owner.dashboard.schoolSwitcher.selectSchool")}
+              {activeSchool?.name ||
+                t("owner.dashboard.schoolSwitcher.selectSchool")}
             </span>
             <span className="truncate text-xs">{activeSchool?.code || ""}</span>
           </div>

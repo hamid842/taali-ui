@@ -20,10 +20,10 @@ import Reports from "@/pages/admin/finance/reports";
 import EditTeacher from "@/pages/admin/teachers/edit";
 import AssignClassesToTeacher from "@/pages/admin/teachers/assign-class";
 
-export const adminRoutes = {
-  path: "/admin",
+export const managerRoutes = {
+  path: "/manager",
   element: (
-    <ProtectedRoute allowedRoles={[UserRole.ADMIN, UserRole.OWNER]}>
+    <ProtectedRoute allowedRoles={[UserRole.SCHOOL_MANAGER, UserRole.OWNER]}>
       <MainLayout />
     </ProtectedRoute>
   ),

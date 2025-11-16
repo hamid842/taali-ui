@@ -1,7 +1,7 @@
 export const UserRole = {
   OWNER: "OWNER",
-  ADMIN: "ADMIN",
-  SUPERVISOR: "SUPERVISOR",
+  SCHOOL_MANAGER: "SCHOOL_MANAGER",
+  SCHOOL_ADMIN: "SCHOOL_ADMIN",
   TEACHER: "TEACHER",
   STUDENT: "STUDENT",
   PARENT: "PARENT",
@@ -17,14 +17,14 @@ export const RoleConfig = {
     dashboardPath: "/owner/dashboard",
     permissions: ["all"],
   },
-  ADMIN: {
-    translationKey: "roles.admin",
-    dashboardPath: "/admin/dashboard",
+  SCHOOL_MANAGER: {
+    translationKey: "roles.manager",
+    dashboardPath: "/manager/dashboard",
     permissions: ["all"],
   },
-  SUPERVISOR: {
-    translationKey: "roles.supervisor",
-    dashboardPath: "/supervisor/dashboard",
+  SCHOOL_ADMIN: {
+    translationKey: "roles.admin",
+    dashboardPath: "/admin/dashboard",
     permissions: ["view_reports", "manage_teachers", "view_students"],
   },
   TEACHER: {

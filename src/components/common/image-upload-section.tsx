@@ -15,6 +15,7 @@ type ImageUploadSectionProps = {
   desc: string;
   uploadType: "profile-image" | "school-logo";
   onImageChange: (url: string | null) => void;
+  currentImage?:string
 };
 
 export default function ImageUploadSection({
@@ -23,6 +24,7 @@ export default function ImageUploadSection({
   desc,
   uploadType,
   onImageChange,
+  currentImage
 }: ImageUploadSectionProps) {
   return (
     <div className="lg:col-span-1">
@@ -39,6 +41,7 @@ export default function ImageUploadSection({
             onImageChange={onImageChange}
             uploadType={uploadType}
             className="justify-center"
+            existingImageUrl={currentImage}
           />
         </CardContent>
       </Card>

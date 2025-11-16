@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useLanguage } from "@/hooks/use-language";
 import { formatGregorian, formatJalali } from "@/lib/utils/date-utils";
+import { useAppStore } from "@/stores/app-store";
 import type { ISchool } from "@/types/school";
 import {
   BookOpen,
@@ -41,6 +42,7 @@ export default function SchoolCard({
   onEdit,
 }: SchoolCardProps) {
   const { t, dir, language } = useLanguage();
+  const { setCurrentSchool } = useAppStore();
 
   const formatSinceDate = (date: string | Date) => {
     if (language === "fa") {
@@ -68,11 +70,11 @@ export default function SchoolCard({
   const getTranslatedStatus = (status: string) => {
     switch (status) {
       case "ACTIVE":
-        return t("schoolsPage.status.active");
+        return t("owner.schoolsPage.status.active");
       case "SETUP":
-        return t("schoolsPage.status.setup");
+        return t("owner.schoolsPage.status.setup");
       case "ARCHIVED":
-        return t("schoolsPage.status.archived");
+        return t("owner.schoolsPage.status.archived");
       default:
         return status;
     }
@@ -82,22 +84,22 @@ export default function SchoolCard({
   const features = [
     {
       icon: Users,
-      label: t("schoolsPage.features.teachers"),
+      label: t("owner.schoolsPage.features.teachers"),
       value: school.teacherCount || 0,
     },
     {
       icon: BookOpen,
-      label: t("schoolsPage.features.classes"),
+      label: t("owner.schoolsPage.features.classes"),
       value: school.classCount || 0,
     },
     {
       icon: Users,
-      label: t("schoolsPage.features.students"),
+      label: t("owner.schoolsPage.features.students"),
       value: school.studentCount || 0,
     },
     {
       icon: Utensils,
-      label: t("schoolsPage.features.canteen"),
+      label: t("owner.schoolsPage.features.canteen"),
       value: school.canteenCount || 0,
     },
   ];
@@ -145,15 +147,15 @@ export default function SchoolCard({
             <DropdownMenuContent align={dir === "rtl" ? "start" : "end"}>
               <DropdownMenuItem onClick={() => onView(school.id)}>
                 <Eye className="h-4 w-4 mr-2" />
-                {t("schoolsPage.actions.viewDetails")}
+                {t("owner.schoolsPage.actions.viewDetails")}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => onEdit(school.id)}>
                 <Edit className="h-4 w-4 mr-2" />
-                {t("schoolsPage.actions.editSchool")}
+                {t("owner.schoolsPage.actions.editSchool")}
               </DropdownMenuItem>
               <DropdownMenuItem className="text-destructive">
                 <Trash2 className="h-4 w-4 mr-2" />
-                {t("schoolsPage.actions.deleteSchool")}
+                {t("owner.schoolsPage.actions.deleteSchool")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -163,7 +165,7 @@ export default function SchoolCard({
             {getTranslatedStatus(school.status)}
           </Badge>
           <span className="text-xs text-muted-foreground">
-            {t("schoolsPage.since")} {formatSinceDate(school.createdAt)}
+            {t("owner.schoolsPage.since")} {formatSinceDate(school.createdAt)}
           </span>
         </div>
       </CardHeader>
@@ -200,10 +202,13 @@ export default function SchoolCard({
             variant="outline"
             size="sm"
             className="flex-1"
-            onClick={() => onView(school.id)}
+            onClick={() => {
+              setCurrentSchool(school);
+              onView(school.id);
+            }}
           >
             <Eye className="h-4 w-4 mr-1" />
-            {t("schoolsPage.actions.dashboard")}
+            {t("owner.schoolsPage.actions.dashboard")}
           </Button>
           <Button variant="ghost" size="sm" onClick={() => onEdit(school.id)}>
             <Settings className="h-4 w-4" />
