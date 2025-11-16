@@ -28,7 +28,7 @@ export default function Users() {
   const { ownerHasSchool } = useAppStore();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [role, setRole] = useState<UserRoleType>(UserRole.ADMIN);
+  const [role, setRole] = useState<UserRoleType>(UserRole.SCHOOL_MANAGER);
 
   const size = 9;
 
@@ -60,7 +60,9 @@ export default function Users() {
           <h1 className="text-3xl font-bold tracking-tight">
             {t("owner.users.title")}
           </h1>
-          <p className="text-muted-foreground">{t("owner.users.subtitleAdmins")}</p>
+          <p className="text-muted-foreground">
+            {t("owner.users.subtitleAdmins")}
+          </p>
         </div>
         <Button onClick={handleClickAddAdmin}>
           <UserPlus className="w-4 h-4 mr-2" />
@@ -89,10 +91,10 @@ export default function Users() {
                 <SelectValue placeholder={t("owner.users.selectRole")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={UserRole.ADMIN}>
+                <SelectItem value={UserRole.SCHOOL_MANAGER}>
                   {t("roles.admin")}
                 </SelectItem>
-                <SelectItem value={UserRole.SUPERVISOR}>
+                <SelectItem value={UserRole.SCHOOL_ADMIN}>
                   {t("roles.supervisor")}
                 </SelectItem>
               </SelectContent>
@@ -105,9 +107,12 @@ export default function Users() {
       <div>
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-xl font-semibold">{t("owner.users.adminList")}</h2>
+            <h2 className="text-xl font-semibold">
+              {t("owner.users.adminList")}
+            </h2>
             <p className="text-sm text-muted-foreground">
-              {data?.pagination.totalElements || 0} {t("owner.users.adminsFound")}
+              {data?.pagination.totalElements || 0}{" "}
+              {t("owner.users.adminsFound")}
               {isFetching && (
                 <span className="ml-2 text-xs text-muted-foreground">
                   {t("owner.users.updating")}
@@ -123,7 +128,7 @@ export default function Users() {
           <EmptyData
             title={t("owner.users.noAdminsFound")}
             desc={
-              search || role !== UserRole.ADMIN
+              search || role !== UserRole.SCHOOL_MANAGER
                 ? t("owner.users.tryChangingFilters")
                 : t("owner.users.getStartedByAdding")
             }

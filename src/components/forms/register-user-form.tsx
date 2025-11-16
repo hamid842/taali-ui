@@ -36,7 +36,7 @@ export default function RegisterUserForm({
   redirectPath,
   profileImage,
   onSuccess,
-  showRedirect = true, 
+  showRedirect = true,
 }: RegisterUserFormProps) {
   const { t, language } = useLanguage();
   const { currentSchool } = useAppStore();
@@ -61,11 +61,11 @@ export default function RegisterUserForm({
         .max(50, t("validation.lastName.max"))
         .regex(nameRegex, t("validation.lastName.regex")),
       phoneNumber: z.string().min(5, t("validation.phone.min")),
-      email: z.string().email(t("validation.email.format")),
+      email: z.email(t("validation.email.format")),
       role: z.enum([
         UserRole.OWNER,
-        UserRole.ADMIN,
-        UserRole.SUPERVISOR,
+        UserRole.SCHOOL_MANAGER,
+        UserRole.SCHOOL_ADMIN,
         UserRole.TEACHER,
         UserRole.STUDENT,
         UserRole.PARENT,
@@ -207,14 +207,15 @@ export default function RegisterUserForm({
 
       {passwordValue && <PasswordStrength password={passwordValue} />}
 
-      {registerForRole === UserRole.OWNER || registerForRole === UserRole.ADMIN && !rootPage && (
+      {registerForRole === UserRole.OWNER ||
+        (registerForRole === UserRole.SCHOOL_MANAGER && !rootPage && (
           <SchoolSelect
             required
             value={watch("schoolId") || ""}
             onChange={(id) => setValue("schoolId", id)}
             label={t("register.form.selectSchool")}
           />
-        )}
+        ))}
 
       {/* Remove the button if we're in stepper mode and let the parent handle it */}
       {!onSuccess && (

@@ -44,9 +44,9 @@ export default function UserItem({ user }: UserItemProps) {
     switch (userRole) {
       case UserRole.OWNER:
         return "destructive";
-      case UserRole.ADMIN:
+      case UserRole.SCHOOL_MANAGER:
         return "default";
-      case UserRole.SUPERVISOR:
+      case UserRole.SCHOOL_ADMIN:
         return "secondary";
       default:
         return "outline";
@@ -81,7 +81,7 @@ export default function UserItem({ user }: UserItemProps) {
                   {t(`roles.${user.role.toLowerCase()}`)}
                 </Badge>
                 <Badge variant={getStatusVariant(user.isActive)}>
-                  {user.isActive ? t("users.active") : t("users.inactive")}
+                  {user.isActive ? t("owner.users.active") : t("owner.users.inactive")}
                 </Badge>
               </CardDescription>
             </div>
@@ -93,8 +93,8 @@ export default function UserItem({ user }: UserItemProps) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>{t("users.viewDetails")}</DropdownMenuItem>
-              <DropdownMenuItem>{t("users.editProfile")}</DropdownMenuItem>
+              <DropdownMenuItem>{t("owner.users.viewDetails")}</DropdownMenuItem>
+              <DropdownMenuItem>{t("owner.users.editProfile")}</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -116,7 +116,7 @@ export default function UserItem({ user }: UserItemProps) {
         <div className="flex items-center gap-2 text-sm">
           <Building className="h-4 w-4 text-muted-foreground" />
           <span className={!user.school ? "text-muted-foreground italic" : ""}>
-            {user.school?.name || t("users.noSchoolAssigned")}
+            {user.school?.name || t("owner.users.noSchoolAssigned")}
           </span>
         </div>
 
@@ -129,7 +129,7 @@ export default function UserItem({ user }: UserItemProps) {
             onClick={() => handleStatusToggle(user.userId, user.isActive)}
             disabled={updateStatusMutation.isPending}
           >
-            {user.isActive ? t("users.deactivate") : t("users.activate")}
+            {user.isActive ? t("owner.users.deactivate") : t("owner.users.activate")}
           </Button>
         </div>
       </CardContent>

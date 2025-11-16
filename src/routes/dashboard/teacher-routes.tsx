@@ -17,7 +17,7 @@ export const teacherRoutes = {
   path: "/teacher",
   element: (
     <ProtectedRoute
-      allowedRoles={[UserRole.ADMIN, UserRole.OWNER, UserRole.TEACHER]}
+      allowedRoles={[UserRole.SCHOOL_MANAGER, UserRole.OWNER, UserRole.TEACHER]}
     >
       <MainLayout />
     </ProtectedRoute>

@@ -12,7 +12,7 @@ export function useRoleRedirect() {
       const basePath = RoleConfig[role].dashboardPath;
 
       // If we have a schoolId and the role should have school context, modify the path
-      if (schoolId && (role === UserRole.ADMIN || role === UserRole.OWNER)) {
+      if (schoolId && (role === UserRole.SCHOOL_MANAGER || role === UserRole.OWNER)) {
         return `/school/${schoolId}${basePath}`;
       }
 

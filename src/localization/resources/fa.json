@@ -198,8 +198,8 @@
     }
   },
   "roles": {
-    "admin": "مدیر سیستم",
-    "supervisor": "ناظر",
+    "school_manager": "مدیر سیستم",
+    "school_admin": "ناظر",
     "teacher": "معلم",
     "student": "دانش آموز",
     "parent": "والدین",

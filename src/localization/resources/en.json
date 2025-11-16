@@ -197,8 +197,8 @@
     }
   },
   "roles": {
-    "admin": "Administrator",
-    "supervisor": "Supervisor",
+    "school_manager": "Administrator",
+    "school_admin": "Supervisor",
     "teacher": "Teacher",
     "student": "Student",
     "parent": "Parent",

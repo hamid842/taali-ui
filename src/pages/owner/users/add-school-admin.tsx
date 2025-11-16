@@ -52,7 +52,7 @@ export default function AddSchoolAdmin() {
                 </CardHeader>
                 <CardContent>
                   <RegisterUserForm
-                    registerForRole="ADMIN"
+                    registerForRole="SCHOOL_MANAGER"
                     redirectPath="/owner/users"
                     profileImage={adminProfileImg}
                   />
