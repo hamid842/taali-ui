@@ -4,8 +4,8 @@ export interface Lesson {
   nameEn?: string;
   gradeLevel: string;
   color: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface CreateLessonRequest {

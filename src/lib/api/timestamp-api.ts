@@ -10,7 +10,7 @@ export const timestampApi = {
   // Get all timestamps for a specific school
   getAll: async (schoolId: number): Promise<ClassTimestamp[]> => {
     return apiClient.get<ClassTimestamp[]>(
-      apiConfig.endpoints.school.getAll(schoolId)
+      apiConfig.endpoints.school.getSchoolTimestamps(schoolId)
     );
   },
 

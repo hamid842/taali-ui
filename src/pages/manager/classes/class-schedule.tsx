@@ -8,23 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   ArrowLeft,
@@ -42,13 +25,13 @@ import { teacherApi } from "@/lib/api/teacher-api";
 import { lessonApi } from "@/lib/api/lesson-api";
 import { useAuth } from "@/hooks/use-auth";
 import { useLanguage } from "@/hooks/use-language";
+import { useTimestamps } from "@/hooks/use-timestamp";
 import type { ClassSchedule, SchoolClassDetail } from "@/types/class";
-import type { Teacher } from "@/types/teacher";
-import {
-  DayOfWeek,
-  type CreateClassScheduleRequest,
-  type Lesson,
-} from "@/types/schedule";
+import type { TeacherListResponse } from "@/types/teacher";
+import { DayOfWeek, type CreateClassScheduleRequest } from "@/types/schedule";
+import type { Lesson } from "@/types/lesson";
+import type { ClassTimestamp } from "@/types/timestamp";
+import ScheduleFormDialog from "@/components/forms/schedule-form-dialog";
 
 export default function ClassSchedule() {
   const { classId } = useParams<{ classId: string }>();
@@ -59,7 +42,7 @@ export default function ClassSchedule() {
     null
   );
   const [schedules, setSchedules] = useState<ClassSchedule[]>([]);
-  const [teachers, setTeachers] = useState<Teacher[]>([]);
+  const [teachers, setTeachers] = useState<TeacherListResponse[]>([]);
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -77,6 +60,13 @@ export default function ClassSchedule() {
     teacherId: undefined,
     roomNumber: "",
   });
+
+  // Use the timestamps hook
+  const {
+    data: timestamps,
+    isLoading: isLoadingTimestamps,
+    error: timestampsError,
+  } = useTimestamps(user?.currentSchool?.id);
 
   // Color palette for different subjects
   const subjectColors: Record<string, string> = {
@@ -204,22 +194,10 @@ export default function ClassSchedule() {
   useEffect(() => {
     console.log("ClassSchedule component mounted with classId:", classId);
     loadData();
-  }, [loadData]);
+  }, [classId, loadData]);
 
-  // Time slots for the timetable
-  const timeSlots = [
-    "08:00",
-    "08:45",
-    "09:30",
-    "10:15",
-    "11:00",
-    "11:45",
-    "12:30",
-    "13:15",
-    "14:00",
-    "14:45",
-    "15:30",
-  ];
+  // Use timestamps instead of static timeSlots
+  const timeSlots = timestamps || [];
 
   // Persian day names
   const persianDays = {
@@ -242,14 +220,16 @@ export default function ClassSchedule() {
     DayOfWeek.FRIDAY,
   ];
 
-  // Get schedule for a specific day and time
+  // Get schedule for a specific day and timestamp
   const getSchedule = (
     day: DayOfWeek,
-    timeSlot: string
+    timestamp: ClassTimestamp
   ): ClassSchedule | undefined => {
     return schedules.find(
       (schedule) =>
-        schedule.dayOfWeek === day && schedule.startTime === timeSlot
+        schedule.dayOfWeek === day &&
+        schedule.startTime === timestamp.startTime &&
+        schedule.endTime === timestamp.endTime
     );
   };
 
@@ -305,35 +285,28 @@ export default function ClassSchedule() {
     setIsDialogOpen(true);
   };
 
-  // Add new schedule for a specific time slot
-  const handleAddSchedule = (day: DayOfWeek, timeSlot: string) => {
+  // Add new schedule for a specific timestamp
+  const handleAddSchedule = (day: DayOfWeek, timestamp: ClassTimestamp) => {
     setEditingSchedule(null);
     setFormData((prev) => ({
       ...prev,
       dayOfWeek: day,
-      startTime: timeSlot,
-      endTime: getNextTimeSlot(timeSlot),
+      startTime: timestamp.startTime,
+      endTime: timestamp.endTime,
     }));
     setIsDialogOpen(true);
   };
 
-  // Calculate next time slot (45 minutes later)
-  const getNextTimeSlot = (timeSlot: string): string => {
-    const [hours, minutes] = timeSlot.split(":").map(Number);
-    let newMinutes = minutes + 45;
-    let newHours = hours;
-
-    if (newMinutes >= 60) {
-      newHours += Math.floor(newMinutes / 60);
-      newMinutes = newMinutes % 60;
-    }
-
-    return `${newHours.toString().padStart(2, "0")}:${newMinutes
-      .toString()
-      .padStart(2, "0")}`;
+  // Format time for display
+  const formatTimeDisplay = (timestamp: ClassTimestamp): string => {
+    return `${timestamp.name}`;
   };
 
-  if (loading) {
+  // Combine loading states
+  const isLoading = loading || isLoadingTimestamps;
+  const hasError = error || timestampsError;
+
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-lg">{t("common.loading")}</div>
@@ -341,12 +314,14 @@ export default function ClassSchedule() {
     );
   }
 
-  if (error) {
+  if (hasError) {
     return (
       <div className="space-y-4">
         <Alert variant="destructive">
           <AlertCircle className="w-4 h-4" />
-          <AlertDescription>{error}</AlertDescription>
+          <AlertDescription>
+            {error || timestampsError?.message}
+          </AlertDescription>
         </Alert>
         <div className="flex gap-4">
           <Button onClick={() => loadData()}>Retry</Button>
@@ -422,26 +397,28 @@ export default function ClassSchedule() {
                 ))}
               </div>
 
-              {/* Time Slots */}
-              {timeSlots.map((timeSlot, index) => (
+              {/* Time Slots using timestamps */}
+              {timeSlots.map((timestamp, index) => (
                 <div
-                  key={timeSlot || index}
+                  key={timestamp.id || index}
                   className="grid grid-cols-8 border-b last:border-b-0"
                 >
                   {/* Time Column */}
                   <div className="p-4 border-r bg-gray-50 dark:bg-stone-900 flex items-center justify-center">
-                    <div className="text-sm font-medium">{timeSlot}</div>
+                    <div className="text-sm font-medium">
+                      {formatTimeDisplay(timestamp)}
+                    </div>
                   </div>
 
                   {/* Day Columns */}
                   {daysOrder.map((day) => {
-                    const schedule = getSchedule(day, timeSlot);
+                    const schedule = getSchedule(day, timestamp);
                     return (
                       <div
                         key={day}
                         className="p-2 border-r last:border-r-0 min-h-20 relative group"
                         onClick={() =>
-                          !schedule && handleAddSchedule(day, timeSlot)
+                          !schedule && handleAddSchedule(day, timestamp)
                         }
                       >
                         {schedule ? (
@@ -501,172 +478,22 @@ export default function ClassSchedule() {
       </Card>
 
       {/* Schedule Form Dialog */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-[500px]">
-          <DialogHeader>
-            <DialogTitle>
-              {editingSchedule
-                ? t("manager.schedule.editSchedule")
-                : t("manager.schedule.addSchedule")}
-            </DialogTitle>
-            <DialogDescription>
-              {t("manager.schedule.formDescription")}
-            </DialogDescription>
-          </DialogHeader>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="dayOfWeek">
-                  {t("manager.schedule.dayOfWeek")}
-                </Label>
-                <Select
-                  value={formData.dayOfWeek}
-                  onValueChange={(value: DayOfWeek) =>
-                    setFormData((prev) => ({ ...prev, dayOfWeek: value }))
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {daysOrder.map((day) => (
-                      <SelectItem key={day} value={day}>
-                        {persianDays[day]}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="subjectName">
-                  {t("manager.schedule.subject")}
-                </Label>
-                <Select
-                  value={formData.subjectName}
-                  onValueChange={(value) =>
-                    setFormData((prev) => ({ ...prev, subjectName: value }))
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue
-                      placeholder={t("manager.schedule.selectSubject")}
-                    />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {lessons.map((lesson) => (
-                      <SelectItem key={lesson.id} value={lesson.name}>
-                        {lesson.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="startTime">
-                  {t("manager.schedule.startTime")}
-                </Label>
-                <Input
-                  type="time"
-                  value={formData.startTime}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      startTime: e.target.value,
-                    }))
-                  }
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="endTime">{t("manager.schedule.endTime")}</Label>
-                <Input
-                  type="time"
-                  value={formData.endTime}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      endTime: e.target.value,
-                    }))
-                  }
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="teacherId">
-                  {t("manager.schedule.teacher")}
-                </Label>
-                <Select
-                  value={formData.teacherId?.toString()}
-                  onValueChange={(value) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      teacherId: parseInt(value),
-                    }))
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue
-                      placeholder={t("manager.schedule.selectTeacher")}
-                    />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {teachers.map((teacher) => (
-                      <SelectItem
-                        key={teacher.id}
-                        value={teacher.id.toString()}
-                      >
-                        {teacher.firstName} {teacher.lastName}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="roomNumber">{t("manager.schedule.room")}</Label>
-                <Input
-                  value={formData.roomNumber}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      roomNumber: e.target.value,
-                    }))
-                  }
-                  placeholder={t("manager.schedule.roomPlaceholder")}
-                />
-              </div>
-            </div>
-
-            <DialogFooter>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  setIsDialogOpen(false);
-                  setEditingSchedule(null);
-                  resetForm();
-                }}
-              >
-                {t("common.cancel")}
-              </Button>
-              <Button type="submit">
-                {editingSchedule
-                  ? t("common.save")
-                  : t("manager.schedule.addSchedule")}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+      <ScheduleFormDialog
+        isDialogOpen={isDialogOpen}
+        setIsDialogOpen={setIsDialogOpen}
+        handleSubmit={handleSubmit}
+        formData={formData}
+        setFormData={setFormData}
+        daysOrder={daysOrder}
+        persianDays={persianDays}
+        lessons={lessons}
+        timeSlots={timeSlots}
+        teachers={teachers}
+        editingSchedule={editingSchedule}
+        setEditingSchedule={setEditingSchedule}
+        resetForm={resetForm}
+        formatTimeDisplay={formatTimeDisplay}
+      />
     </div>
   );
 }

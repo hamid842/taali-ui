@@ -33,7 +33,7 @@ export const apiConfig = {
       search: `${API_BASE_URL}/schools/search`,
     },
     school: {
-      getAll: (schoolId: number) =>
+      getSchoolTimestamps: (schoolId: number) =>
         `${API_BASE_URL}/school/${schoolId}/timestamps`,
       create: (schoolId: number) =>
         `${API_BASE_URL}/school/${schoolId}/timestamps`,
