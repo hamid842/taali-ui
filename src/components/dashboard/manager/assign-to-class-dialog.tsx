@@ -58,7 +58,7 @@ export default function AssignClassModal({
       setClasses(data);
     } catch (error) {
       console.error("Failed to load classes:", error);
-      toast.error(t("admin.students.errors.loadClassesFailed"));
+      toast.error(t("manager.students.errors.loadClassesFailed"));
     } finally {
       setLoading(false);
     }
@@ -88,15 +88,15 @@ export default function AssignClassModal({
       // Show success toast
       toast.success(
         selectedClassId === "remove"
-          ? t("admin.students.success.removeFromClass")
-          : t("admin.students.success.assignToClass")
+          ? t("manager.students.success.removeFromClass")
+          : t("manager.students.success.assignToClass")
       );
 
       onSuccess();
       onClose();
     } catch (error) {
       console.error("Failed to assign class:", error);
-      toast.error(t("admin.students.errors.assignClassFailed"));
+      toast.error(t("manager.students.errors.assignClassFailed"));
     } finally {
       setSaving(false);
     }
@@ -110,13 +110,13 @@ export default function AssignClassModal({
       await studentApi.removeFromClass(student.id!);
 
       // Show success toast
-      toast.success(t("admin.students.success.removeFromClass"));
+      toast.success(t("manager.students.success.removeFromClass"));
 
       onSuccess();
       onClose();
     } catch (error) {
       console.error("Failed to remove from class:", error);
-      toast.error(t("admin.students.errors.removeClassFailed"));
+      toast.error(t("manager.students.errors.removeClassFailed"));
     } finally {
       setSaving(false);
     }
@@ -136,12 +136,12 @@ export default function AssignClassModal({
           <DialogTitle
             className={cn("mt-6", dir === "rtl" ? "text-right" : "text-left")}
           >
-            {t("admin.students.assignClass")}
+            {t("manager.students.assignClass")}
           </DialogTitle>
           <DialogDescription
             className={dir === "rtl" ? "text-right" : "text-left"}
           >
-            {t("admin.students.assigningTo")}: {student?.userFirstName}{" "}
+            {t("manager.students.assigningTo")}: {student?.userFirstName}{" "}
             {student?.userLastName}
           </DialogDescription>
         </DialogHeader>
@@ -161,7 +161,7 @@ export default function AssignClassModal({
           {!loading && student?.classId && (
             <div className="p-3 border rounded-lg bg-muted/50">
               <h4 className="text-sm font-medium mb-2">
-                {t("admin.students.currentClass")}
+                {t("manager.students.currentClass")}
               </h4>
               <p className="text-sm">{student.className}</p>
             </div>
@@ -171,7 +171,7 @@ export default function AssignClassModal({
           {!loading && (
             <div className="space-y-2">
               <label className="text-sm font-medium">
-                {t("admin.students.selectClass")}
+                {t("manager.students.selectClass")}
               </label>
               <Select
                 value={selectedClassId}
@@ -186,13 +186,13 @@ export default function AssignClassModal({
                     </div>
                   ) : (
                     <SelectValue
-                      placeholder={t("admin.students.chooseClass")}
+                      placeholder={t("manager.students.chooseClass")}
                     />
                   )}
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="remove">
-                    {t("admin.students.noClass")}
+                    {t("manager.students.noClass")}
                   </SelectItem>
                   {classes.map((classItem) => (
                     <SelectItem
@@ -213,7 +213,7 @@ export default function AssignClassModal({
           {!loading && selectedClass && (
             <div className="p-3 border rounded-lg bg-blue-50 dark:bg-blue-950/20">
               <h4 className="text-sm font-medium mb-1">
-                {t("admin.students.classInfo")}
+                {t("manager.students.classInfo")}
               </h4>
               <p className="text-xs text-muted-foreground">
                 {selectedClass.gradeLevel} • {selectedClass.studentCount || 0}{" "}
@@ -241,7 +241,7 @@ export default function AssignClassModal({
                 {saving && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
                 {saving
                   ? t("common.removing")
-                  : t("admin.students.removeFromClass")}
+                  : t("manager.students.removeFromClass")}
               </Button>
             ) : (
               <Button
@@ -251,7 +251,7 @@ export default function AssignClassModal({
                 {saving && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
                 {saving
                   ? t("common.saving")
-                  : t("admin.students.assignToClass")}
+                  : t("manager.students.assignToClass")}
               </Button>
             )}
           </div>

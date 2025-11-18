@@ -86,6 +86,9 @@ export const apiConfig = {
     },
     lessons: {
       getAll: `${API_BASE_URL}/lessons`,
+      create: `${API_BASE_URL}/lessons`,
+      update: (id: number) => `${API_BASE_URL}/lessons/${id}`,
+      delete: (id: number) => `${API_BASE_URL}/lessons/${id}`,
       getByGradeLevel: (gradeLevel: string) =>
         `${API_BASE_URL}/lessons/grade-level/${encodeURIComponent(gradeLevel)}`,
     },

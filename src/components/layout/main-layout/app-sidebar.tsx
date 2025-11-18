@@ -35,7 +35,7 @@ export default function AppSidebar() {
     resetRoleContext,
   } = useAuth();
   const location = useLocation();
-  const { role, currentSchool,setCurrentSchool } = useAppStore();
+  const { currentSchool, setCurrentSchool } = useAppStore();
   const [expandedItem, setExpandedItem] = useState<number | null>(null);
 
   // Get sidebar state
@@ -105,7 +105,8 @@ export default function AppSidebar() {
 
   // Check if we should show the "Back to Owner Panel" button
   const shouldShowOwnerSwitch =
-    user?.role === UserRole.OWNER && currentRoleContext === UserRole.SCHOOL_MANAGER;
+    user?.role === UserRole.OWNER &&
+    currentRoleContext === UserRole.SCHOOL_MANAGER;
 
   // Handle switching back to owner context
   const handleBackToOwnerPanel = () => {
@@ -143,7 +144,7 @@ export default function AppSidebar() {
       collapsible="icon"
     >
       <SidebarHeader>
-        {role === "OWNER" ? (
+        {user?.role === "OWNER" ? (
           <SchoolSwitcher />
         ) : (
           <SchoolTitle school={currentSchool} />

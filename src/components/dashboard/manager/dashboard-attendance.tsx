@@ -16,52 +16,52 @@ export default function DashboardAttendance({
       <Card>
         <CardHeader className="pb-2">
           <CardTitle className="text-sm font-medium text-green-600">
-            {t("admin.dashboard.attendance.present")}
+            {t("manager.dashboard.attendance.present")}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{attendance.present}</div>
           <p className="text-xs text-muted-foreground">
-            {t("admin.dashboard.attendance.students")}
+            {t("manager.dashboard.attendance.students")}
           </p>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="pb-2">
           <CardTitle className="text-sm font-medium text-red-600">
-            {t("admin.dashboard.attendance.absent")}
+            {t("manager.dashboard.attendance.absent")}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{attendance.absent}</div>
           <p className="text-xs text-muted-foreground">
-            {t("admin.dashboard.attendance.students")}
+            {t("manager.dashboard.attendance.students")}
           </p>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="pb-2">
           <CardTitle className="text-sm font-medium text-yellow-600">
-            {t("admin.dashboard.attendance.late")}
+            {t("manager.dashboard.attendance.late")}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{attendance.late}</div>
           <p className="text-xs text-muted-foreground">
-            {t("admin.dashboard.attendance.students")}
+            {t("manager.dashboard.attendance.students")}
           </p>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="pb-2">
           <CardTitle className="text-sm font-medium text-blue-600">
-            {t("admin.dashboard.attendance.total")}
+            {t("manager.dashboard.attendance.total")}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{attendance.total}</div>
           <p className="text-xs text-muted-foreground">
-            {t("admin.dashboard.attendance.students")}
+            {t("manager.dashboard.attendance.students")}
           </p>
         </CardContent>
       </Card>

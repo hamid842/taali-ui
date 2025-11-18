@@ -98,10 +98,12 @@ export default function StudentsList() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">
-            {t("admin.students.title")}
+            {t("manager.students.title")}
           </h1>
           <p className="text-muted-foreground">
-            {t("admin.students.subtitle", { count: pagination.totalElements })}
+            {t("manager.students.subtitle", {
+              count: pagination.totalElements,
+            })}
           </p>
         </div>
 
@@ -115,7 +117,7 @@ export default function StudentsList() {
                 <div className="relative flex-1 min-w-[200px]">
                   <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                   <Input
-                    placeholder={t("admin.students.searchPlaceholder")}
+                    placeholder={t("manager.students.searchPlaceholder")}
                     value={filters.search}
                     onChange={(e) =>
                       handleFilterChange("search", e.target.value)
@@ -135,7 +137,9 @@ export default function StudentsList() {
                   }
                 >
                   <SelectTrigger className="min-w-[150px]">
-                    <SelectValue placeholder={t("admin.students.gradeLevel")} />
+                    <SelectValue
+                      placeholder={t("manager.students.gradeLevel")}
+                    />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">{t("common.all")}</SelectItem>
@@ -155,7 +159,7 @@ export default function StudentsList() {
                   }
                 >
                   <SelectTrigger className="min-w-[150px]">
-                    <SelectValue placeholder={t("admin.students.class")} />
+                    <SelectValue placeholder={t("manager.students.class")} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">{t("common.all")}</SelectItem>
@@ -197,8 +201,8 @@ export default function StudentsList() {
           </div>
         ) : students.length === 0 ? (
           <EmptyData
-            title={t("admin.students.noStudents")}
-            desc={t("admin.students.noStudentsDescription")}
+            title={t("manager.students.noStudents")}
+            desc={t("manager.students.noStudentsDescription")}
           />
         ) : (
           <>
@@ -215,7 +219,8 @@ export default function StudentsList() {
                   <div className="flex items-center justify-between">
                     <div className="text-sm text-gray-600">
                       {t("common.showing")} {students.length} {t("common.of")}{" "}
-                      {pagination.totalElements} {t("admin.students.students")}
+                      {pagination.totalElements}{" "}
+                      {t("manager.students.students")}
                     </div>
 
                     <div className="flex items-center gap-2">

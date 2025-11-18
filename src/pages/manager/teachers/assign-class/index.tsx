@@ -88,7 +88,7 @@ export default function AssignClassesToTeacher() {
       navigate("/manager/teachers");
     } catch (error) {
       console.error("Failed to assign classes:", error);
-      alert(t("admin.teachers.errors.assignClassesFailed"));
+      alert(t("manager.teachers.errors.assignClassesFailed"));
     } finally {
       setSaving(false);
     }
@@ -112,7 +112,7 @@ export default function AssignClassesToTeacher() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-lg text-red-600">
-          {t("admin.teachers.teacherNotFound")}
+          {t("manager.teachers.teacherNotFound")}
         </div>
       </div>
     );
@@ -131,10 +131,10 @@ export default function AssignClassesToTeacher() {
           </Link>
           <div>
             <h1 className="text-3xl font-bold">
-              {t("admin.teachers.assignClasses")}
+              {t("manager.teachers.assignClasses")}
             </h1>
             <p className="text-muted-foreground">
-              {t("admin.teachers.assigningTo")}: {teacher.firstName}{" "}
+              {t("manager.teachers.assigningTo")}: {teacher.firstName}{" "}
               {teacher.lastName}
             </p>
           </div>
@@ -150,13 +150,13 @@ export default function AssignClassesToTeacher() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              <span>{t("admin.teachers.availableClasses")}</span>
+              <span>{t("manager.teachers.availableClasses")}</span>
               <Badge variant="secondary">{availableClasses.length}</Badge>
             </CardTitle>
             <div className="relative">
               <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder={t("admin.teachers.searchClasses")}
+                placeholder={t("manager.teachers.searchClasses")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-8"
@@ -168,8 +168,8 @@ export default function AssignClassesToTeacher() {
               {filteredAvailableClasses.length === 0 ? (
                 <div className="text-center py-8 text-muted-foreground">
                   {availableClasses.length === 0
-                    ? t("admin.teachers.noClassesAvailable")
-                    : t("admin.teachers.noClassesMatchSearch")}
+                    ? t("manager.teachers.noClassesAvailable")
+                    : t("manager.teachers.noClassesMatchSearch")}
                 </div>
               ) : (
                 <div className="space-y-2">
@@ -201,18 +201,18 @@ export default function AssignClassesToTeacher() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              <span>{t("admin.teachers.assignedClasses")}</span>
+              <span>{t("manager.teachers.assignedClasses")}</span>
               <Badge variant="default">{assignedClasses.length}</Badge>
             </CardTitle>
             <p className="text-sm text-muted-foreground">
-              {t("admin.teachers.assignedClassesDescription")}
+              {t("manager.teachers.assignedClassesDescription")}
             </p>
           </CardHeader>
           <CardContent>
             <ScrollArea className="h-[400px]">
               {assignedClasses.length === 0 ? (
                 <div className="text-center py-8 text-muted-foreground">
-                  {t("admin.teachers.noClassesAssigned")}
+                  {t("manager.teachers.noClassesAssigned")}
                 </div>
               ) : (
                 <div className="space-y-2">
@@ -248,13 +248,13 @@ export default function AssignClassesToTeacher() {
       {/* Teacher Info Card */}
       <Card>
         <CardHeader>
-          <CardTitle>{t("admin.teachers.teacherInformation")}</CardTitle>
+          <CardTitle>{t("manager.teachers.teacherInformation")}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label className="text-sm font-medium text-muted-foreground">
-                {t("admin.teachers.name")}
+                {t("manager.teachers.name")}
               </label>
               <p className="font-medium">
                 {teacher.firstName} {teacher.lastName}
@@ -262,13 +262,13 @@ export default function AssignClassesToTeacher() {
             </div>
             <div>
               <label className="text-sm font-medium text-muted-foreground">
-                {t("admin.teachers.email")}
+                {t("manager.teachers.email")}
               </label>
               <p className="font-medium">{teacher.email}</p>
             </div>
             <div>
               <label className="text-sm font-medium text-muted-foreground">
-                {t("admin.teachers.subjects")}
+                {t("manager.teachers.subjects")}
               </label>
               <div className="flex flex-wrap gap-1">
                 {teacher.specializations?.map((subject: string) => (
@@ -279,7 +279,7 @@ export default function AssignClassesToTeacher() {
                 {(!teacher.specializations ||
                   teacher.specializations.length === 0) && (
                   <span className="text-sm text-muted-foreground">
-                    {t("admin.teachers.noSubjects")}
+                    {t("manager.teachers.noSubjects")}
                   </span>
                 )}
               </div>

@@ -31,12 +31,12 @@ export default function TeacherSelection({
         <div className="text-center py-6 border rounded-lg">
           <Users className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
           <p className="text-sm text-muted-foreground mb-2">
-            {t("admin.classes.noTeachersAvailable")}
+            {t("manager.classes.noTeachersAvailable")}
           </p>
           <Link to="/manager/teachers/create">
             <Button variant="outline" size="sm">
               <Plus className="w-4 h-4 mr-2" />
-              {t("teachers.createTeacher")}
+              {t("manager.teachers.createTeacher")}
             </Button>
           </Link>
         </div>
@@ -66,7 +66,7 @@ export default function TeacherSelection({
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Users className="w-4 h-4" />
-            {t("admin.classes.selectedCount", {
+            {t("manager.classes.selectedCount", {
               count: selectedTeacherIds.length,
             })}
           </div>

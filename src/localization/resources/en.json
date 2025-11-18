@@ -68,9 +68,7 @@
       "PRIMARY": "Primary School",
       "MIDDLE_SCHOOL": "Middle School",
       "HIGH_SCHOOL": "High School",
-      "VOCATIONAL": "Vocational",
-      "UNDERGRADUATE": "Undergraduate",
-      "POSTGRADUATE": "Postgraduate"
+      "VOCATIONAL": "Vocational"
     },
     "shift": {
       "MORNING": "Morning Shift",
@@ -495,6 +493,8 @@
       "studentsCapacity": "Student Capacity",
       "capacityHelper": "Leave as 0 for unlimited capacity",
       "submit": "Create School",
+      "educationalLevels": "Educational Levels",
+      "selectEducationalLevels": "Select educational levels",
       "validation": {
         "nameTooLong": "School name must not exceed 255 characters",
         "codeTooLong": "School code must not exceed 50 characters",
@@ -503,7 +503,8 @@
         "phoneInvalid": "Please provide a valid phone number",
         "capacityPositive": "Student capacity must be positive or zero",
         "nameRequired": "School name is required",
-        "codeRequired": "School code is required"
+        "codeRequired": "School code is required",
+        "atLeastOneLevel": "Please select at least one educational level"
       }
     },
     "schoolsPage": {
@@ -572,7 +573,7 @@
       "noSchoolBtn": "Create your first school"
     }
   },
-  "admin": {
+  "manager": {
     "dashboard": {
       "title": "School Dashboard",
       "description": "Welcome back, {{name}}! Managing {{school}}.",
@@ -778,7 +779,8 @@
         "phonePlaceholder": "Enter phone number",
         "occupationPlaceholder": "Enter occupation",
         "completeRegistration": "Complete Registration",
-        "notes": "Notes"
+        "notes": "Notes",
+        "notesPlaceholder": "If you have comment, enter here"
       }
     },
     "students": {
@@ -841,6 +843,45 @@
     },
     "attendance": {
       "manage": "Manage Attendance"
+    },
+    "lessons": {
+      "create": {
+        "title": "Create New Lesson",
+        "description": "Add a new lesson to the curriculum",
+        "success": "Lesson created successfully",
+        "error": "Failed to create lesson",
+        "submit": "Create Lesson"
+      },
+      "list": {
+        "title": "Lessons",
+        "description": "Manage curriculum lessons across all grade levels",
+        "addLesson": "Add Lesson",
+        "searchPlaceholder": "Search lessons...",
+        "lessons": "lessons",
+        "gradeDescription": "Curriculum lessons for {grade} level",
+        "noLessons": "No lessons found",
+        "noMatchingLessons": "No lessons match your search criteria",
+        "tryDifferentSearch": "Try adjusting your search or filter criteria",
+        "emptyDescription": "Get started by creating your first lesson",
+        "addFirstLesson": "Add First Lesson",
+        "loadError": "Failed to load lessons",
+        "periodDescription": "درس‌های برنامه درسی برای {period}"
+      },
+      "form": {
+        "name": "Lesson Name (Persian)",
+        "namePlaceholder": "Enter lesson name in Persian",
+        "nameEn": "Lesson Name (English)",
+        "nameEnPlaceholder": "Enter lesson name in English",
+        "gradeLevel": "Grade Level",
+        "selectGradeLevel": "Select grade level",
+        "color": "Color"
+      },
+      "validation": {
+        "nameRequired": "Lesson name is required",
+        "nameTooLong": "Lesson name is too long",
+        "gradeLevelRequired": "Grade level is required",
+        "colorRequired": "Color is required"
+      }
     }
   },
   "teacher": {
@@ -906,7 +947,16 @@
       "send": "Send Message"
     }
   },
-
+  "education": {
+    "periods": {
+      "PRE_PRIMARY": "Pre-primary",
+      "FIRST_PERIOD_PRIMARY": "Primary – First Cycle",
+      "SECOND_PERIOD_PRIMARY": "Primary – Second Cycle",
+      "LOWER_SECONDARY": "Lower Secondary",
+      "UPPER_SECONDARY": "Upper Secondary",
+      "TERTIARY": "Tertiary Education"
+    }
+  },
   "loading": {
     "checkAuth": "Checking authentication..."
   },

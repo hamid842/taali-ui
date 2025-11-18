@@ -39,7 +39,7 @@ export default function StudentDetailsForm({
       onSuccess(updatedStudent);
       if (updatedStudent.id) onNext();
     } catch (error) {
-      if(error instanceof Error) toast.error(error.message)
+      if (error instanceof Error) toast.error(error.message);
       console.error("Failed to update student details:", error);
     }
   };
@@ -48,14 +48,14 @@ export default function StudentDetailsForm({
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <AppTextField
-          label={t("admin.addStudent.fields.studentId")}
-          placeholder={t("admin.addStudent.placeholders.studentId")}
+          label={t("manager.addStudent.fields.studentId")}
+          placeholder={t("manager.addStudent.placeholders.studentId")}
           {...register("studentId")}
         />
 
         <AppTextField
-          label={t("admin.addStudent.fields.idNumber")}
-          placeholder={t("admin.addStudent.placeholders.idNumber")}
+          label={t("manager.addStudent.fields.idNumber")}
+          placeholder={t("manager.addStudent.placeholders.idNumber")}
           {...register("idNumber")}
         />
         <Controller
@@ -63,8 +63,8 @@ export default function StudentDetailsForm({
           control={control}
           render={({ field }) => (
             <AppEnDateField
-              label={t("admin.addStudent.fields.birthDate")}
-              placeholder={t("admin.addStudent.placeholders.birthDate")}
+              label={t("manager.addStudent.fields.birthDate")}
+              placeholder={t("manager.addStudent.placeholders.birthDate")}
               value={field.value}
               onChange={field.onChange}
             />
@@ -72,27 +72,27 @@ export default function StudentDetailsForm({
         />
 
         <AppTextField
-          label={t("admin.addStudent.fields.gradeLevel")}
-          placeholder={t("admin.addStudent.placeholders.gradeLevel")}
+          label={t("manager.addStudent.fields.gradeLevel")}
+          placeholder={t("manager.addStudent.placeholders.gradeLevel")}
           {...register("gradeLevel")}
         />
 
         <AppTextField
-          label={t("admin.addStudent.fields.emergencyContact")}
-          placeholder={t("admin.addStudent.placeholders.emergencyContact")}
+          label={t("manager.addStudent.fields.emergencyContact")}
+          placeholder={t("manager.addStudent.placeholders.emergencyContact")}
           {...register("emergencyContact")}
         />
 
         <AppTextField
-          label={t("admin.addStudent.fields.emergencyPhone")}
-          placeholder={t("admin.addStudent.placeholders.emergencyPhone")}
+          label={t("manager.addStudent.fields.emergencyPhone")}
+          placeholder={t("manager.addStudent.placeholders.emergencyPhone")}
           {...register("emergencyPhone")}
         />
       </div>
       <AppTextArea
         {...register("medicalNotes")}
-        label={t("admin.addStudent.fields.medicalNotes")}
-        placeholder={t("admin.addStudent.placeholders.medicalNotes")}
+        label={t("manager.addStudent.fields.medicalNotes")}
+        placeholder={t("manager.addStudent.placeholders.medicalNotes")}
       />
       <div className="flex justify-between pt-4">
         <Button type="button" variant="outline" onClick={onBack}>

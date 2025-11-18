@@ -15,7 +15,7 @@ import DashboardMainGrid from "@/components/dashboard/manager/dashboard-main-gri
 export default function AdminDashboard() {
   const { t } = useLanguage();
   const { user } = useAuth();
-  const {currentSchool } = useAppStore();
+  const { currentSchool } = useAppStore();
 
   const [stats, setStats] = useState<AdminDashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -32,8 +32,8 @@ export default function AdminDashboard() {
       setStats(data);
     } catch (err) {
       console.error("Failed to load admin dashboard data:", err);
-      setError(t("admin.dashboard.error.loading"));
-      toast.error(t("admin.dashboard.error.loading"));
+      setError(t("manager.dashboard.error.loading"));
+      toast.error(t("manager.dashboard.error.loading"));
     } finally {
       setLoading(false);
     }
@@ -52,7 +52,7 @@ export default function AdminDashboard() {
       <div className="flex flex-col items-center justify-center py-12">
         <School className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
         <h3 className="text-lg font-medium">
-          {t("admin.dashboard.error.title")}
+          {t("manager.dashboard.error.title")}
         </h3>
         <p className="text-muted-foreground mt-2">{error}</p>
         <button className="btn mt-4" onClick={loadDashboardData}>

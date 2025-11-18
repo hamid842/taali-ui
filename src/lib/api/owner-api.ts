@@ -15,14 +15,22 @@ import { dashboardUtils } from "@/lib/utils/dashboard-utils";
 import { activityUtils } from "@/lib/utils/activity-utils";
 import type { ISchool } from "@/types/school";
 import type { StudentListResponse } from "@/types/student";
-import type { Teacher } from "@/types/teacher";
+import type { TeacherListResponse } from "@/types/teacher";
 import type { ClassResponse } from "@/types/class";
 
 export const ownerApi = {
   // Get comprehensive dashboard statistics
   getDashboardStats: async (): Promise<DashboardStats> => {
     try {
+      console.log("Fetching schools...");
       const schools = await schoolApi.getMySchools();
+      console.log("Schools fetched:", schools);
+
+      // Handle case when user has no schools
+      if (!schools || schools.length === 0) {
+        console.log("No schools found for this user");
+        return getEmptyDashboardStats();
+      }
 
       const schoolPromises = schools.map(async (school) => {
         try {
@@ -78,7 +86,7 @@ export const ownerApi = {
         totalTeachers,
         totalClasses,
         totalCapacity,
-        schools.length 
+        schools.length
       );
 
       // Prepare top schools
@@ -126,7 +134,7 @@ export const ownerApi = {
       };
     } catch (error) {
       console.error("Error fetching dashboard stats:", error);
-      throw new Error("Failed to load dashboard data");
+      return getEmptyDashboardStats();
     }
   },
 
@@ -203,6 +211,38 @@ export const ownerApi = {
   },
 };
 
+// Helper function for empty dashboard state
+function getEmptyDashboardStats(): DashboardStats {
+  return {
+    totalSchools: 0,
+    totalStudents: 0,
+    totalTeachers: 0,
+    totalClasses: 0,
+    activeSchools: 0,
+    recentActivity: [
+      {
+        id: 1,
+        type: "school_created" as const,
+        description:
+          "Welcome to your dashboard! Create your first school to get started.",
+        timestamp: new Date().toISOString(),
+        schoolName: "Get Started",
+      },
+    ],
+    schoolDistribution: [],
+    monthlyGrowth: [],
+    topSchools: [],
+    recentRegistrations: [],
+    performanceMetrics: {
+      averageStudentsPerSchool: 0,
+      averageTeachersPerSchool: 0,
+      averageClassesPerSchool: 0,
+      studentTeacherRatio: 0,
+      capacityUtilization: 0,
+    },
+  };
+}
+
 // Helper function to calculate school distribution
 function calculateSchoolDistribution(schools: ISchool[]): SchoolDistribution[] {
   const distribution: { [key: string]: number } = {};
@@ -277,7 +317,7 @@ async function generateRecentRegistrations(
 async function generateSchoolActivity(
   school: ISchool,
   students: StudentListResponse,
-  teachers: Teacher[],
+  teachers: TeacherListResponse[],
   classes: ClassResponse[]
 ): Promise<ActivityItem[]> {
   const activities: ActivityItem[] = [];

@@ -18,9 +18,9 @@ export default function NoSchoolContent() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">
-              {t("users.title")}
+              {t("owner.users.title")}
             </h1>
-            <p className="text-muted-foreground">{t("users.subtitleAdmins")}</p>
+            <p className="text-muted-foreground">{t("owner.users.subtitleAdmins")}</p>
           </div>
         </div>
 
@@ -31,17 +31,17 @@ export default function NoSchoolContent() {
               <AlertTriangle className="h-6 w-6 text-yellow-600 mt-0.5" />
               <div className="flex-1">
                 <h3 className="font-semibold text-yellow-600 mb-2">
-                  {t("users.noSchoolWarningTitle")}
+                  {t("owner.users.noSchoolWarningTitle")}
                 </h3>
                 <p className="text-yellow-700 mb-4">
-                  {t("users.noSchoolWarningDesc")}
+                  {t("owner.users.noSchoolWarningDesc")}
                 </p>
                 <Button
                   onClick={handleCreateSchool}
                   className="bg-yellow-600 hover:bg-yellow-700"
                 >
                   <School className="w-4 h-4 mr-2" />
-                  {t("users.createSchoolButton")}
+                  {t("owner.users.createSchoolButton")}
                 </Button>
               </div>
             </div>

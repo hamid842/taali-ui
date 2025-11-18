@@ -48,32 +48,32 @@ export interface UpdateTeacherRequest {
 }
 
 export interface TeacherListResponse {
-    id: number,
-     firstName: string,
-     lastName: string,
-     email: string,
-     profileImage?: string,
-     isActive: boolean,
-     subjects: string[],
-     classCount: number
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  profileImage?: string;
+  isActive: boolean;
+  subjects: string[];
+  classCount: number;
 }
 
 export interface TeacherDetailResponse {
-   id: number,
-   firstName: string,
-     lastName: string,
-     email: string,
-     profileImage?: string,
-     isActive: boolean,
-     qualification?: string,
-     experienceYears?: number,
-     specializations: string[],
-     classes: TeacherClassResponse[]
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  profileImage?: string;
+  isActive: boolean;
+  qualification?: string;
+  experienceYears?: number;
+  specializations: string[];
+  classes: TeacherClassResponse[];
 }
 
 export interface TeacherClassResponse {
-   classId: number,
-    className: string,
-    subject?: string[],
-    isMainTeacher: boolean
+  classId: number;
+  className: string;
+  subject?: string[];
+  isMainTeacher: boolean;
 }

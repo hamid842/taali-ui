@@ -14,7 +14,7 @@ export type SelectFieldOptions = {
 };
 
 interface AppSelectProps {
-  label: string;
+  label?: string;
   value?: string;
   onValueChange?: (value: string) => void;
   error?: string;

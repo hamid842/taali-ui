@@ -3,9 +3,9 @@ import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/hooks/use-language";
 import { useNavigate } from "react-router-dom";
-import type { User } from "@/types/auth";
+import type { LoginResponse } from "@/types/auth";
 
-export default function DashboardHeader({ user }: { user: User | null }) {
+export default function DashboardHeader({ user }: { user: LoginResponse | null }) {
   const { t, dir } = useLanguage();
   const navigate = useNavigate();
 

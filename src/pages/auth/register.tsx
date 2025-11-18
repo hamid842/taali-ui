@@ -14,29 +14,83 @@ import { useRoleRedirect } from "@/hooks/use-role-redirect";
 import { useNavigate } from "react-router-dom";
 import registerImage from "@/assets/images/register-pic.webp";
 import RegisterUserForm from "@/components/forms/register-user-form";
+import { useAuth } from "@/hooks/use-auth";
+import { useLoginMutation } from "@/hooks/use-auth-mutation";
+import type { LoginResponse } from "@/types/auth";
+import { toast } from "sonner";
 
 export default function Register() {
   const navigate = useNavigate();
   const [step, setStep] = useState<"register" | "verify">("register");
   const [userId, setUserId] = useState<string>("");
-  const [userContact, setUserContact] = useState<{
+  const [userCredentials, setUserCredentials] = useState<{
     email: string;
     phoneNumber: string;
+    password: string;
   }>({
     email: "",
     phoneNumber: "",
+    password: "",
   });
   const { t } = useLanguage();
-
   const { redirectToDashboard } = useRoleRedirect();
+  const { login } = useAuth();
+  const loginMutation = useLoginMutation();
 
-  const handleVerificationSuccess = (userData: {
+  const handleVerificationSuccess = async (userData: {
     role: UserRoleType;
     userId: string;
   }) => {
-    setTimeout(() => {
-      redirectToDashboard(userData.role);
-    }, 2000);
+    try {
+      // Use the stored credentials to login automatically
+      const loginData = {
+        email: userCredentials.email,
+        password: userCredentials.password,
+        // Or use phoneNumber if your login supports it
+        // phoneNumber: userCredentials.phoneNumber,
+      };
+
+      const loginResult = await loginMutation.mutateAsync(loginData);
+
+      if (loginResult.success && loginResult.token) {
+        const userData: LoginResponse = {
+          id: loginResult.id,
+          userId: loginResult.userId!,
+          firstName: loginResult.firstName!,
+          lastName: loginResult.lastName!,
+          role: loginResult.role! as UserRoleType,
+          email: loginResult.email!,
+          currentSchool: loginResult.currentSchool,
+          permissions: loginResult.permissions,
+        };
+        // Store the authentication data
+        login(loginResult.token, userData, loginResult.refreshToken);
+
+        toast.success(loginResult.message, {
+          description: t("toast.redirectingDashboard"),
+        });
+
+        // Redirect to dashboard
+        setTimeout(() => {
+          redirectToDashboard(loginResult.role!);
+        }, 1000);
+      } else {
+        toast.error(loginResult.message || t("login.loginFailed"));
+        // Fallback: redirect anyway and let user login manually
+        setTimeout(() => {
+          redirectToDashboard(userData.role);
+        }, 2000);
+      }
+    } catch (error: unknown) {
+      console.error("Auto-login after OTP verification failed:", error);
+      if (error instanceof Error) {
+        toast.error(error.message || t("login.loginFailed"));
+      }
+      // Fallback: redirect anyway and let user login manually
+      setTimeout(() => {
+        redirectToDashboard(userData.role);
+      }, 2000);
+    }
   };
 
   const handleBackToRegister = () => {
@@ -46,8 +100,8 @@ export default function Register() {
   if (step === "verify") {
     return (
       <OtpVerification
-        phoneNumber={userContact.phoneNumber}
-        email={userContact.email}
+        phoneNumber={userCredentials.phoneNumber}
+        email={userCredentials.email}
         userId={userId}
         onSuccess={handleVerificationSuccess}
         onBack={handleBackToRegister}
@@ -84,7 +138,7 @@ export default function Register() {
               registerForRole="OWNER"
               setStep={setStep}
               setUserId={setUserId}
-              setUserContact={setUserContact}
+              setUserContact={setUserCredentials}
             />
           </CardContent>
           <div className="flex items-center justify-center text-sm">

@@ -273,7 +273,7 @@ export default function ClassSchedule() {
       loadData(); // Reload schedules
     } catch (error) {
       console.error("Error saving schedule:", error);
-      alert(t("admin.schedule.errors.saveFailed"));
+      alert(t("manager.schedule.errors.saveFailed"));
     }
   };
 
@@ -362,7 +362,7 @@ export default function ClassSchedule() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-lg text-red-600">
-          {t("admin.schedule.errors.classNotFound")}
+          {t("manager.schedule.errors.classNotFound")}
         </div>
       </div>
     );
@@ -379,7 +379,9 @@ export default function ClassSchedule() {
             </Button>
           </Link>
           <div>
-            <h1 className="text-3xl font-bold">{t("admin.schedule.title")}</h1>
+            <h1 className="text-3xl font-bold">
+              {t("manager.schedule.title")}
+            </h1>
             <p className="text-muted-foreground">
               {classDetail.name} - {classDetail.gradeLevel}
             </p>
@@ -387,7 +389,7 @@ export default function ClassSchedule() {
         </div>
         <Button onClick={() => setIsDialogOpen(true)}>
           <Plus className="w-4 h-4 mr-2" />
-          {t("admin.schedule.addSchedule")}
+          {t("manager.schedule.addSchedule")}
         </Button>
       </div>
 
@@ -396,10 +398,10 @@ export default function ClassSchedule() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <CalendarIcon className="w-5 h-5" />
-            {t("admin.schedule.weeklyTimetable")}
+            {t("manager.schedule.weeklyTimetable")}
           </CardTitle>
           <CardDescription>
-            {t("admin.schedule.timetableDescription")}
+            {t("manager.schedule.timetableDescription")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -408,7 +410,7 @@ export default function ClassSchedule() {
               {/* Days Header */}
               <div className="grid grid-cols-8 border-b">
                 <div className="p-4 font-semibold border-r bg-gray-50 dark:bg-stone-900">
-                  {t("admin.schedule.time")}
+                  {t("manager.schedule.time")}
                 </div>
                 {daysOrder.map((day) => (
                   <div
@@ -504,11 +506,11 @@ export default function ClassSchedule() {
           <DialogHeader>
             <DialogTitle>
               {editingSchedule
-                ? t("admin.schedule.editSchedule")
-                : t("admin.schedule.addSchedule")}
+                ? t("manager.schedule.editSchedule")
+                : t("manager.schedule.addSchedule")}
             </DialogTitle>
             <DialogDescription>
-              {t("admin.schedule.formDescription")}
+              {t("manager.schedule.formDescription")}
             </DialogDescription>
           </DialogHeader>
 
@@ -516,7 +518,7 @@ export default function ClassSchedule() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="dayOfWeek">
-                  {t("admin.schedule.dayOfWeek")}
+                  {t("manager.schedule.dayOfWeek")}
                 </Label>
                 <Select
                   value={formData.dayOfWeek}
@@ -539,7 +541,7 @@ export default function ClassSchedule() {
 
               <div className="space-y-2">
                 <Label htmlFor="subjectName">
-                  {t("admin.schedule.subject")}
+                  {t("manager.schedule.subject")}
                 </Label>
                 <Select
                   value={formData.subjectName}
@@ -549,7 +551,7 @@ export default function ClassSchedule() {
                 >
                   <SelectTrigger>
                     <SelectValue
-                      placeholder={t("admin.schedule.selectSubject")}
+                      placeholder={t("manager.schedule.selectSubject")}
                     />
                   </SelectTrigger>
                   <SelectContent>
@@ -566,7 +568,7 @@ export default function ClassSchedule() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="startTime">
-                  {t("admin.schedule.startTime")}
+                  {t("manager.schedule.startTime")}
                 </Label>
                 <Input
                   type="time"
@@ -582,7 +584,7 @@ export default function ClassSchedule() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="endTime">{t("admin.schedule.endTime")}</Label>
+                <Label htmlFor="endTime">{t("manager.schedule.endTime")}</Label>
                 <Input
                   type="time"
                   value={formData.endTime}
@@ -599,7 +601,9 @@ export default function ClassSchedule() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="teacherId">{t("admin.schedule.teacher")}</Label>
+                <Label htmlFor="teacherId">
+                  {t("manager.schedule.teacher")}
+                </Label>
                 <Select
                   value={formData.teacherId?.toString()}
                   onValueChange={(value) =>
@@ -611,7 +615,7 @@ export default function ClassSchedule() {
                 >
                   <SelectTrigger>
                     <SelectValue
-                      placeholder={t("admin.schedule.selectTeacher")}
+                      placeholder={t("manager.schedule.selectTeacher")}
                     />
                   </SelectTrigger>
                   <SelectContent>
@@ -628,7 +632,7 @@ export default function ClassSchedule() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="roomNumber">{t("admin.schedule.room")}</Label>
+                <Label htmlFor="roomNumber">{t("manager.schedule.room")}</Label>
                 <Input
                   value={formData.roomNumber}
                   onChange={(e) =>
@@ -637,7 +641,7 @@ export default function ClassSchedule() {
                       roomNumber: e.target.value,
                     }))
                   }
-                  placeholder={t("admin.schedule.roomPlaceholder")}
+                  placeholder={t("manager.schedule.roomPlaceholder")}
                 />
               </div>
             </div>
@@ -657,7 +661,7 @@ export default function ClassSchedule() {
               <Button type="submit">
                 {editingSchedule
                   ? t("common.save")
-                  : t("admin.schedule.addSchedule")}
+                  : t("manager.schedule.addSchedule")}
               </Button>
             </DialogFooter>
           </form>

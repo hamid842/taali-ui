@@ -6,6 +6,8 @@ import EditTeacher from "@/pages/manager/teachers/edit";
 import AssignClassesToTeacher from "@/pages/manager/teachers/assign-class";
 import SchoolProfile from "@/pages/owner/schools/school-profile";
 import TimestampManagement from "@/pages/manager/school-settings/timestamp";
+import LessonsCreate from "@/pages/manager/lessons/create";
+import Lessons from "@/pages/manager/lessons/list";
 
 const AdminDashboard = lazy(() => import("@/pages/manager/dashboard"));
 const AdminUsers = lazy(() => import("@/pages/manager/users/list"));
@@ -58,5 +60,7 @@ export const schoolManagerRoutes = {
     { path: "finance/tuition", element: <Tuition /> },
     { path: "finance/invoice", element: <Invoice /> },
     { path: "finance/reports", element: <Reports /> },
+    { path: "lessons/create", element: <LessonsCreate /> },
+    { path: "lessons", element: <Lessons /> },
   ],
 };

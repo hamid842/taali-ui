@@ -20,7 +20,11 @@ interface RegisterUserFormProps {
   registerForRole: UserRoleType;
   setStep?: (value: SetStateAction<"register" | "verify">) => void;
   setUserId?: Dispatch<SetStateAction<string>>;
-  setUserContact?: (contact: { email: string; phoneNumber: string }) => void;
+  setUserContact?: (contact: {
+    email: string;
+    phoneNumber: string;
+    password: string;
+  }) => void;
   redirectPath?: string;
   profileImage?: string | null;
   onSuccess?: (userData: RegisterResponse) => void;
@@ -120,6 +124,7 @@ export default function RegisterUserForm({
           setUserContact?.({
             email: data.email,
             phoneNumber: data.phoneNumber,
+            password: data.password,
           });
           setStep?.("verify");
         } else {

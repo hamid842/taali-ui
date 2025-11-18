@@ -46,7 +46,7 @@ const ClassesPage: React.FC = () => {
       const data = await classApi.getClassesBySchool(currentSchool.id);
       setClasses(data);
     } catch (error) {
-      console.error(t("admin.classes.errors.loadFailed"), error);
+      console.error(t("manager.classes.errors.loadFailed"), error);
     } finally {
       setLoading(false);
     }
@@ -76,7 +76,7 @@ const ClassesPage: React.FC = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-lg">{t("admin.classes.loading")}</div>
+        <div className="text-lg">{t("manager.classes.loading")}</div>
       </div>
     );
   }
@@ -85,16 +85,16 @@ const ClassesPage: React.FC = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">{t("admin.classes.title")}</h1>
+          <h1 className="text-3xl font-bold">{t("manager.classes.title")}</h1>
           <p className="text-muted-foreground">
-            {t("admin.classes.description")}
+            {t("manager.classes.description")}
           </p>
         </div>
         {canManageClasses() && (
           <Link to="/manager/classes/create">
             <Button>
               <Plus className="w-4 h-4 mr-2" />
-              {t("admin.classes.createClass")}
+              {t("manager.classes.createClass")}
             </Button>
           </Link>
         )}
@@ -105,7 +105,7 @@ const ClassesPage: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <Input
-                placeholder={t("admin.classes.searchPlaceholder")}
+                placeholder={t("manager.classes.searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="max-w-sm"
@@ -118,7 +118,7 @@ const ClassesPage: React.FC = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">
-                    {t("admin.classes.allStatus")}
+                    {t("manager.classes.allStatus")}
                   </SelectItem>
                   <SelectItem value="active">{t("common.active")}</SelectItem>
                   <SelectItem value="inactive">
@@ -132,11 +132,13 @@ const ClassesPage: React.FC = () => {
                 onValueChange={setAcademicYearFilter}
               >
                 <SelectTrigger className="w-[150px]">
-                  <SelectValue placeholder={t("admin.classes.academicYear")} />
+                  <SelectValue
+                    placeholder={t("manager.classes.academicYear")}
+                  />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">
-                    {t("admin.classes.allYears")}
+                    {t("manager.classes.allYears")}
                   </SelectItem>
                   {academicYears.map((year) => (
                     <SelectItem key={year} value={year}>
@@ -153,19 +155,19 @@ const ClassesPage: React.FC = () => {
             <TableHeader>
               <TableRow>
                 <TableHead className="text-center">
-                  {t("admin.classes.name")}
+                  {t("manager.classes.name")}
                 </TableHead>
                 <TableHead className="text-center">
-                  {t("admin.classes.gradeLevel")}
+                  {t("manager.classes.gradeLevel")}
                 </TableHead>
                 <TableHead className="text-center">
-                  {t("admin.classes.academicYear")}
+                  {t("manager.classes.academicYear")}
                 </TableHead>
                 <TableHead className="text-center">
-                  {t("admin.classes.students")}
+                  {t("manager.classes.students")}
                 </TableHead>
                 <TableHead className="text-center">
-                  {t("admin.classes.teachers")}
+                  {t("manager.classes.teachers")}
                 </TableHead>
                 <TableHead className="text-center">
                   {t("common.status")}
@@ -182,7 +184,7 @@ const ClassesPage: React.FC = () => {
                     colSpan={7}
                     className="text-center py-8 text-muted-foreground"
                   >
-                    {t("admin.classes.noClassesFound")}
+                    {t("manager.classes.noClassesFound")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -220,7 +222,7 @@ const ClassesPage: React.FC = () => {
                         <Link to={`/manager/classes/${classItem.id}/schedule`}>
                           <Button variant="outline" size="sm">
                             <Calendar className="w-4 h-4 mr-1" />
-                            {t("admin.classes.schedule")}
+                            {t("manager.classes.schedule")}
                           </Button>
                         </Link>
                       </div>

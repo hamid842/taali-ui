@@ -46,6 +46,7 @@ export default function SchoolSwitcher() {
     );
   }
 
+
   // Handle no schools state
   if (!schools || schools.length === 0) {
     return <EmptySchools />;

@@ -43,20 +43,20 @@ export default function CreateStudent() {
   const steps = [
     {
       id: 1,
-      title: t("admin.addStudent.steps.registerInfo"),
-      description: t("admin.addStudent.steps.registerInfoDesc"),
+      title: t("manager.addStudent.steps.registerInfo"),
+      description: t("manager.addStudent.steps.registerInfoDesc"),
       icon: User,
     },
     {
       id: 2,
-      title: t("admin.addStudent.steps.personalInfo"),
-      description: t("admin.addStudent.steps.personalInfoDesc"),
+      title: t("manager.addStudent.steps.personalInfo"),
+      description: t("manager.addStudent.steps.personalInfoDesc"),
       icon: UserCheck,
     },
     {
       id: 3,
-      title: t("admin.addStudent.steps.parentsInfo"),
-      description: t("admin.addStudent.steps.parentsInfoDesc"),
+      title: t("manager.addStudent.steps.parentsInfo"),
+      description: t("manager.addStudent.steps.parentsInfoDesc"),
       icon: Users,
     },
   ];
@@ -139,11 +139,11 @@ export default function CreateStudent() {
   if (!ownerHasSchool) {
     return (
       <EmptyData
-        title={t("admin.addStudent.noSchoolTitle")}
-        desc={t("admin.addStudent.noSchoolDesc")}
+        title={t("manager.addStudent.noSchoolTitle")}
+        desc={t("manager.addStudent.noSchoolDesc")}
         actions={
           <Link to={"/manager/schools/create"}>
-            <Button>{t("admin.addStudent.noSchoolBtn")}</Button>
+            <Button>{t("manager.addStudent.noSchoolBtn")}</Button>
           </Link>
         }
       />
@@ -154,8 +154,8 @@ export default function CreateStudent() {
     <div className="container mx-auto py-6 max-w-4xl">
       {/* Header */}
       <FormHeader
-        title={t("admin.addStudent.create")}
-        desc={t("admin.addStudent.createDesc")}
+        title={t("manager.addStudent.create")}
+        desc={t("manager.addStudent.createDesc")}
       />
 
       {/* Stepper */}
@@ -236,8 +236,8 @@ export default function CreateStudent() {
         {currentStep === 1 && (
           <ImageUploadSection
             uploadType="profile-image"
-            title={t("admin.addStudent.imgSectionTitle")}
-            desc={t("admin.addStudent.imgSectionDesc")}
+            title={t("manager.addStudent.imgSectionTitle")}
+            desc={t("manager.addStudent.imgSectionDesc")}
             onImageChange={handleLogoChange}
           />
         )}

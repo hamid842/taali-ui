@@ -48,7 +48,7 @@ export default function TeachersPage() {
       const data = await teacherApi.getBySchool(currentSchool?.id);
       setTeachers(data);
     } catch (error) {
-      console.error(t("admin.teachers.errors.loadFailed"), error);
+      console.error(t("manager.teachers.errors.loadFailed"), error);
     } finally {
       setLoading(false);
     }
@@ -82,7 +82,7 @@ export default function TeachersPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-lg">{t("admin.teachers.loading")}</div>
+        <div className="text-lg">{t("manager.teachers.loading")}</div>
       </div>
     );
   }
@@ -91,16 +91,16 @@ export default function TeachersPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">{t("admin.teachers.title")}</h1>
+          <h1 className="text-3xl font-bold">{t("manager.teachers.title")}</h1>
           <p className="text-muted-foreground">
-            {t("admin.teachers.description")}
+            {t("manager.teachers.description")}
           </p>
         </div>
         {canManageTeachers() && (
           <Link to="/manager/teachers/create">
             <Button>
               <Plus className="w-4 h-4 mr-2" />
-              {t("admin.teachers.createTeacher")}
+              {t("manager.teachers.createTeacher")}
             </Button>
           </Link>
         )}
@@ -111,7 +111,7 @@ export default function TeachersPage() {
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <Input
-                placeholder={t("admin.teachers.searchPlaceholder")}
+                placeholder={t("manager.teachers.searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="max-w-sm"
@@ -124,7 +124,7 @@ export default function TeachersPage() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">
-                    {t("admin.teachers.allStatus")}
+                    {t("manager.teachers.allStatus")}
                   </SelectItem>
                   <SelectItem value="active">{t("common.active")}</SelectItem>
                   <SelectItem value="inactive">
@@ -135,11 +135,11 @@ export default function TeachersPage() {
 
               <Select value={subjectFilter} onValueChange={setSubjectFilter}>
                 <SelectTrigger className="w-[150px]">
-                  <SelectValue placeholder={t("admin.teachers.subject")} />
+                  <SelectValue placeholder={t("manager.teachers.subject")} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">
-                    {t("admin.teachers.allSubjects")}
+                    {t("manager.teachers.allSubjects")}
                   </SelectItem>
                   {allSubjects.map((subject) => (
                     <SelectItem key={subject} value={subject}>
@@ -156,16 +156,16 @@ export default function TeachersPage() {
             <TableHeader>
               <TableRow>
                 <TableHead className="text-center">
-                  {t("admin.teachers.name")}
+                  {t("manager.teachers.name")}
                 </TableHead>
                 <TableHead className="text-center">
-                  {t("admin.teachers.email")}
+                  {t("manager.teachers.email")}
                 </TableHead>
                 <TableHead className="text-center">
-                  {t("admin.teachers.subjects")}
+                  {t("manager.teachers.subjects")}
                 </TableHead>
                 <TableHead className="text-center">
-                  {t("admin.teachers.classes")}
+                  {t("manager.teachers.classes")}
                 </TableHead>
                 <TableHead className="text-center">
                   {t("common.status")}
@@ -182,7 +182,7 @@ export default function TeachersPage() {
                     colSpan={6}
                     className="text-center py-8 text-muted-foreground"
                   >
-                    {t("admin.teachers.noTeachersFound")}
+                    {t("manager.teachers.noTeachersFound")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -221,7 +221,7 @@ export default function TeachersPage() {
                         {(!teacher.subjects ||
                           teacher.subjects.length === 0) && (
                           <span className="text-muted-foreground text-sm">
-                            {t("admin.teachers.noSubjects")}
+                            {t("manager.teachers.noSubjects")}
                           </span>
                         )}
                       </div>

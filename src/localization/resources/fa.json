@@ -68,9 +68,7 @@
       "PRIMARY": "ابتدایی",
       "MIDDLE_SCHOOL": "متوسطه اول",
       "HIGH_SCHOOL": "متوسطه دوم",
-      "VOCATIONAL": "فنی و حرفه‌ای",
-      "UNDERGRADUATE": "کارشناسی",
-      "POSTGRADUATE": "کارشناسی ارشد"
+      "VOCATIONAL": "فنی و حرفه‌ای"
     },
     "shift": {
       "MORNING": "شیفت صبح",
@@ -495,16 +493,16 @@
       "selectEducationalLevel": "سطح آموزشی را انتخاب کنید",
       "studentsCapacity": "ظرفیت دانش‌آموزان",
       "capacityHelper": "برای ظرفیت نامحدود، صفر قرار دهید",
-      "email": "ایمیل",
-      "phone": "تلفن",
       "submit": "ایجاد مدرسه",
-      "cancel": "انصراف",
+      "educationalLevels": "مقاطع تحصیلی",
+      "selectEducationalLevels": "انتخاب مقاطع تحصیلی",
       "validation": {
         "nameRequired": "نام مدرسه الزامی است",
         "codeRequired": "کد مدرسه الزامی است",
         "codePattern": "کد باید شامل حروف و اعداد بدون فاصله باشد",
         "emailInvalid": "لطفا یک آدرس ایمیل معتبر وارد کنید",
-        "phoneInvalid": "لطفا یک شماره تلفن معتبر وارد کنید"
+        "phoneInvalid": "لطفا یک شماره تلفن معتبر وارد کنید",
+        "atLeastOneLevel": "لطفاً حداقل یک مقطع تحصیلی را انتخاب کنید"
       }
     },
     "schoolsPage": {
@@ -573,7 +571,7 @@
       "noSchoolBtn": "ایجاد اولین مدرسه"
     }
   },
-  "admin": {
+  "manager": {
     "dashboard": {
       "title": "داشبورد مدرسه",
       "description": "خوش آمدید، {{name}}! در حال مدیریت {{school}}.",
@@ -779,7 +777,8 @@
         "phonePlaceholder": "شماره تلفن را وارد کنید",
         "occupationPlaceholder": "شغل را وارد کنید",
         "completeRegistration": "تکمیل ثبت نام",
-        "notes": "توضیحات"
+        "notes": "توضیحات",
+        "notesPlaceholder": "چنانچه توضیحاتی دارید اینجا وارد کنید"
       }
     },
     "students": {
@@ -838,6 +837,45 @@
         "classNotFound": "کلاس یافت نشد",
         "saveFailed": "ذخیره برنامه با خطا مواجه شد",
         "deleteFailed": "حذف برنامه با خطا مواجه شد"
+      }
+    },
+    "lessons": {
+      "create": {
+        "title": "ایجاد درس جدید",
+        "description": "افزودن درس جدید به برنامهٔ درسی",
+        "success": "درس با موفقیت ایجاد شد",
+        "error": "ایجاد درس انجام نشد",
+        "submit": "ایجاد درس"
+      },
+      "list": {
+        "title": "دروس",
+        "description": "مدیریت درس‌های برنامهٔ درسی در تمام مقاطع",
+        "addLesson": "افزودن درس",
+        "searchPlaceholder": "جستجوی درس...",
+        "lessons": "دروس",
+        "gradeDescription": "درس‌های برنامهٔ درسی برای مقطع {grade}",
+        "noLessons": "هیچ درسی یافت نشد",
+        "noMatchingLessons": "هیچ درسی مطابق معیارهای جستجو یافت نشد",
+        "tryDifferentSearch": "لطفاً جستجو یا فیلترها را تغییر دهید",
+        "emptyDescription": "برای شروع، اولین درس خود را ایجاد کنید",
+        "addFirstLesson": "ایجاد اولین درس",
+        "loadError": "بارگذاری دروس انجام نشد",
+        "periodDescription": "درس‌های برنامه درسی برای {period}"
+      },
+      "form": {
+        "name": "نام درس (فارسی)",
+        "namePlaceholder": "نام درس را به فارسی وارد کنید",
+        "nameEn": "نام درس (انگلیسی)",
+        "nameEnPlaceholder": "نام درس را به انگلیسی وارد کنید",
+        "gradeLevel": "مقطع تحصیلی",
+        "selectGradeLevel": "انتخاب مقطع تحصیلی",
+        "color": "رنگ"
+      },
+      "validation": {
+        "nameRequired": "نام درس ضروری است",
+        "nameTooLong": "نام درس بیش از حد طولانی است",
+        "gradeLevelRequired": "انتخاب مقطع تحصیلی ضروری است",
+        "colorRequired": "انتخاب رنگ ضروری است"
       }
     }
   },
@@ -906,7 +944,16 @@
       "send": "ارسال پیام"
     }
   },
-
+  "education": {
+    "periods": {
+      "PRE_PRIMARY": "پیش دبستانی",
+      "FIRST_PERIOD_PRIMARY": "دوره اول ابتدایی",
+      "SECOND_PERIOD_PRIMARY": "دوره دوم ابتدایی",
+      "LOWER_SECONDARY": "دوره اول متوسطه",
+      "UPPER_SECONDARY": "دوره دوم متوسطه",
+      "TERTIARY": "آموزش عالی"
+    }
+  },
   "loading": {
     "checkAuth": "بررسی احراز هویت..."
   },

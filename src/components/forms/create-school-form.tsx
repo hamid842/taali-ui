@@ -1,4 +1,3 @@
-// components/forms/create-school-form.tsx
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -9,6 +8,7 @@ import { AppTextField } from "../common/app-text-field";
 import { InternationalPhoneInput } from "../common/phone-input";
 import AppSelect from "../common/app-select-field";
 import { AppTextArea } from "../common/app-text-area";
+import AppMultiSelect from "../common/app-multi-select";
 
 // Enhanced validation schema
 const createSchoolSchema = z.object({
@@ -23,15 +23,10 @@ const createSchoolSchema = z.object({
     .regex(/^[A-Z0-9_-]+$/, "validation.codePattern"),
   image: z.string().optional(),
   address: z.string().optional(),
-  email: z
-    .string()
-    .email("validation.emailInvalid")
-    .optional()
-    .or(z.literal("")),
+  email: z.email("validation.emailInvalid").optional().or(z.literal("")),
   phone: z.string().optional(),
-  // Essential new fields
   schoolType: z.string().optional(),
-  educationalLevel: z.string().optional(),
+  educationalLevels: z.array(z.string()).min(1, "validation.atLeastOneLevel"),
   studentsCapacity: z.number().min(0, "validation.capacityPositive").optional(),
 });
 
@@ -68,7 +63,7 @@ export function CreateSchoolForm({
       email: initialData?.email || "",
       phone: initialData?.phone || "",
       schoolType: initialData?.schoolType || "",
-      educationalLevel: initialData?.educationalLevel || "",
+      educationalLevels: initialData?.educationalLevels || [],
       studentsCapacity: initialData?.studentsCapacity || 0,
     },
     mode: "onChange",
@@ -83,7 +78,7 @@ export function CreateSchoolForm({
       email: data.email || undefined,
       phone: data.phone || undefined,
       schoolType: data.schoolType || undefined,
-      educationalLevel: data.educationalLevel || undefined,
+      educationalLevel: data.educationalLevels || undefined,
     };
     onSubmit(submitData);
   };
@@ -110,6 +105,10 @@ export function CreateSchoolForm({
       "validation.phoneInvalid": "owner.addSchool.validation.phoneInvalid",
       "validation.capacityPositive":
         "owner.addSchool.validation.capacityPositive",
+      "validation.educationalLevels":
+        "owner.addSchool.validation.educationalLevels",
+      "validation.atLeastOneLevel":
+        "owner.addSchool.validation.atLeastOneLevel",
     };
 
     const translationKey = translationKeys[message] || message;
@@ -118,6 +117,10 @@ export function CreateSchoolForm({
 
   const handlePhoneChange = (value: string) => {
     setValue("phone", value, { shouldValidate: true });
+  };
+
+  const handleEducationalLevelsChange = (values: string[]) => {
+    setValue("educationalLevels", values, { shouldValidate: true });
   };
 
   // School type options
@@ -149,6 +152,10 @@ export function CreateSchoolForm({
     {
       value: "HIGH_SCHOOL",
       label: t("school.level.HIGH_SCHOOL") || "High School",
+    },
+    {
+      value: "VOCATIONAL",
+      label: t("school.level.VOCATIONAL") || "High School",
     },
   ];
 
@@ -197,18 +204,13 @@ export function CreateSchoolForm({
             }
             disabled={isLoading}
           />
-          <AppSelect
-            label={t("owner.addSchool.educationalLevel")}
+          <AppMultiSelect
+            label={t("owner.addSchool.educationalLevels") + " *"}
             options={educationalLevelOptions}
-            value={watch("educationalLevel") || ""}
-            onValueChange={(value) =>
-              setValue("educationalLevel", value, { shouldValidate: true })
-            }
-            error={getErrorMessage(errors.educationalLevel)}
-            placeholder={
-              t("owner.addSchool.selectEducationalLevel") ||
-              "Select educational level"
-            }
+            value={watch("educationalLevels") || []}
+            onChange={handleEducationalLevelsChange}
+            error={getErrorMessage(errors.educationalLevels)}
+            placeholder={t("owner.addSchool.selectEducationalLevels")}
             disabled={isLoading}
           />
         </div>

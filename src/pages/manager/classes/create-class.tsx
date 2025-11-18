@@ -69,17 +69,17 @@ const CreateClassPage: FC = () => {
     e.preventDefault();
 
     if (!formData.schoolId) {
-      toast.warning(t("admin.classes.errors.schoolRequired"));
+      toast.warning(t("manager.classes.errors.schoolRequired"));
       return;
     }
 
     if (!formData.name.trim()) {
-      toast.warning(t("admin.classes.errors.nameRequired"));
+      toast.warning(t("manager.classes.errors.nameRequired"));
       return;
     }
 
     if (!formData.academicYear.trim()) {
-      toast.warning(t("admin.classes.errors.academicYearRequired"));
+      toast.warning(t("manager.classes.errors.academicYearRequired"));
       return;
     }
 
@@ -87,11 +87,11 @@ const CreateClassPage: FC = () => {
 
     try {
       await classApi.createClass(formData);
-      toast.success(t("admin.classes.success.created"));
+      toast.success(t("manager.classes.success.created"));
       navigate("/manager/classes");
     } catch (error) {
-      console.error(t("admin.classes.errors.createFailed"), error);
-      toast.error(t("admin.classes.errors.createFailed"));
+      console.error(t("manager.classes.errors.createFailed"), error);
+      toast.error(t("manager.classes.errors.createFailed"));
     } finally {
       setLoading(false);
     }
@@ -114,23 +114,23 @@ const CreateClassPage: FC = () => {
   };
 
   const gradeLevels = [
-    { value: "مهد کودک", label: t("admin.classes.gradeLevels.kindergarten") },
-    { value: "پیش دبستانی", label: t("admin.classes.gradeLevels.preschool") },
+    { value: "مهد کودک", label: t("manager.classes.gradeLevels.kindergarten") },
+    { value: "پیش دبستانی", label: t("manager.classes.gradeLevels.preschool") },
     {
       value: "ابتدایی دوره اول",
-      label: t("admin.classes.gradeLevels.primaryFirst"),
+      label: t("manager.classes.gradeLevels.primaryFirst"),
     },
     {
       value: "ابتدایی دوره دوم",
-      label: t("admin.classes.gradeLevels.primarySecond"),
+      label: t("manager.classes.gradeLevels.primarySecond"),
     },
     {
       value: "متوسطه دوره اول",
-      label: t("admin.classes.gradeLevels.secondaryFirst"),
+      label: t("manager.classes.gradeLevels.secondaryFirst"),
     },
     {
       value: "متوسطه دوره دوم",
-      label: t("admin.classes.gradeLevels.secondarySecond"),
+      label: t("manager.classes.gradeLevels.secondarySecond"),
     },
   ];
 
@@ -161,13 +161,13 @@ const CreateClassPage: FC = () => {
   return (
     <div className="space-y-6">
       <FormHeader
-        title={t("admin.classes.createClass")}
-        desc={t("admin.classes.createDescription")}
+        title={t("manager.classes.createClass")}
+        desc={t("manager.classes.createDescription")}
       />
       {/* Information Alert */}
       <Alert>
         <AlertCircle className="w-4 h-4" />
-        <AlertDescription>{t("admin.classes.createInfo")}</AlertDescription>
+        <AlertDescription>{t("manager.classes.createInfo")}</AlertDescription>
       </Alert>
 
       <form onSubmit={handleSubmit}>
@@ -175,22 +175,22 @@ const CreateClassPage: FC = () => {
           {/* Basic Information Card */}
           <Card>
             <CardHeader>
-              <CardTitle>{t("admin.classes.basicInformation")}</CardTitle>
+              <CardTitle>{t("manager.classes.basicInformation")}</CardTitle>
               <CardDescription>
-                {t("admin.classes.basicInformationDesc")}
+                {t("manager.classes.basicInformationDesc")}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <AppTextField
-                label={t("admin.classes.className")}
+                label={t("manager.classes.className")}
                 name="name"
                 value={formData.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}
-                placeholder={t("admin.classes.classNamePlaceholder")}
+                placeholder={t("manager.classes.classNamePlaceholder")}
                 required
               />
               <AppSelect
-                label={t("admin.classes.gradeLevel")}
+                label={t("manager.classes.gradeLevel")}
                 value={formData.gradeLevel}
                 onValueChange={(value) =>
                   handleInputChange("gradeLevel", value)
@@ -200,7 +200,7 @@ const CreateClassPage: FC = () => {
               />
               <AppSelect
                 required
-                label={t("admin.classes.academicYear")}
+                label={t("manager.classes.academicYear")}
                 value={formData.academicYear}
                 onValueChange={(value) =>
                   handleInputChange("academicYear", value)
@@ -208,7 +208,7 @@ const CreateClassPage: FC = () => {
                 options={academicYears}
               />
               <AppTextField
-                label={t("admin.classes.capacity")}
+                label={t("manager.classes.capacity")}
                 name="capacity"
                 type="number"
                 value={formData.capacity}
@@ -221,23 +221,23 @@ const CreateClassPage: FC = () => {
               {teachers.length === 0 ? (
                 <div className="space-y-2">
                   <AppSelect
-                    label={t("admin.classes.mainTeacher")}
+                    label={t("manager.classes.mainTeacher")}
                     options={[]}
                     disabled
                   />
                   <p className="text-sm text-muted-foreground">
-                    {t("admin.classes.noTeachersMessage")}
+                    {t("manager.classes.noTeachersMessage")}
                   </p>
                   <Link to="/manager/teachers/create">
                     <Button variant="outline" size="sm" className="mt-2">
                       <Plus className="w-4 h-4 mr-2" />
-                      {t("teachers.createTeacher")}
+                      {t("manager.teachers.createTeacher")}
                     </Button>
                   </Link>
                 </div>
               ) : (
                 <AppSelect
-                  label={t("admin.classes.mainTeacher")}
+                  label={t("manager.classes.mainTeacher")}
                   value={formData.mainTeacherId?.toString()}
                   onValueChange={(value) =>
                     handleInputChange("mainTeacherId", parseInt(value))
@@ -251,9 +251,9 @@ const CreateClassPage: FC = () => {
           {/* Students and Teachers Card */}
           <Card>
             <CardHeader>
-              <CardTitle>{t("admin.classes.studentsAndTeachers")}</CardTitle>
+              <CardTitle>{t("manager.classes.studentsAndTeachers")}</CardTitle>
               <CardDescription>
-                {t("admin.classes.studentsAndTeachersDesc")}
+                {t("manager.classes.studentsAndTeachersDesc")}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -276,8 +276,8 @@ const CreateClassPage: FC = () => {
           <Button type="submit" disabled={loading}>
             <Save className="w-4 h-4 mr-2" />
             {loading
-              ? t("admin.classes.creating")
-              : t("admin.classes.createClass")}
+              ? t("manager.classes.creating")
+              : t("manager.classes.createClass")}
           </Button>
         </div>
       </form>

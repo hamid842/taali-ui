@@ -31,7 +31,7 @@ export function ProtectedRoute({
     return <Navigate to="/login" replace />;
   }
 
-  if (user && !allowedRoles.includes(user.role)) {
+  if (user && !allowedRoles.includes(user.role!)) {
     return <Navigate to={fallbackPath} replace />;
   }
 

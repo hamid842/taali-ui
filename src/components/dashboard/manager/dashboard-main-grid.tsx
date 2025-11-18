@@ -48,9 +48,9 @@ export default function AdminDashboardMainGrid({
       {/* Recent Activity */}
       <Card className="lg:col-span-4">
         <CardHeader>
-          <CardTitle>{t("admin.dashboard.recentActivity")}</CardTitle>
+          <CardTitle>{t("manager.dashboard.recentActivity")}</CardTitle>
           <CardDescription>
-            {t("admin.dashboard.recentActivityDescription")}
+            {t("manager.dashboard.recentActivityDescription")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -61,7 +61,7 @@ export default function AdminDashboardMainGrid({
             {recentActivity.length === 0 && (
               <div className="text-center py-8 text-muted-foreground">
                 <Calendar className="h-8 w-8 mx-auto mb-2" />
-                {t("admin.dashboard.noActivity")}
+                {t("manager.dashboard.noActivity")}
               </div>
             )}
           </div>
@@ -73,9 +73,9 @@ export default function AdminDashboardMainGrid({
         {/* Student Distribution */}
         <Card>
           <CardHeader>
-            <CardTitle>{t("admin.dashboard.studentDistribution")}</CardTitle>
+            <CardTitle>{t("manager.dashboard.studentDistribution")}</CardTitle>
             <CardDescription>
-              {t("admin.dashboard.studentDistributionDescription")}
+              {t("manager.dashboard.studentDistributionDescription")}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -110,9 +110,9 @@ export default function AdminDashboardMainGrid({
         {/* Upcoming Classes */}
         <Card>
           <CardHeader>
-            <CardTitle>{t("admin.dashboard.upcomingClasses")}</CardTitle>
+            <CardTitle>{t("manager.dashboard.upcomingClasses")}</CardTitle>
             <CardDescription>
-              {t("admin.dashboard.upcomingClassesDescription")}
+              {t("manager.dashboard.upcomingClassesDescription")}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -144,7 +144,7 @@ export default function AdminDashboardMainGrid({
               {upcomingClasses.length === 0 && (
                 <div className="text-center py-4 text-muted-foreground">
                   <BookOpen className="h-6 w-6 mx-auto mb-2" />
-                  {t("admin.dashboard.noUpcomingClasses")}
+                  {t("manager.dashboard.noUpcomingClasses")}
                 </div>
               )}
             </div>
@@ -154,7 +154,7 @@ export default function AdminDashboardMainGrid({
         {/* Quick Actions */}
         <Card>
           <CardHeader>
-            <CardTitle>{t("admin.dashboard.quickActions")}</CardTitle>
+            <CardTitle>{t("manager.dashboard.quickActions")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-2">
@@ -174,7 +174,7 @@ export default function AdminDashboardMainGrid({
                 className="justify-start"
               >
                 <GraduationCap className="h-4 w-4 mr-2" />
-                {t("teachers.manage")}
+                {t("manager.teachers.manage")}
               </Button>
               <Button
                 variant="outline"

@@ -17,7 +17,7 @@ export default function TeachersTableActions({
   const { canManageTeachers } = useRoles();
 
   const handleDeleteTeacher = async () => {
-    if (!confirm(t("admin.teachers.confirmDelete"))) {
+    if (!confirm(t("manager.teachers.confirmDelete"))) {
       return;
     }
 
@@ -25,8 +25,8 @@ export default function TeachersTableActions({
       await teacherApi.delete(teacherId);
       // TODO fetch teachers again
     } catch (error) {
-      console.error(t("admin.teachers.errors.deleteFailed"), error);
-      alert(t("admin.teachers.errors.deleteFailed"));
+      console.error(t("manager.teachers.errors.deleteFailed"), error);
+      alert(t("manager.teachers.errors.deleteFailed"));
     }
   };
 

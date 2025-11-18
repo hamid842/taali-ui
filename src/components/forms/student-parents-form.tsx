@@ -61,35 +61,37 @@ export default function StudentParentsForm({
         onSubmit={handleSubmit(addParent)}
         className="space-y-4 p-4 border rounded-lg"
       >
-        <h3 className="font-medium">{t("admin.addStudent.parents.addNew")}</h3>
+        <h3 className="font-medium">
+          {t("manager.addStudent.parents.addNew")}
+        </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <AppTextField
-            label={t("admin.addStudent.parents.firstName")}
-            placeholder={t("admin.addStudents.parents.firstNamePlaceholder")}
+            label={t("manager.addStudent.parents.firstName")}
+            placeholder={t("manager.addStudent.parents.firstNamePlaceholder")}
             error={errors.firstName && t("common.required")}
             required
             {...register("firstName", { required: true })}
           />
 
           <AppTextField
-            label={t("admin.addStudent.parents.lastName")}
-            placeholder={t("admin.addStudents.parents.lastNamePlaceholder")}
+            label={t("manager.addStudent.parents.lastName")}
+            placeholder={t("manager.addStudent.parents.lastNamePlaceholder")}
             error={errors.lastName && t("common.required")}
             required
             {...register("lastName", { required: true })}
           />
 
           <AppTextField
-            label={t("admin.addStudent.parents.email")}
+            label={t("manager.addStudent.parents.email")}
             type="email"
-            placeholder={t("admin.addStudents.parents.emailPlaceholder")}
+            placeholder={t("manager.addStudent.parents.emailPlaceholder")}
             error={errors.email && t("common.required")}
             required
             {...register("email", { required: true })}
           />
           <InternationalPhoneInput
-            label={t("admin.addStudent.parents.phone")}
+            label={t("manager.addStudent.parents.phone")}
             value={watch("phoneNumber")}
             onChange={(value) => setValue("phoneNumber", value)}
             error={errors.phoneNumber?.message}
@@ -98,16 +100,18 @@ export default function StudentParentsForm({
 
           <div className="md:col-span-2">
             <AppTextField
-              label={t("admin.addStudents.parents.occupation")}
-              placeholder={t("admin.addStudents.parents.occupationPlaceholder")}
+              label={t("manager.addStudent.parents.occupation")}
+              placeholder={t(
+                "manager.addStudent.parents.occupationPlaceholder"
+              )}
               {...register("occupation")}
             />
           </div>
 
           <div className="md:col-span-2">
             <AppTextArea
-              label={t("admin.addStudent.parents.notes")}
-              placeholder={t("admin.addStudent.parents.notesPlaceholder")}
+              label={t("manager.addStudent.parents.notes")}
+              placeholder={t("manager.addStudent.parents.notesPlaceholder")}
               {...register("notes")}
             />
           </div>
@@ -115,7 +119,7 @@ export default function StudentParentsForm({
 
         <Button type="submit" size="sm" disabled={isSubmitting}>
           <Plus className="w-4 h-4 mr-2" />
-          {t("admin.addStudents.parents.addParent")}
+          {t("manager.addStudent.parents.addParent")}
         </Button>
       </form>
 
@@ -123,7 +127,7 @@ export default function StudentParentsForm({
       {parents.length > 0 && (
         <div className="space-y-3">
           <h3 className="font-medium">
-            {t("admin.addStudents.parents.addedParents")}
+            {t("manager.addStudent.parents.addedParents")}
           </h3>
           {parents.map((parent, index) => (
             <div

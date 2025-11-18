@@ -24,10 +24,10 @@ export default function AdminDashboardHeader({
         className={cn("space-y-1", dir === "rtl" ? "text-right" : "text-left")}
       >
         <h1 className="text-3xl font-bold tracking-tight">
-          {t("admin.dashboard.title")}
+          {t("manager.dashboard.title")}
         </h1>
         <p className="text-muted-foreground">
-          {t("admin.dashboard.description", {
+          {t("manager.dashboard.description", {
             name: user?.firstName,
             school: school?.name,
           })}
@@ -39,11 +39,11 @@ export default function AdminDashboardHeader({
           onClick={() => navigate("/manager/students/create")}
         >
           <Plus className="h-4 w-4 mr-2" />
-          {t("admin.addStudent.create")}
+          {t("manager.addStudent.create")}
         </Button>
         <Button onClick={() => navigate("/manager/teachers/create")}>
           <Plus className="h-4 w-4 mr-2" />
-          {t("admin.addTeacher.create")}
+          {t("manager.addTeacher.create")}
         </Button>
       </div>
     </div>

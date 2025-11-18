@@ -146,7 +146,7 @@ export default function SchoolDropdown({ schools }: { schools: ISchool[] }) {
             <Plus className="size-4" />
           </div>
           <div className="text-muted-foreground font-medium">
-            {t("addSchool.create") || "Add School"}
+            {t("owner.addSchool.create") || "Add School"}
           </div>
         </DropdownMenuItem>
       </DropdownMenuContent>
