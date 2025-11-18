@@ -2,26 +2,30 @@ import { lazy } from "react";
 import { ProtectedRoute } from "@/components/auth/protected-route";
 import MainLayout from "@/components/layout/main-layout";
 import { UserRole } from "@/types/role";
-import EditTeacher from "@/pages/admin/teachers/edit";
-import AssignClassesToTeacher from "@/pages/admin/teachers/assign-class";
+import EditTeacher from "@/pages/manager/teachers/edit";
+import AssignClassesToTeacher from "@/pages/manager/teachers/assign-class";
+import SchoolProfile from "@/pages/owner/schools/school-profile";
+import TimestampManagement from "@/pages/manager/school-settings/timestamp";
 
-const AdminDashboard = lazy(() => import("@/pages/admin/dashboard"));
-const AdminUsers = lazy(() => import("@/pages/admin/users/list"));
-const CreateAdminUser = lazy(() => import("@/pages/admin/users/create"));
-const Teachers = lazy(() => import("@/pages/admin/teachers/list"));
-const CreateTeacher = lazy(() => import("@/pages/admin/teachers/create"));
-const Classes = lazy(() => import("@/pages/admin/classes/classes"));
-const CreateClass = lazy(() => import("@/pages/admin/classes/create-class"));
+const AdminDashboard = lazy(() => import("@/pages/manager/dashboard"));
+const AdminUsers = lazy(() => import("@/pages/manager/users/list"));
+const CreateAdminUser = lazy(() => import("@/pages/manager/users/create"));
+const Teachers = lazy(() => import("@/pages/manager/teachers/list"));
+const CreateTeacher = lazy(() => import("@/pages/manager/teachers/create"));
+const Classes = lazy(() => import("@/pages/manager/classes/classes"));
+const CreateClass = lazy(() => import("@/pages/manager/classes/create-class"));
 const ClassSchedule = lazy(
-  () => import("@/pages/admin/classes/class-schedule")
+  () => import("@/pages/manager/classes/class-schedule")
 );
-const Students = lazy(() => import("@/pages/admin/students/list"));
-const CreateStudent = lazy(() => import("@/pages/admin/students/create"));
-const Parents = lazy(() => import("@/pages/admin/parents/parents"));
-const CreateParent = lazy(() => import("@/pages/admin/parents/create-parent"));
-const Tuition = lazy(() => import("@/pages/admin/finance/tuition"));
-const Invoice = lazy(() => import("@/pages/admin/finance/invoice"));
-const Reports = lazy(() => import("@/pages/admin/finance/reports"));
+const Students = lazy(() => import("@/pages/manager/students/list"));
+const CreateStudent = lazy(() => import("@/pages/manager/students/create"));
+const Parents = lazy(() => import("@/pages/manager/parents/parents"));
+const CreateParent = lazy(
+  () => import("@/pages/manager/parents/create-parent")
+);
+const Tuition = lazy(() => import("@/pages/manager/finance/tuition"));
+const Invoice = lazy(() => import("@/pages/manager/finance/invoice"));
+const Reports = lazy(() => import("@/pages/manager/finance/reports"));
 
 export const schoolManagerRoutes = {
   path: "/school/:schoolId/manager",
@@ -49,6 +53,8 @@ export const schoolManagerRoutes = {
     { path: "students/create", element: <CreateStudent /> },
     { path: "parents", element: <Parents /> },
     { path: "parents/create", element: <CreateParent /> },
+    { path: "school-settings/profile", element: <SchoolProfile /> },
+    { path: "school-settings/timestamp", element: <TimestampManagement /> },
     { path: "finance/tuition", element: <Tuition /> },
     { path: "finance/invoice", element: <Invoice /> },
     { path: "finance/reports", element: <Reports /> },

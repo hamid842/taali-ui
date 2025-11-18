@@ -19,7 +19,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 export default function AssignClassesToTeacher() {
   const { teacherId } = useParams<{ teacherId: string }>();
   const navigate = useNavigate();
-  const { t,dir } = useLanguage();
+  const { t, dir } = useLanguage();
   const { currentSchool } = useAppStore();
 
   const [teacher, setTeacher] = useState<TeacherDetailResponse | null>(null);
@@ -83,9 +83,9 @@ export default function AssignClassesToTeacher() {
     setSaving(true);
     try {
       const classIds = assignedClasses.map((c) => c.id);
-      await teacherApi.assignClass(teacher.id, classIds);
+      await teacherApi.assignClasses(teacher.id, classIds);
 
-      navigate("/admin/teachers");
+      navigate("/manager/teachers");
     } catch (error) {
       console.error("Failed to assign classes:", error);
       alert(t("admin.teachers.errors.assignClassesFailed"));
@@ -123,7 +123,7 @@ export default function AssignClassesToTeacher() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Link to="/admin/teachers">
+          <Link to="/manager/teachers">
             <Button variant="outline" size="sm">
               <ArrowLeft className="w-4 h-4 mr-2" />
               {t("common.back")}

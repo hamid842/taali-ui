@@ -18,11 +18,15 @@ import {
   SchoolProfileForm,
   type SchoolProfileFormData,
 } from "@/components/forms/school-profile-form";
+import { useAppStore } from "@/stores/app-store";
 
 export default function SchoolProfile() {
   const { schoolId } = useParams();
   const { t, dir } = useLanguage();
-  const { data: school, isLoading } = useSchool(schoolId!);
+  const { currentSchool } = useAppStore();
+  const { data: school, isLoading } = useSchool(
+    schoolId ? schoolId : String(currentSchool?.id)
+  );
   const updateSchoolMutation = useUpdateSchool();
   const [schoolLogo, setSchoolLogo] = useState<string | null>(null);
 

@@ -86,10 +86,12 @@ const ClassesPage: React.FC = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">{t("admin.classes.title")}</h1>
-          <p className="text-muted-foreground">{t("admin.classes.description")}</p>
+          <p className="text-muted-foreground">
+            {t("admin.classes.description")}
+          </p>
         </div>
         {canManageClasses() && (
-          <Link to="/admin/classes/create">
+          <Link to="/manager/classes/create">
             <Button>
               <Plus className="w-4 h-4 mr-2" />
               {t("admin.classes.createClass")}
@@ -115,7 +117,9 @@ const ClassesPage: React.FC = () => {
                   <SelectValue placeholder={t("common.status")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">{t("admin.classes.allStatus")}</SelectItem>
+                  <SelectItem value="all">
+                    {t("admin.classes.allStatus")}
+                  </SelectItem>
                   <SelectItem value="active">{t("common.active")}</SelectItem>
                   <SelectItem value="inactive">
                     {t("common.inactive")}
@@ -131,7 +135,9 @@ const ClassesPage: React.FC = () => {
                   <SelectValue placeholder={t("admin.classes.academicYear")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">{t("admin.classes.allYears")}</SelectItem>
+                  <SelectItem value="all">
+                    {t("admin.classes.allYears")}
+                  </SelectItem>
                   {academicYears.map((year) => (
                     <SelectItem key={year} value={year}>
                       {year}
@@ -211,7 +217,7 @@ const ClassesPage: React.FC = () => {
                             {t("common.edit")}
                           </Button>
                         </Link>
-                        <Link to={`/admin/classes/${classItem.id}/schedule`}>
+                        <Link to={`/manager/classes/${classItem.id}/schedule`}>
                           <Button variant="outline" size="sm">
                             <Calendar className="w-4 h-4 mr-1" />
                             {t("admin.classes.schedule")}

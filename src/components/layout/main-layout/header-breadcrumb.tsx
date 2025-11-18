@@ -36,7 +36,7 @@ export default function HeaderBreadcrumb() {
         {/* Home link */}
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link to="/admin/dashboard">{t("breadcrumbs.home")}</Link>
+            <Link to="/manager/dashboard">{t("breadcrumbs.home")}</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
 

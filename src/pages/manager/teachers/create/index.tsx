@@ -56,7 +56,7 @@ export default function CreateTeacher() {
                 </CardHeader>
                 <CardContent>
                   <RegisterUserForm
-                    redirectPath="/admin/teachers"
+                    redirectPath="/manager/teachers"
                     profileImage={teacherProfileImg}
                     registerForRole={"TEACHER"}
                   />
@@ -68,7 +68,9 @@ export default function CreateTeacher() {
           {/* Quick Tips Section */}
           <Card className="mt-6">
             <CardHeader>
-              <CardTitle className="text-lg">{t("admin.addTeacher.tips")}</CardTitle>
+              <CardTitle className="text-lg">
+                {t("admin.addTeacher.tips")}
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <ul
@@ -89,7 +91,7 @@ export default function CreateTeacher() {
           title={t("admin.addTeacher.noSchoolTitle")}
           desc={t("admin.addTeacher.noSchoolDesc")}
           actions={
-            <Link to={"/admin/schools/create"}>
+            <Link to={"/manager/schools/create"}>
               <Button>{t("admin.addTeacher.noSchoolBtn")}</Button>
             </Link>
           }

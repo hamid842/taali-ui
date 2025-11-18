@@ -32,6 +32,18 @@ export const apiConfig = {
       updateLogo: (id: string) => `${API_BASE_URL}/schools/${id}/logo`,
       search: `${API_BASE_URL}/schools/search`,
     },
+    school: {
+      getAll: (schoolId: number) =>
+        `${API_BASE_URL}/school/${schoolId}/timestamps`,
+      create: (schoolId: number) =>
+        `${API_BASE_URL}/school/${schoolId}/timestamps`,
+      update: (timestampId: number) =>
+        `${API_BASE_URL}/school/timestamps/${timestampId}`,
+      delete: (timestampId: number) =>
+        `${API_BASE_URL}/school/timestamps/${timestampId}`,
+      getAvailableTypes: (schoolId: number) =>
+        `${API_BASE_URL}/school/${schoolId}/available-timestamp-types`,
+    },
     upload: {
       schoolLogo: `${API_BASE_URL}/upload/school-logo`,
       profileImage: `${API_BASE_URL}/upload/profile-image`,

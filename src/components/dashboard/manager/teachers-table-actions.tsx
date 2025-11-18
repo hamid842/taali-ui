@@ -42,14 +42,14 @@ export default function TeachersTableActions({
       {canManageTeachers() && (
         <>
           <AppTooltip content={t("common.edit")}>
-            <Link to={`/admin/teachers/edit/${teacherId}`}>
+            <Link to={`/manager/teachers/edit/${teacherId}`}>
               <Button variant="outline" size="icon">
                 <Edit className="w-4 h-4 mr-1" />
               </Button>
             </Link>
           </AppTooltip>
           <AppTooltip content={t("common.assignClass")}>
-            <Link to={`/admin/teachers/assign-classes/${teacherId}`}>
+            <Link to={`/manager/teachers/assign-classes/${teacherId}`}>
               <Button variant="outline" size="icon">
                 <FileImage className="w-4 h-4 mr-1" />
               </Button>

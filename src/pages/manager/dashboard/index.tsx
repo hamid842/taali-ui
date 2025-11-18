@@ -6,11 +6,11 @@ import { adminApi } from "@/lib/api/admin-api";
 import { School } from "lucide-react";
 import type { AdminDashboardStats } from "@/types/admin-dashboard";
 import AdminDashboardSkeleton from "@/components/skeleton/dashboard/admin-dashboard-skeleton";
-import DashboardStatsGrid from "@/components/dashboard/admin/dashboard-stats-grid";
-import DashboardHeader from "@/components/dashboard/admin/dashboard-header";
+import DashboardStatsGrid from "@/components/dashboard/manager/dashboard-stats-grid";
+import DashboardHeader from "@/components/dashboard/manager/dashboard-header";
 import { useAppStore } from "@/stores/app-store";
-import DashboardAttendance from "@/components/dashboard/admin/dashboard-attendance";
-import DashboardMainGrid from "@/components/dashboard/admin/dashboard-main-grid";
+import DashboardAttendance from "@/components/dashboard/manager/dashboard-attendance";
+import DashboardMainGrid from "@/components/dashboard/manager/dashboard-main-grid";
 
 export default function AdminDashboard() {
   const { t } = useLanguage();

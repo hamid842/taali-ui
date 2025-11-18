@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguage } from "@/hooks/use-language";
 import type { Student } from "@/types/student";
 import { BookOpen, Calendar, Mail, Phone, User } from "lucide-react";
-import AssignClassModal from "../admin/assign-to-class-dialog";
+import AssignClassModal from "../manager/assign-to-class-dialog";
 import { useState } from "react";
 
 type StudentItemProps = {

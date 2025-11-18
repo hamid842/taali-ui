@@ -78,8 +78,8 @@ export default function CreateStudent() {
 
   const handleStep3Complete = (parentsData: Student) => {
     if (parentsData) {
-      toast.success(t("admin.addStudent.success"));
-      navigate("/admin/students");
+      toast.success(t("manager.addStudent.success"));
+      navigate("/manager/students");
     }
   };
 
@@ -100,7 +100,7 @@ export default function CreateStudent() {
       case 1:
         return (
           <RegisterUserForm
-            redirectPath="/admin/students"
+            redirectPath="/manager/students"
             profileImage={studentProfileImg}
             registerForRole="STUDENT"
             onSuccess={handleStep1Complete}
@@ -142,7 +142,7 @@ export default function CreateStudent() {
         title={t("admin.addStudent.noSchoolTitle")}
         desc={t("admin.addStudent.noSchoolDesc")}
         actions={
-          <Link to={"/admin/schools/create"}>
+          <Link to={"/manager/schools/create"}>
             <Button>{t("admin.addStudent.noSchoolBtn")}</Button>
           </Link>
         }

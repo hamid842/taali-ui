@@ -26,7 +26,7 @@ import { useRoles } from "@/hooks/use-roles";
 import type { TeacherListResponse } from "@/types/teacher";
 import { ImageDisplay } from "@/components/common/image-display";
 import { useAppStore } from "@/stores/app-store";
-import TeachersTableActions from "@/components/dashboard/admin/teachers-table-actions";
+import TeachersTableActions from "@/components/dashboard/manager/teachers-table-actions";
 
 export default function TeachersPage() {
   const { canManageTeachers } = useRoles();
@@ -97,7 +97,7 @@ export default function TeachersPage() {
           </p>
         </div>
         {canManageTeachers() && (
-          <Link to="/admin/teachers/create">
+          <Link to="/manager/teachers/create">
             <Button>
               <Plus className="w-4 h-4 mr-2" />
               {t("admin.teachers.createTeacher")}

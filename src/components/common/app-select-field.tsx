@@ -8,6 +8,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+export type SelectFieldOptions = {
+  value: string | number;
+  label: string;
+};
+
 interface AppSelectProps {
   label: string;
   value?: string;
@@ -16,7 +21,7 @@ interface AppSelectProps {
   required?: boolean;
   disabled?: boolean;
   placeholder?: string;
-  options: { value: string; label: string }[];
+  options: SelectFieldOptions[];
 }
 
 export default function AppSelect({

@@ -161,7 +161,7 @@ export default function AdminDashboardMainGrid({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => navigate("/admin/students")}
+                onClick={() => navigate("/manager/students")}
                 className="justify-start"
               >
                 <Users className="h-4 w-4 mr-2" />
@@ -170,7 +170,7 @@ export default function AdminDashboardMainGrid({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => navigate("/admin/teachers")}
+                onClick={() => navigate("/manager/teachers")}
                 className="justify-start"
               >
                 <GraduationCap className="h-4 w-4 mr-2" />
@@ -179,7 +179,7 @@ export default function AdminDashboardMainGrid({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => navigate("/admin/classes")}
+                onClick={() => navigate("/manager/classes")}
                 className="justify-start"
               >
                 <BookOpen className="h-4 w-4 mr-2" />
@@ -188,7 +188,7 @@ export default function AdminDashboardMainGrid({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => navigate("/admin/attendance")}
+                onClick={() => navigate("/manager/attendance")}
                 className="justify-start"
               >
                 <UserCheck className="h-4 w-4 mr-2" />

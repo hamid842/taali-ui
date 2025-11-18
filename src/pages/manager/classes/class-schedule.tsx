@@ -391,43 +391,6 @@ export default function ClassSchedule() {
         </Button>
       </div>
 
-      {schedules.length === 0 && (
-        <Alert className="bg-blue-50 border-blue-200">
-          <AlertDescription>
-            No schedules found for this class. Click on any time slot to add a
-            schedule.
-          </AlertDescription>
-        </Alert>
-      )}
-
-      {teachers.length === 0 && (
-        <Alert className="bg-amber-50 border-amber-200">
-          <AlertDescription>
-            No teachers found in this school. Please create teachers first to
-            assign them to schedules.
-          </AlertDescription>
-        </Alert>
-      )}
-
-      {lessons.length === 0 && (
-        <Alert className="bg-amber-50 border-amber-200">
-          <AlertDescription>
-            No lessons found for this grade level. Using default lesson list.
-          </AlertDescription>
-        </Alert>
-      )}
-
-      {/* Debug Info - Remove in production */}
-      <Card className="bg-yellow-50 border-yellow-200">
-        <CardContent className="pt-4">
-          <div className="text-sm text-yellow-800">
-            <strong>Debug Info:</strong> Class: {classDetail.name}, Schedules:{" "}
-            {schedules.length}, Teachers: {teachers.length}, Lessons:{" "}
-            {lessons.length}
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Timetable */}
       <Card>
         <CardHeader>
@@ -441,16 +404,16 @@ export default function ClassSchedule() {
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
-            <div className="min-w-full bg-white rounded-lg border">
+            <div className="min-w-full bg-white dark:bg-stone-900 rounded-lg border">
               {/* Days Header */}
               <div className="grid grid-cols-8 border-b">
-                <div className="p-4 font-semibold border-r bg-gray-50">
+                <div className="p-4 font-semibold border-r bg-gray-50 dark:bg-stone-900">
                   {t("admin.schedule.time")}
                 </div>
                 {daysOrder.map((day) => (
                   <div
                     key={day}
-                    className="p-4 font-semibold text-center bg-gray-50"
+                    className="p-4 font-semibold text-center bg-gray-50 dark:bg-stone-900"
                   >
                     {persianDays[day]}
                   </div>
@@ -464,7 +427,7 @@ export default function ClassSchedule() {
                   className="grid grid-cols-8 border-b last:border-b-0"
                 >
                   {/* Time Column */}
-                  <div className="p-4 border-r bg-gray-50 flex items-center justify-center">
+                  <div className="p-4 border-r bg-gray-50 dark:bg-stone-900 flex items-center justify-center">
                     <div className="text-sm font-medium">{timeSlot}</div>
                   </div>
 
@@ -552,7 +515,9 @@ export default function ClassSchedule() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="dayOfWeek">{t("admin.schedule.dayOfWeek")}</Label>
+                <Label htmlFor="dayOfWeek">
+                  {t("admin.schedule.dayOfWeek")}
+                </Label>
                 <Select
                   value={formData.dayOfWeek}
                   onValueChange={(value: DayOfWeek) =>
@@ -573,7 +538,9 @@ export default function ClassSchedule() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="subjectName">{t("admin.schedule.subject")}</Label>
+                <Label htmlFor="subjectName">
+                  {t("admin.schedule.subject")}
+                </Label>
                 <Select
                   value={formData.subjectName}
                   onValueChange={(value) =>
@@ -581,7 +548,9 @@ export default function ClassSchedule() {
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder={t("admin.schedule.selectSubject")} />
+                    <SelectValue
+                      placeholder={t("admin.schedule.selectSubject")}
+                    />
                   </SelectTrigger>
                   <SelectContent>
                     {lessons.map((lesson) => (
@@ -596,7 +565,9 @@ export default function ClassSchedule() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="startTime">{t("admin.schedule.startTime")}</Label>
+                <Label htmlFor="startTime">
+                  {t("admin.schedule.startTime")}
+                </Label>
                 <Input
                   type="time"
                   value={formData.startTime}
@@ -639,7 +610,9 @@ export default function ClassSchedule() {
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder={t("admin.schedule.selectTeacher")} />
+                    <SelectValue
+                      placeholder={t("admin.schedule.selectTeacher")}
+                    />
                   </SelectTrigger>
                   <SelectContent>
                     {teachers.map((teacher) => (
@@ -682,7 +655,9 @@ export default function ClassSchedule() {
                 {t("common.cancel")}
               </Button>
               <Button type="submit">
-                {editingSchedule ? t("common.save") : t("admin.schedule.addSchedule")}
+                {editingSchedule
+                  ? t("common.save")
+                  : t("admin.schedule.addSchedule")}
               </Button>
             </DialogFooter>
           </form>

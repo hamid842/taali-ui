@@ -2,23 +2,25 @@ import { ProtectedRoute } from "@/components/auth/protected-route";
 import MainLayout from "@/components/layout/main-layout";
 import { UserRole } from "@/types/role";
 
-import AdminDashboard from "@/pages/admin/dashboard";
-import AdminUsers from "@/pages/admin/users/list";
-import CreateAdminUser from "@/pages/admin/users/create";
-import Teachers from "@/pages/admin/teachers/list";
-import CreateTeacher from "@/pages/admin/teachers/create";
-import Classes from "@/pages/admin/classes/classes";
-import CreateClass from "@/pages/admin/classes/create-class";
-import ClassSchedule from "@/pages/admin/classes/class-schedule";
-import Students from "@/pages/admin/students/list";
-import CreateStudent from "@/pages/admin/students/create";
-import Parents from "@/pages/admin/parents/parents";
-import CreateParent from "@/pages/admin/parents/create-parent";
-import Tuition from "@/pages/admin/finance/tuition";
-import Invoice from "@/pages/admin/finance/invoice";
-import Reports from "@/pages/admin/finance/reports";
-import EditTeacher from "@/pages/admin/teachers/edit";
-import AssignClassesToTeacher from "@/pages/admin/teachers/assign-class";
+import AdminDashboard from "@/pages/manager/dashboard";
+import AdminUsers from "@/pages/manager/users/list";
+import CreateAdminUser from "@/pages/manager/users/create";
+import Teachers from "@/pages/manager/teachers/list";
+import CreateTeacher from "@/pages/manager/teachers/create";
+import Classes from "@/pages/manager/classes/classes";
+import CreateClass from "@/pages/manager/classes/create-class";
+import ClassSchedule from "@/pages/manager/classes/class-schedule";
+import Students from "@/pages/manager/students/list";
+import CreateStudent from "@/pages/manager/students/create";
+import Parents from "@/pages/manager/parents/parents";
+import CreateParent from "@/pages/manager/parents/create-parent";
+import Tuition from "@/pages/manager/finance/tuition";
+import Invoice from "@/pages/manager/finance/invoice";
+import Reports from "@/pages/manager/finance/reports";
+import EditTeacher from "@/pages/manager/teachers/edit";
+import AssignClassesToTeacher from "@/pages/manager/teachers/assign-class";
+import SchoolProfile from "@/pages/owner/schools/school-profile";
+import TimestampManagement from "@/pages/manager/school-settings/timestamp";
 
 export const managerRoutes = {
   path: "/manager",
@@ -46,6 +48,8 @@ export const managerRoutes = {
     { path: "students/create", element: <CreateStudent /> },
     { path: "parents", element: <Parents /> },
     { path: "parents/create", element: <CreateParent /> },
+    { path: "school-settings/profile", element: <SchoolProfile /> },
+    { path: "school-settings/timestamp", element: <TimestampManagement /> },
     { path: "finance/tuition", element: <Tuition /> },
     { path: "finance/invoice", element: <Invoice /> },
     { path: "finance/reports", element: <Reports /> },
