@@ -8,7 +8,7 @@ import type { ISchool } from "@/types/school";
 
 interface AdminDashboardHeaderProps {
   user: LoginResponse | null;
-  school: ISchool | null;
+  school: ISchool | undefined;
 }
 
 export default function AdminDashboardHeader({

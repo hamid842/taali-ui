@@ -8,14 +8,12 @@ import type { AdminDashboardStats } from "@/types/admin-dashboard";
 import AdminDashboardSkeleton from "@/components/skeleton/dashboard/admin-dashboard-skeleton";
 import DashboardStatsGrid from "@/components/dashboard/manager/dashboard-stats-grid";
 import DashboardHeader from "@/components/dashboard/manager/dashboard-header";
-import { useAppStore } from "@/stores/app-store";
 import DashboardAttendance from "@/components/dashboard/manager/dashboard-attendance";
 import DashboardMainGrid from "@/components/dashboard/manager/dashboard-main-grid";
 
 export default function AdminDashboard() {
   const { t } = useLanguage();
   const { user } = useAuth();
-  const { currentSchool } = useAppStore();
 
   const [stats, setStats] = useState<AdminDashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -24,11 +22,11 @@ export default function AdminDashboard() {
   const loadDashboardData = useCallback(async () => {
     try {
       setLoading(true);
-      if (!currentSchool?.id) {
+      if (!user?.currentSchool?.id) {
         throw new Error("No school assigned to admin");
       }
 
-      const data = await adminApi.getDashboardStats(currentSchool?.id);
+      const data = await adminApi.getDashboardStats(user?.currentSchool?.id);
       setStats(data);
     } catch (err) {
       console.error("Failed to load admin dashboard data:", err);
@@ -37,7 +35,7 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  }, [t, currentSchool?.id]);
+  }, [t, user?.currentSchool?.id]);
 
   useEffect(() => {
     loadDashboardData();
@@ -65,7 +63,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-6">
-      <DashboardHeader user={user} school={currentSchool} />
+      <DashboardHeader user={user} school={user?.currentSchool} />
       <DashboardStatsGrid stats={stats} />
       <DashboardAttendance attendance={stats.attendanceSummary} />
       <DashboardMainGrid

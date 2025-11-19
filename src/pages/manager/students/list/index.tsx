@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useLanguage } from "@/hooks/use-language";
 import { studentApi } from "@/lib/api/student-api";
 import { Button } from "@/components/ui/button";
@@ -12,15 +12,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Search, Filter, RefreshCw } from "lucide-react";
-import { useAppStore } from "@/stores/app-store";
 import type { Student } from "@/types/student";
 import StudentItemSkeleton from "@/components/skeleton/dashboard/student-item-skeleton";
 import StudentItem from "@/components/dashboard/students/student-item";
 import EmptyData from "@/components/common/empty-data";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function StudentsList() {
   const { t } = useLanguage();
-  const { currentSchool } = useAppStore();
+  const { user } = useAuth();
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
@@ -39,37 +39,42 @@ export default function StudentsList() {
 
   const [gradeLevels, setGradeLevels] = useState<string[]>([]);
 
-  const fetchStudents = async (page = 0) => {
-    setLoading(true);
-    try {
-      const response = await studentApi.getBySchool(currentSchool!.id, {
-        page,
-        size: pagination.size,
-        ...filters,
-      });
+  const fetchStudents = useCallback(
+    async (page = 0) => {
+      if (!user?.currentSchool) return;
+      setLoading(true);
+      try {
+        const response = await studentApi.getBySchool(user?.currentSchool!.id, {
+          page,
+          size: pagination.size,
+          ...filters,
+        });
 
-      setStudents(response.items);
-      setPagination(response.pagination);
-    } catch (error) {
-      console.error("Failed to fetch students:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+        setStudents(response.items);
+        setPagination(response.pagination);
+      } catch (error) {
+        console.error("Failed to fetch students:", error);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [filters, pagination.size, user?.currentSchool]
+  );
 
-  const fetchGradeLevels = async () => {
+  const fetchGradeLevels = useCallback(async () => {
+    if (!user?.currentSchool) return;
     try {
-      const levels = await studentApi.getGradeLevels(currentSchool!.id);
+      const levels = await studentApi.getGradeLevels(user?.currentSchool!.id);
       setGradeLevels(levels);
     } catch (error) {
       console.error("Failed to fetch grade levels:", error);
     }
-  };
+  }, [user?.currentSchool]);
 
   useEffect(() => {
     fetchStudents(0);
     fetchGradeLevels();
-  }, [currentSchool]);
+  }, [fetchGradeLevels, fetchStudents, user?.currentSchool]);
 
   useEffect(() => {
     // Debounce search
@@ -78,7 +83,7 @@ export default function StudentsList() {
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [filters]);
+  }, [fetchStudents, filters]);
 
   const handleFilterChange = (key: string, value: string) => {
     setFilters((prev) => ({ ...prev, [key]: value }));

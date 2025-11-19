@@ -83,7 +83,7 @@ export default function ScheduleFormDialog({
               : t("manager.schedule.addSchedule")}
           </DialogTitle>
           <DialogDescription
-            className={cn( dir === "rtl" ? "text-right" : "text-left")}
+            className={cn(dir === "rtl" ? "text-right" : "text-left")}
           >
             {t("manager.schedule.formDescription")}
           </DialogDescription>
@@ -173,7 +173,7 @@ export default function ScheduleFormDialog({
                 className="bg-gray-100"
               />
               <p className="text-xs text-muted-foreground">
-                End time is automatically set based on the selected start time
+                {t("manager.schedule.endTimeHelperText")}
               </p>
             </div>
           </div>

@@ -10,6 +10,7 @@ import { AppTextArea } from "../common/app-text-area";
 import AppSelect from "../common/app-select-field";
 import type { ISchool } from "@/types/school";
 import { useEffect } from "react";
+import AppMultiSelect from "../common/app-multi-select";
 
 const schoolProfileSchema = z.object({
   // Basic info
@@ -22,10 +23,7 @@ const schoolProfileSchema = z.object({
     .min(1, "validation.codeRequired")
     .max(50, "validation.codeTooLong")
     .regex(/^[A-Z0-9_-]+$/, "validation.codePattern"),
-  email: z
-    .email("validation.emailInvalid")
-    .optional()
-    .or(z.literal("")),
+  email: z.email("validation.emailInvalid").optional().or(z.literal("")),
   phone: z.string().optional(),
   image: z.string().optional(),
   address: z.string().optional(),
@@ -42,7 +40,7 @@ const schoolProfileSchema = z.object({
 
   // Academic
   schoolType: z.string().optional(),
-  educationalLevel: z.string().optional(),
+  educationalLevels: z.array(z.string()).min(1, "validation.atLeastOneLevel"),
   shiftType: z.string().optional(),
   studentsCapacity: z.number().min(0, "validation.capacityPositive").optional(),
 
@@ -85,7 +83,12 @@ const TAB_FIELDS: Record<string, (keyof SchoolProfileFormData)[]> = {
     "motto",
     "establishedYear",
   ],
-  academic: ["schoolType", "educationalLevel", "shiftType", "studentsCapacity"],
+  academic: [
+    "schoolType",
+    "educationalLevels",
+    "shiftType",
+    "studentsCapacity",
+  ],
   facilities: [
     "totalClassrooms",
     "totalLabs",
@@ -142,7 +145,7 @@ export function SchoolProfileForm({
       motto: school.motto || "",
       establishedYear: school.establishedYear || undefined,
       schoolType: school.schoolType || "",
-      educationalLevel: school.educationalLevel || "",
+      educationalLevels: school.educationalLevels || [],
       shiftType: school.shiftType || "",
       studentsCapacity: school.studentsCapacity || 0,
       totalClassrooms: school.totalClassrooms || 0,
@@ -172,7 +175,7 @@ export function SchoolProfileForm({
 
       // Academic Tab
       schoolType: school.schoolType || "",
-      educationalLevel: school.educationalLevel || "",
+      educationalLevels: school.educationalLevels || [],
       shiftType: school.shiftType || "",
       studentsCapacity: school.studentsCapacity || 0,
 
@@ -331,7 +334,7 @@ export function SchoolProfileForm({
           error={getErrorMessage(errors.schoolType)}
           disabled={isLoading}
         />
-        <AppSelect
+        <AppMultiSelect
           label={t("school.fields.educationalLevel")}
           options={[
             { value: "KINDERGARTEN", label: t("school.level.KINDERGARTEN") },
@@ -340,11 +343,11 @@ export function SchoolProfileForm({
             { value: "MIDDLE_SCHOOL", label: t("school.level.MIDDLE_SCHOOL") },
             { value: "HIGH_SCHOOL", label: t("school.level.HIGH_SCHOOL") },
           ]}
-          value={watch("educationalLevel") || ""}
-          onValueChange={(value) =>
-            setValue("educationalLevel", value, { shouldValidate: true })
+          value={watch("educationalLevels") || []}
+          onChange={(value) =>
+            setValue("educationalLevels", value, { shouldValidate: true })
           }
-          error={getErrorMessage(errors.educationalLevel)}
+          error={getErrorMessage(errors.educationalLevels)}
           disabled={isLoading}
         />
       </div>

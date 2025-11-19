@@ -1,7 +1,6 @@
 import { useEffect, useState, type ReactNode, useCallback } from "react";
 import LanguageContext, { type Language } from "@/contexts/language-context";
 import { languages } from "@/constants";
-import { useAppStore } from "@/stores/app-store";
 
 // Import your JSON translation files
 import enTranslations from "@/localization/resources/en.json";
@@ -21,7 +20,6 @@ export default function LanguageProvider({
     languages[0]
   );
   const [isInitialized, setIsInitialized] = useState(false);
-  const setIsRTL = useAppStore((state) => state.setIsRTL);
 
   // Helper function to get nested translation values with proper typing
   const getNestedValue = useCallback(
@@ -86,10 +84,9 @@ export default function LanguageProvider({
     document.documentElement.lang = initialLanguage.code;
 
     // Update Zustand store
-    setIsRTL(initialLanguage.dir === "rtl");
 
     setIsInitialized(true);
-  }, [setIsRTL]);
+  }, []);
 
   // Update direction and language when currentLanguage changes
   useEffect(() => {
@@ -98,10 +95,7 @@ export default function LanguageProvider({
     document.documentElement.dir = currentLanguage.dir;
     document.documentElement.lang = currentLanguage.code;
     localStorage.setItem("selectedLanguage", currentLanguage.code);
-
-    // Update Zustand store
-    setIsRTL(currentLanguage.dir === "rtl");
-  }, [currentLanguage, isInitialized, setIsRTL]);
+  }, [currentLanguage, isInitialized]);
 
   // Function to change language
   const changeLanguage = useCallback((language: Language) => {

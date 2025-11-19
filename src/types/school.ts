@@ -65,7 +65,7 @@ export interface ISchool {
 
   schoolType?: SchoolStatusType;
   shiftType?: ShiftTypeType;
-  educationalLevel?: EducationalLevelType;
+  educationalLevels?: EducationalLevelType[];
 
   // Capacity fields
   studentsCapacity: number;

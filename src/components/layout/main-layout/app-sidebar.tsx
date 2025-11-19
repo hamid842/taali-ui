@@ -17,7 +17,6 @@ import SidebarSkeleton from "@/components/skeleton/layout/sidebar-skeleton";
 import type { MenuItemDto } from "@/types/menu";
 import { useEffect, useState } from "react";
 import CollapsibleMenuItem from "./collapsible-menu-item";
-import { useAppStore } from "@/stores/app-store";
 import SchoolTitle from "@/components/common/school-title";
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard } from "lucide-react";
@@ -35,7 +34,6 @@ export default function AppSidebar() {
     resetRoleContext,
   } = useAuth();
   const location = useLocation();
-  const { currentSchool, setCurrentSchool } = useAppStore();
   const [expandedItem, setExpandedItem] = useState<number | null>(null);
 
   // Get sidebar state
@@ -110,7 +108,6 @@ export default function AppSidebar() {
 
   // Handle switching back to owner context
   const handleBackToOwnerPanel = () => {
-    setCurrentSchool(null);
     resetRoleContext();
     navigate("/owner/dashboard");
   };
@@ -147,7 +144,7 @@ export default function AppSidebar() {
         {user?.role === "OWNER" ? (
           <SchoolSwitcher />
         ) : (
-          <SchoolTitle school={currentSchool} />
+          <SchoolTitle school={user?.currentSchool} />
         )}
       </SidebarHeader>
       <SidebarSeparator />

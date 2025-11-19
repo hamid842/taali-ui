@@ -25,12 +25,12 @@ import { useLanguage } from "@/hooks/use-language";
 import { useRoles } from "@/hooks/use-roles";
 import type { TeacherListResponse } from "@/types/teacher";
 import { ImageDisplay } from "@/components/common/image-display";
-import { useAppStore } from "@/stores/app-store";
 import TeachersTableActions from "@/components/dashboard/manager/teachers-table-actions";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function TeachersPage() {
   const { canManageTeachers } = useRoles();
-  const { currentSchool } = useAppStore();
+  const { user } = useAuth();
   const { t } = useLanguage();
   const [teachers, setTeachers] = useState<TeacherListResponse[]>([]);
   const [loading, setLoading] = useState(true);
@@ -40,19 +40,19 @@ export default function TeachersPage() {
 
   const loadTeachers = useCallback(async () => {
     try {
-      if (!currentSchool?.id) {
+      if (!user?.currentSchool?.id) {
         console.error("No school ID found");
         return;
       }
 
-      const data = await teacherApi.getBySchool(currentSchool?.id);
+      const data = await teacherApi.getBySchool(user?.currentSchool?.id);
       setTeachers(data);
     } catch (error) {
       console.error(t("manager.teachers.errors.loadFailed"), error);
     } finally {
       setLoading(false);
     }
-  }, [currentSchool, t]);
+  }, [user?.currentSchool, t]);
 
   useEffect(() => {
     loadTeachers();

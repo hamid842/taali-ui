@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import type { RegisterRequest, RegisterResponse } from "@/types/auth";
 import { useRegisterMutation } from "@/hooks/use-auth-mutation";
 import { SchoolSelect } from "./school-select";
-import { useAppStore } from "@/stores/app-store";
+import { useAuth } from "@/hooks/use-auth";
 
 interface RegisterUserFormProps {
   rootPage?: boolean;
@@ -42,8 +42,8 @@ export default function RegisterUserForm({
   onSuccess,
   showRedirect = true,
 }: RegisterUserFormProps) {
+  const { user } = useAuth();
   const { t, language } = useLanguage();
-  const { currentSchool } = useAppStore();
   const registerMutation = useRegisterMutation();
 
   const nameRegex = language === "fa" ? FARSI_REGEX : ENGLISH_REGEX;
@@ -106,7 +106,9 @@ export default function RegisterUserForm({
       password: registerForRole === UserRole.OWNER ? "" : "Default@123",
       confirmPassword: registerForRole === UserRole.OWNER ? "" : "Default@123",
       role: registerForRole,
-      schoolId: currentSchool?.id ? currentSchool.id.toString() : undefined,
+      schoolId: user?.currentSchool
+        ? String(user?.currentSchool.id)
+        : undefined,
     },
   });
   const passwordValue = watch("password");

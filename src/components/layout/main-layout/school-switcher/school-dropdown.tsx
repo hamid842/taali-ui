@@ -18,13 +18,11 @@ import type { ISchool } from "@/types/school";
 import { useAuth } from "@/hooks/use-auth";
 import { UserRole, type UserRoleType } from "@/types/role";
 import { useRoleRedirect } from "@/hooks/use-role-redirect";
-import { useAppStore } from "@/stores/app-store";
 
 export default function SchoolDropdown({ schools }: { schools: ISchool[] }) {
   const { t, dir } = useLanguage();
   const { isMobile } = useSidebar();
   const navigate = useNavigate();
-  const { setCurrentSchool } = useAppStore();
   const { user, updateSchoolContext } = useAuth();
   const { redirectToDashboard } = useRoleRedirect();
 
@@ -42,7 +40,6 @@ export default function SchoolDropdown({ schools }: { schools: ISchool[] }) {
 
   const handleSchoolSelect = (school: ISchool) => {
     setActiveSchool(school);
-    setCurrentSchool(school);
     // For OWNER, switch to MANAGER role context when selecting a school
     if (user?.role === UserRole.OWNER) {
       // Update school context AND switch to ADMIN role for menu purposes

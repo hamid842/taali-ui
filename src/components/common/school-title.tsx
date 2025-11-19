@@ -5,7 +5,7 @@ import type { ISchool } from "@/types/school";
 import { useSidebar } from "../ui/sidebar";
 
 type SchoolTitleProps = {
-  school: ISchool | null;
+  school: ISchool | undefined;
 };
 
 export default function SchoolTitle({ school }: SchoolTitleProps) {

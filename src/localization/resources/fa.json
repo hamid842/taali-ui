@@ -828,6 +828,7 @@
       "selectSubject": "انتخاب درس",
       "startTime": "زمان شروع",
       "endTime": "زمان پایان",
+      "endTimeHelperText":"زمان پایان به‌صورت خودکار بر اساس زمان شروع انتخاب‌شده تنظیم می‌شود.",
       "teacher": "معلم",
       "selectTeacher": "انتخاب معلم",
       "room": "اتاق",

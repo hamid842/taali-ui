@@ -4,26 +4,25 @@ import type {
   CreateClassTimestampRequest,
   UpdateClassTimestampRequest,
 } from "@/types/timestamp";
-import { useAppStore } from "@/stores/app-store";
+import { useAuth } from "./use-auth";
 
 export function useTimestamps(schoolId: number | undefined) {
-  const { currentSchool } = useAppStore();
-
+  const { user } = useAuth();
   return useQuery({
     queryKey: ["timestamps", schoolId],
     queryFn: () => timestampApi.getAll(schoolId!),
-    enabled: !!schoolId && !!currentSchool,
+    enabled: !!schoolId && !!user?.currentSchool,
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 }
 
 export function useAvailableTimestampTypes(schoolId: number | undefined) {
-  const { currentSchool } = useAppStore();
+  const { user } = useAuth();
 
   return useQuery({
     queryKey: ["timestamp-types", schoolId],
     queryFn: () => timestampApi.getAvailableTypes(schoolId!),
-    enabled: !!schoolId && !!currentSchool,
+    enabled: !!schoolId && !!user?.currentSchool,
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 }
@@ -42,7 +41,7 @@ export function useCreateTimestamp(schoolId: number) {
 
 export function useUpdateTimestamp() {
   const queryClient = useQueryClient();
-  const { currentSchool } = useAppStore();
+  const { user } = useAuth();
 
   return useMutation({
     mutationFn: ({
@@ -53,9 +52,9 @@ export function useUpdateTimestamp() {
       data: UpdateClassTimestampRequest;
     }) => timestampApi.update(timestampId, data),
     onSuccess: () => {
-      if (currentSchool?.id) {
+      if (user?.currentSchool?.id) {
         queryClient.invalidateQueries({
-          queryKey: ["timestamps", currentSchool.id],
+          queryKey: ["timestamps", user?.currentSchool.id],
         });
       }
     },
@@ -64,14 +63,14 @@ export function useUpdateTimestamp() {
 
 export function useDeleteTimestamp() {
   const queryClient = useQueryClient();
-  const { currentSchool } = useAppStore();
+  const { user } = useAuth();
 
   return useMutation({
     mutationFn: (timestampId: number) => timestampApi.delete(timestampId),
     onSuccess: () => {
-      if (currentSchool?.id) {
+      if (user?.currentSchool?.id) {
         queryClient.invalidateQueries({
-          queryKey: ["timestamps", currentSchool.id],
+          queryKey: ["timestamps", user?.currentSchool.id],
         });
       }
     },

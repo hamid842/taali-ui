@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useLanguage } from "@/hooks/use-language";
 import { formatGregorian, formatJalali } from "@/lib/utils/date-utils";
-import { useAppStore } from "@/stores/app-store";
 import type { ISchool } from "@/types/school";
 import {
   BookOpen,
@@ -42,7 +41,6 @@ export default function SchoolCard({
   onEdit,
 }: SchoolCardProps) {
   const { t, dir, language } = useLanguage();
-  const { setCurrentSchool } = useAppStore();
 
   const formatSinceDate = (date: string | Date) => {
     if (language === "fa") {
@@ -203,7 +201,6 @@ export default function SchoolCard({
             size="sm"
             className="flex-1"
             onClick={() => {
-              setCurrentSchool(school);
               onView(school.id);
             }}
           >

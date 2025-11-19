@@ -19,11 +19,9 @@ import type { LoginRequest } from "@/types/auth";
 import { useNavigate } from "react-router-dom";
 import type { UserRoleType } from "@/types/role";
 import loginImage from "@/assets/images/login-pic.webp";
-import { useAppStore } from "@/stores/app-store";
 
 export default function Login() {
   const { t } = useLanguage();
-  const { setRole, setCurrentSchool } = useAppStore();
   const navigate = useNavigate();
   const loginMutation = useLoginMutation();
   const { redirectToDashboard } = useRoleRedirect();
@@ -56,8 +54,6 @@ export default function Login() {
         toast.success(result.message, {
           description: t("toast.redirectingDashboard"),
         });
-        setRole(result.role!);
-        if (result.currentSchool) setCurrentSchool(result.currentSchool);
         setTimeout(() => {
           redirectToDashboard(result.role! as UserRoleType);
         }, 1000);

@@ -15,7 +15,6 @@ import {
   Shield,
   Smartphone,
 } from "lucide-react";
-import { useAppStore } from "@/stores/app-store";
 import { useLanguage } from "@/hooks/use-language";
 import dashboardImg from "@/assets/images/dashboard.png";
 import dashFaImage from "@/assets/images/dashboard-fa.png";
@@ -31,9 +30,9 @@ interface Features {
 }
 
 export default function LandingPage() {
-  const isRTL = useAppStore((state) => state.isRTL);
   const { currentLanguage } = useLanguage();
-  const { t } = useLanguage();
+  const { t, dir } = useLanguage();
+  const isRTL = dir === "rtl";
 
   const featureList = features[currentLanguage.code];
 

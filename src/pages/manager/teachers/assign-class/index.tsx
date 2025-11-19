@@ -8,19 +8,19 @@ import { ArrowLeft, Search, Check, X } from "lucide-react";
 import { teacherApi } from "@/lib/api/teacher-api";
 import { classApi } from "@/lib/api/class-api";
 import { useLanguage } from "@/hooks/use-language";
-import { useAppStore } from "@/stores/app-store";
 import type {
   TeacherDetailResponse,
   TeacherClassResponse,
 } from "@/types/teacher";
 import type { SchoolClass } from "@/types/class";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function AssignClassesToTeacher() {
   const { teacherId } = useParams<{ teacherId: string }>();
   const navigate = useNavigate();
   const { t, dir } = useLanguage();
-  const { currentSchool } = useAppStore();
+  const { user } = useAuth();
 
   const [teacher, setTeacher] = useState<TeacherDetailResponse | null>(null);
   const [availableClasses, setAvailableClasses] = useState<SchoolClass[]>([]);
@@ -31,11 +31,11 @@ export default function AssignClassesToTeacher() {
 
   const loadData = useCallback(async () => {
     try {
-      if (!teacherId || !currentSchool?.id) return;
+      if (!teacherId || !user?.currentSchool?.id) return;
 
       const [teacherData, schoolClasses] = await Promise.all([
         teacherApi.getById(parseInt(teacherId)),
-        classApi.getClassesBySchool(currentSchool.id),
+        classApi.getClassesBySchool(user?.currentSchool.id),
       ]);
 
       setTeacher(teacherData);
@@ -61,7 +61,7 @@ export default function AssignClassesToTeacher() {
     } finally {
       setLoading(false);
     }
-  }, [teacherId, currentSchool]);
+  }, [teacherId, user?.currentSchool]);
 
   useEffect(() => {
     loadData();

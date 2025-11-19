@@ -17,15 +17,15 @@ import type { CreateSchoolClassRequest } from "@/types/class";
 import FormHeader from "@/components/common/form-header";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { toast } from "sonner";
-import { useAppStore } from "@/stores/app-store";
 import { AppTextField } from "@/components/common/app-text-field";
 import AppSelect, {
   type SelectFieldOptions,
 } from "@/components/common/app-select-field";
 import TeacherSelection from "@/components/dashboard/class/teacher-selection";
+import { useAuth } from "@/hooks/use-auth";
 
 const CreateClassPage: FC = () => {
-  const { currentSchool } = useAppStore();
+  const { user } = useAuth();
   const { t } = useLanguage();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -37,33 +37,33 @@ const CreateClassPage: FC = () => {
     gradeLevel: "",
     academicYear: "1403-1404",
     capacity: 30,
-    schoolId: currentSchool?.id || 0,
+    schoolId: user?.currentSchool?.id || 0,
     mainTeacherId: undefined,
     teacherIds: [],
   });
 
   const loadTeachers = useCallback(async () => {
     try {
-      if (!currentSchool?.id) return;
+      if (!user?.currentSchool?.id) return;
       setTeachersLoading(true);
-      const data = await teacherApi.getBySchool(currentSchool?.id);
+      const data = await teacherApi.getBySchool(user?.currentSchool?.id);
       setTeachers(data);
     } catch (error) {
       console.error("Error loading teachers:", error);
     } finally {
       setTeachersLoading(false);
     }
-  }, [currentSchool]);
+  }, [user?.currentSchool]);
 
   useEffect(() => {
-    if (currentSchool?.id) {
+    if (user?.currentSchool?.id) {
       loadTeachers();
       setFormData((prev) => ({
         ...prev,
-        schoolId: Number(currentSchool?.id),
+        schoolId: Number(user?.currentSchool?.id),
       }));
     }
-  }, [currentSchool, loadTeachers]);
+  }, [user?.currentSchool, loadTeachers]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

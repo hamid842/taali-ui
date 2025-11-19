@@ -18,19 +18,20 @@ import {
   SchoolProfileForm,
   type SchoolProfileFormData,
 } from "@/components/forms/school-profile-form";
-import { useAppStore } from "@/stores/app-store";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function SchoolProfile() {
   const { schoolId } = useParams();
   const { t, dir } = useLanguage();
-  const { currentSchool } = useAppStore();
+  const { user } = useAuth();
   const { data: school, isLoading } = useSchool(
-    schoolId ? schoolId : String(currentSchool?.id)
+    schoolId ? schoolId : String(user?.currentSchool?.id)
   );
   const updateSchoolMutation = useUpdateSchool();
   const [schoolLogo, setSchoolLogo] = useState<string | null>(null);
 
   const handleSubmit = async (data: Partial<SchoolProfileFormData>) => {
+    if (!schoolId && !user?.currentSchool) return;
     try {
       const updateData = {
         ...data,
@@ -38,7 +39,7 @@ export default function SchoolProfile() {
       };
 
       await updateSchoolMutation.mutateAsync({
-        id: schoolId!,
+        id: schoolId ? schoolId : String(user?.currentSchool?.id),
         data: updateData,
       });
 

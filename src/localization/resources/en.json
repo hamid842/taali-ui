@@ -830,6 +830,7 @@
       "selectSubject": "Select subject",
       "startTime": "Start Time",
       "endTime": "End Time",
+      "endTimeHelperText":"End time is automatically set based on the selected start time",
       "teacher": "Teacher",
       "selectTeacher": "Select teacher",
       "room": "Room",

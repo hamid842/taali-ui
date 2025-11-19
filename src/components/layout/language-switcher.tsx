@@ -1,4 +1,3 @@
-// LanguageSwitcher.tsx
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -7,14 +6,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { languages } from "@/constants";
-import { useAppStore } from "@/stores/app-store";
 import { type Language } from "@/contexts/language-context";
 import { useLanguage } from "@/hooks/use-language";
 import { useAuth } from "@/hooks/use-auth";
 
 export function LanguageSwitcher() {
   const { currentLanguage, setCurrentLanguage } = useLanguage();
-  const setIsRTL = useAppStore((state) => state.setIsRTL);
   const { refetchMenu } = useAuth();
 
 
@@ -25,9 +22,6 @@ export function LanguageSwitcher() {
    // Update document attributes
    document.documentElement.dir = language.dir;
    document.documentElement.lang = language.code;
-
-   // Update Zustand store
-   setIsRTL(language.dir === "rtl");
 
    // Update localStorage
    localStorage.setItem("selectedLanguage", language.code);

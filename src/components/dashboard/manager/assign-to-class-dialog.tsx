@@ -18,12 +18,12 @@ import {
 import { classApi } from "@/lib/api/class-api";
 import { studentApi } from "@/lib/api/student-api";
 import { useLanguage } from "@/hooks/use-language";
-import { useAppStore } from "@/stores/app-store";
 import type { SchoolClass } from "@/types/class";
 import type { Student } from "@/types/student";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/hooks/use-auth";
 
 interface AssignClassModalProps {
   isOpen: boolean;
@@ -39,7 +39,7 @@ export default function AssignClassModal({
   onSuccess,
 }: AssignClassModalProps) {
   const { t, dir } = useLanguage();
-  const { currentSchool } = useAppStore();
+  const { user } = useAuth();
   const [classes, setClasses] = useState<SchoolClass[]>([]);
   const [selectedClassId, setSelectedClassId] = useState<string>("");
   const [loading, setLoading] = useState(false);
@@ -52,9 +52,10 @@ export default function AssignClassModal({
   }, [student, isOpen]);
 
   const loadClasses = useCallback(async () => {
+    if (!user?.currentSchool) return;
     try {
       setLoading(true);
-      const data = await classApi.getClassesBySchool(currentSchool!.id);
+      const data = await classApi.getClassesBySchool(user.currentSchool.id);
       setClasses(data);
     } catch (error) {
       console.error("Failed to load classes:", error);
@@ -62,13 +63,13 @@ export default function AssignClassModal({
     } finally {
       setLoading(false);
     }
-  }, [currentSchool, t]);
+  }, [user?.currentSchool, t]);
 
   useEffect(() => {
-    if (isOpen && currentSchool?.id) {
+    if (isOpen && user?.currentSchool?.id) {
       loadClasses();
     }
-  }, [isOpen, currentSchool, loadClasses]);
+  }, [isOpen, user?.currentSchool, loadClasses]);
 
   const handleAssign = async () => {
     if (!student || !selectedClassId) return;
