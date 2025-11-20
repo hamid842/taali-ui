@@ -10,6 +10,7 @@ import type {
   TeacherClassDetail,
   UpcomingClass,
   TeacherActivity,
+  TeacherClass,
 } from "@/types/teacher-dashboard";
 import { teacherDashboardApi } from "@/lib/api/teacher-dashboard-api";
 import TeacherStatsGrid from "@/components/dashboard/teacher/teacher-stats-grid";
@@ -22,7 +23,7 @@ export default function TeacherDashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [stats, setStats] = useState<TeacherDashboardStats | null>(null);
-  const [classes, setClasses] = useState<TeacherClassDetail[]>([]);
+  const [classes, setClasses] = useState<TeacherClass[]>([]);
   const [todaySchedule, setTodaySchedule] = useState<UpcomingClass[]>([]);
   const [recentActivity, setRecentActivity] = useState<TeacherActivity[]>([]);
   const [loading, setLoading] = useState(true);

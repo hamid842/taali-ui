@@ -9,6 +9,7 @@ import { AppTextField } from "../common/app-text-field";
 import { AppTextArea } from "../common/app-text-area";
 import { studentApi } from "@/lib/api/student-api";
 import { InternationalPhoneInput } from "../common/phone-input";
+import { authService } from "@/services/auth-service";
 
 interface StudentParentsFormProps {
   studentId: number | undefined;
@@ -39,6 +40,35 @@ export default function StudentParentsForm({
 
   const removeParent = (index: number) => {
     setParents(parents.filter((_, i) => i !== index));
+  };
+
+  const createParentUser = async (parentData: Parent): Promise<Parent> => {
+    try {
+      // First, create a user with PARENT role
+      const userResponse = await authService.register({
+        email: parentData.email,
+        password: "Default@123",
+        firstName: parentData.firstName,
+        lastName: parentData.lastName,
+        role: "PARENT",
+        phoneNumber: parentData.phoneNumber,
+      });
+
+      if (!userResponse.success) {
+        throw new Error(userResponse.message || "Failed to create user");
+      }
+
+      // Then create the parent record linked to the user
+      const parentRecord = await parentApi.createParent({
+        ...parentData,
+        userId: userResponse.data.id, // Assuming the response includes the user ID
+      });
+
+      return parentRecord;
+    } catch (error) {
+      console.error("Failed to create parent user:", error);
+      throw error;
+    }
   };
 
   const onSubmit = async () => {

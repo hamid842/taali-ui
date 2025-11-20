@@ -28,9 +28,18 @@ export default function TeacherTodaySchedule({
     const diffMs = classTime.getTime() - now.getTime();
     const diffMins = Math.floor(diffMs / (1000 * 60));
 
+    // Class ended more than 1 hour ago
+    if (diffMins < -60) {
+      return t("teacher.dashboard.completed");
+    }
+
+    // Class is currently in progress (started within last hour)
     if (diffMins < 0) return t("teacher.dashboard.inProgress");
+
+    // Upcoming classes
     if (diffMins < 60)
       return t("teacher.dashboard.inMinutes", { minutes: diffMins });
+
     const hours = Math.floor(diffMins / 60);
     return t("teacher.dashboard.inHours", { hours });
   };

@@ -6,6 +6,14 @@ export interface TeacherDashboardStats {
   averageGrade?: number;
 }
 
+export interface TeacherClass {
+  classId: number;
+  className: string;
+  subject: string;
+  isMainTeacher: boolean;
+  studentCount: number;
+}
+
 export interface TeacherClassDetail {
   id: number;
   className: string;
@@ -50,5 +58,5 @@ export interface TeacherClassWithDetails extends TeacherClassDetail {
 export interface ScheduleWithContext extends UpcomingClass {
   isNow: boolean;
   timeUntil: string;
-  status: 'upcoming' | 'ongoing' | 'completed';
+  status: "upcoming" | "ongoing" | "completed";
 }

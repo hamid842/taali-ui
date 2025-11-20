@@ -11,6 +11,7 @@ import AppSelect from "../common/app-select-field";
 import type { ISchool } from "@/types/school";
 import { useEffect } from "react";
 import AppMultiSelect from "../common/app-multi-select";
+import { useGradeLevels } from "@/hooks/use-grade-levels";
 
 const schoolProfileSchema = z.object({
   // Basic info
@@ -115,6 +116,7 @@ export function SchoolProfileForm({
   tab,
 }: SchoolProfileFormProps) {
   const { t, dir } = useLanguage();
+  const { options } = useGradeLevels();
 
   const getTabSchema = () => {
     const fields = TAB_FIELDS[tab];
@@ -197,16 +199,72 @@ export function SchoolProfileForm({
   const handleFormSubmit = (data: SchoolProfileFormData) => {
     const fields = TAB_FIELDS[tab];
 
-    // Use Record<string, any> during building, then cast final result
+    // Convert frontend levels to backend enum values
+    const educationalLevels = convertToBackendLevels(
+      data.educationalLevels || []
+    );
+
     const tabData = fields.reduce((acc: Record<string, unknown>, field) => {
       const value = data[field];
       if (value !== undefined && value !== null) {
-        acc[field] = value;
+        if (field === "educationalLevels") {
+          acc[field] = educationalLevels;
+        } else {
+          acc[field] = value;
+        }
       }
       return acc;
     }, {}) as Partial<SchoolProfileFormData>;
 
+    console.log("Sending to backend:", tabData);
     onSubmit(tabData);
+  };
+
+  // Add this conversion function
+  const convertToBackendLevels = (frontendLevels: string[]): string[] => {
+    const backendLevels: string[] = [];
+
+    frontendLevels.forEach((level) => {
+      switch (level) {
+        case "PRE_PRIMARY":
+        case "PRESCHOOL":
+          if (!backendLevels.includes("PRESCHOOL"))
+            backendLevels.push("PRESCHOOL");
+          break;
+        case "PRIMARY_1":
+        case "PRIMARY_2":
+        case "PRIMARY_3":
+        case "PRIMARY_4":
+        case "PRIMARY_5":
+        case "PRIMARY_6":
+        case "PRIMARY":
+          if (!backendLevels.includes("PRIMARY")) backendLevels.push("PRIMARY");
+          break;
+        case "LOWER_SECONDARY_7":
+        case "LOWER_SECONDARY_8":
+        case "LOWER_SECONDARY_9":
+        case "MIDDLE_SCHOOL":
+          if (!backendLevels.includes("MIDDLE_SCHOOL"))
+            backendLevels.push("MIDDLE_SCHOOL");
+          break;
+        case "UPPER_SECONDARY_10":
+        case "UPPER_SECONDARY_11":
+        case "UPPER_SECONDARY_12":
+        case "HIGH_SCHOOL":
+          if (!backendLevels.includes("HIGH_SCHOOL"))
+            backendLevels.push("HIGH_SCHOOL");
+          break;
+        case "KINDERGARTEN":
+        case "VOCATIONAL":
+          if (!backendLevels.includes(level)) backendLevels.push(level);
+          break;
+        default:
+          // If it's already a backend level, keep it
+          if (!backendLevels.includes(level)) backendLevels.push(level);
+      }
+    });
+
+    return backendLevels;
   };
 
   const getErrorMessage = (error: unknown): string | undefined => {
@@ -336,13 +394,7 @@ export function SchoolProfileForm({
         />
         <AppMultiSelect
           label={t("school.fields.educationalLevel")}
-          options={[
-            { value: "KINDERGARTEN", label: t("school.level.KINDERGARTEN") },
-            { value: "PRESCHOOL", label: t("school.level.PRESCHOOL") },
-            { value: "PRIMARY", label: t("school.level.PRIMARY") },
-            { value: "MIDDLE_SCHOOL", label: t("school.level.MIDDLE_SCHOOL") },
-            { value: "HIGH_SCHOOL", label: t("school.level.HIGH_SCHOOL") },
-          ]}
+          options={options}
           value={watch("educationalLevels") || []}
           onChange={(value) =>
             setValue("educationalLevels", value, { shouldValidate: true })
@@ -532,7 +584,7 @@ export function SchoolProfileForm({
       >
         <Button
           type="submit"
-          disabled={isLoading || !isDirty || !isValid}
+          disabled={isLoading || !isValid}
           className="gap-2"
         >
           {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}

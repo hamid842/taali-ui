@@ -893,6 +893,7 @@
       "takeAttendance": "Take Attendance",
       "quickActions": "Quick Actions",
       "students": "students",
+      "completed":"Class Completed",
       "inProgress": "In progress",
       "inMinutes": "in {minutes}m",
       "inHours": "in {hours}h",

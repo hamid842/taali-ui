@@ -1,11 +1,10 @@
 import { useLanguage } from "@/hooks/use-language";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { BookOpen, Users, Clock } from "lucide-react";
-import type { TeacherClassDetail } from "@/types/teacher-dashboard";
+import { BookOpen, Users } from "lucide-react";
+import type { TeacherClass } from "@/types/teacher-dashboard";
 
 interface TeacherClassesListProps {
-  classes: TeacherClassDetail[];
+  classes: TeacherClass[];
   onClassClick?: (classId: number) => void;
 }
 
@@ -32,38 +31,38 @@ export default function TeacherClassesList({
         ) : (
           classes.map((classItem) => (
             <div
-              key={classItem.id}
+              key={classItem.classId}
               className="flex items-center justify-between p-3 rounded-lg border hover:bg-accent/50 cursor-pointer transition-colors"
-              onClick={() => onClassClick?.(classItem.id)}
+              onClick={() => onClassClick?.(classItem.classId)}
             >
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
                   <p className="font-medium text-sm truncate">
                     {classItem.className}
                   </p>
-                  <Badge variant="secondary" className="text-xs">
+                  {/* <Badge variant="secondary" className="text-xs">
                     {classItem.gradeLevel}
-                  </Badge>
+                  </Badge> */}
                 </div>
 
-                <div className="flex items-center gap-2 mb-2">
+                {/* <div className="flex items-center gap-2 mb-2">
                   <Badge variant="outline" className="text-xs">
                     {classItem.subject}
                   </Badge>
                   <span className="text-xs text-muted-foreground">
                     {classItem.room}
                   </span>
-                </div>
+                </div> */}
 
                 <div className="flex items-center gap-4 text-xs text-muted-foreground">
                   <span className="flex items-center gap-1">
                     <Users className="h-3 w-3" />
                     {classItem.studentCount} {t("teacher.dashboard.students")}
                   </span>
-                  <span className="flex items-center gap-1">
+                  {/* <span className="flex items-center gap-1">
                     <Clock className="h-3 w-3" />
                     {classItem.schedule}
-                  </span>
+                  </span> */}
                 </div>
               </div>
             </div>

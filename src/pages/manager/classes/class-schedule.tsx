@@ -32,11 +32,13 @@ import { DayOfWeek, type CreateClassScheduleRequest } from "@/types/schedule";
 import type { Lesson } from "@/types/lesson";
 import type { ClassTimestamp } from "@/types/timestamp";
 import ScheduleFormDialog from "@/components/forms/schedule-form-dialog";
+import { useGradeLevels } from "@/hooks/use-grade-levels";
 
 export default function ClassSchedule() {
   const { classId } = useParams<{ classId: string }>();
   const { user } = useAuth();
   const { t } = useLanguage();
+  const { mapSchoolLevelsToLessonLevels } = useGradeLevels();
 
   const [classDetail, setClassDetail] = useState<SchoolClassDetail | null>(
     null
@@ -134,11 +136,17 @@ export default function ClassSchedule() {
             encodeURIComponent(classData.gradeLevel)
           );
 
-          const lessonsData = await lessonApi.getByGradeLevel(
-            classData.gradeLevel
-          );
-          console.log("Lessons API response:", lessonsData);
-          setLessons(lessonsData);
+          if (user?.currentSchool?.educationalLevels) {
+            const lessonGradeLevels = mapSchoolLevelsToLessonLevels(
+              user.currentSchool.educationalLevels
+            );
+            const lessonsData = await lessonApi.getByGradeLevels(
+              lessonGradeLevels,
+              user?.currentSchool?.id
+            );
+            console.log("Lessons API response:", lessonsData);
+            setLessons(lessonsData);
+          }
         } catch (error) {
           console.error("Error loading lessons:", error);
           console.error("Error details:", {
@@ -225,13 +233,56 @@ export default function ClassSchedule() {
     day: DayOfWeek,
     timestamp: ClassTimestamp
   ): ClassSchedule | undefined => {
-    return schedules.find(
-      (schedule) =>
-        schedule.dayOfWeek === day &&
-        schedule.startTime === timestamp.startTime &&
-        schedule.endTime === timestamp.endTime
-    );
+    return schedules.find((schedule) => {
+      // Check day
+      if (schedule.dayOfWeek !== day) return false;
+
+      // Normalize times by removing seconds for comparison
+      const normalizeTime = (time: string): string => {
+        // Handle both "HH:MM:SS" and "HH:MM" formats
+        return time.split(":").slice(0, 2).join(":");
+      };
+
+      const scheduleStart = normalizeTime(schedule.startTime);
+      const scheduleEnd = normalizeTime(schedule.endTime);
+      const timestampStart = normalizeTime(timestamp.startTime);
+      const timestampEnd = normalizeTime(timestamp.endTime);
+
+      return scheduleStart === timestampStart && scheduleEnd === timestampEnd;
+    });
   };
+
+  // Add this debugging function
+  const debugScheduleData = () => {
+    console.log("=== DEBUG SCHEDULE DATA ===");
+    console.log("Schedules:", schedules);
+    console.log("Time slots:", timeSlots);
+
+    // Check one specific time slot
+    if (timeSlots.length > 0 && schedules.length > 0) {
+      const testTimestamp = timeSlots[0];
+      const testDay = daysOrder[0];
+      const foundSchedule = getSchedule(testDay, testTimestamp);
+
+      console.log("Testing with:", {
+        day: testDay,
+        timestamp: testTimestamp,
+        foundSchedule: foundSchedule,
+      });
+
+      // Log all schedules for this day to see what's available
+      const daySchedules = schedules.filter((s) => s.dayOfWeek === testDay);
+      console.log(`Schedules for ${testDay}:`, daySchedules);
+    }
+  };
+
+  // Call it when schedules or timeSlots change
+  useEffect(() => {
+    if (schedules.length > 0 && timeSlots.length > 0) {
+      debugScheduleData();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [schedules, timeSlots]);
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {

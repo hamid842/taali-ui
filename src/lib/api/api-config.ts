@@ -89,8 +89,16 @@ export const apiConfig = {
       create: `${API_BASE_URL}/lessons`,
       update: (id: number) => `${API_BASE_URL}/lessons/${id}`,
       delete: (id: number) => `${API_BASE_URL}/lessons/${id}`,
-      getByGradeLevel: (gradeLevel: string) =>
-        `${API_BASE_URL}/lessons/grade-level/${encodeURIComponent(gradeLevel)}`,
+      getByGradeLevel: (gradeLevel: string, schoolId: number) =>
+        `${API_BASE_URL}/lessons/grade-level/${encodeURIComponent(
+          gradeLevel
+        )}/school/${schoolId}`,
+      getByGradeLevels: (gradeLevels: string, schoolId: number) =>
+        `${API_BASE_URL}/lessons/grade-levels/school/${schoolId}?gradeLevels=${encodeURIComponent(
+          gradeLevels
+        )}`,
+      getAvailableGradeLevels: (schoolId: number) =>
+        `${API_BASE_URL}/lessons/available-grade-levels/${schoolId}`,
     },
     teachers: {
       create: `${API_BASE_URL}/teachers`,

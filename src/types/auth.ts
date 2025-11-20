@@ -35,7 +35,7 @@ export interface RegisterRequest {
   phoneNumber: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
   role: UserRoleType;
   profileImage?: string | null;
 }

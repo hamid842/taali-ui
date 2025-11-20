@@ -2,9 +2,9 @@
 
 import type {
   TeacherDashboardStats,
-  TeacherClass,
   UpcomingClass,
   TeacherActivity,
+  TeacherClass,
 } from "@/types/teacher-dashboard";
 import { apiClient, apiConfig } from "./api-config";
 

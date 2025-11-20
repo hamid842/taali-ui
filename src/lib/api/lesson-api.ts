@@ -2,17 +2,40 @@ import { apiClient, apiConfig } from "./api-config";
 import type { Lesson } from "@/types/lesson";
 
 export const lessonApi = {
-  // Get all lessons
-  getAll: async (): Promise<Lesson[]> => {
-    return await apiClient.get<Lesson[]>(apiConfig.endpoints.lessons.getAll);
+  // Get all lessons (you might want to add school filter here too)
+  getAll: async (schoolId?: number): Promise<Lesson[]> => {
+    const url = schoolId
+      ? `${apiConfig.endpoints.lessons.getAll}?schoolId=${schoolId}`
+      : apiConfig.endpoints.lessons.getAll;
+    return await apiClient.get<Lesson[]>(url);
   },
 
-  // Get lessons by grade level
-  getByGradeLevel: async (gradeLevel: string): Promise<Lesson[]> => {
-    // Use encodeURIComponent to properly encode the grade level
+  // Get lessons by grade level for specific school
+  getByGradeLevel: async (
+    gradeLevel: string,
+    schoolId: number
+  ): Promise<Lesson[]> => {
     const encodedGradeLevel = encodeURIComponent(gradeLevel);
     return await apiClient.get<Lesson[]>(
-      `${apiConfig.endpoints.lessons.getByGradeLevel(encodedGradeLevel)}`
+      apiConfig.endpoints.lessons.getByGradeLevel(encodedGradeLevel, schoolId)
+    );
+  },
+
+  // Get lessons by multiple grade levels for specific school
+  getByGradeLevels: async (
+    gradeLevels: string[],
+    schoolId: number
+  ): Promise<Lesson[]> => {
+    const gradeLevelsParam = gradeLevels.join(",");
+    return await apiClient.get<Lesson[]>(
+      apiConfig.endpoints.lessons.getByGradeLevels(gradeLevelsParam, schoolId)
+    );
+  },
+
+  // Get available grade levels for specific school
+  getAvailableGradeLevels: async (schoolId: number): Promise<string[]> => {
+    return await apiClient.get<string[]>(
+      apiConfig.endpoints.lessons.getAvailableGradeLevels(schoolId)
     );
   },
 
