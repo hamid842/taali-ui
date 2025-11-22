@@ -17,9 +17,7 @@ import {
 } from "lucide-react";
 import FormHeader from "@/components/common/form-header";
 import ImageUploadSection from "@/components/common/image-upload-section";
-import { useAppStore } from "@/stores/app-store";
-import EmptyData from "@/components/common/empty-data";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import StudentDetailsForm from "@/components/forms/student-details-form";
 import StudentParentsForm from "@/components/forms/student-parents-form";
 import RegisterUserForm from "@/components/forms/register-user-form";
@@ -30,7 +28,6 @@ import { toast } from "sonner";
 export default function CreateStudent() {
   const { t, dir } = useLanguage();
   const navigate = useNavigate();
-  const { ownerHasSchool } = useAppStore();
   const [studentProfileImg, setStudentProfileImg] = useState<string | null>(
     null
   );
@@ -135,20 +132,6 @@ export default function CreateStudent() {
     if (stepId === 2) return currentStep > 2;
     return false;
   };
-
-  if (!ownerHasSchool) {
-    return (
-      <EmptyData
-        title={t("manager.addStudent.noSchoolTitle")}
-        desc={t("manager.addStudent.noSchoolDesc")}
-        actions={
-          <Link to={"/manager/schools/create"}>
-            <Button>{t("manager.addStudent.noSchoolBtn")}</Button>
-          </Link>
-        }
-      />
-    );
-  }
 
   return (
     <div className="container mx-auto py-6 max-w-4xl">

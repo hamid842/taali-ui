@@ -1,5 +1,6 @@
 import { managerRoutes } from "./manager-routes";
 import { ownerRoutes } from "./owner-routes";
+import { parentRoutes } from "./parent-routes";
 import { schoolManagerRoutes } from "./school-specific-manager-routes";
 import { teacherRoutes } from "./teacher-routes";
 
@@ -8,4 +9,5 @@ export const dashboardRoutes = [
   schoolManagerRoutes,
   managerRoutes,
   teacherRoutes,
+  parentRoutes,
 ];

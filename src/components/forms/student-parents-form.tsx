@@ -10,6 +10,9 @@ import { AppTextArea } from "../common/app-text-area";
 import { studentApi } from "@/lib/api/student-api";
 import { InternationalPhoneInput } from "../common/phone-input";
 import { authService } from "@/services/auth-service";
+import { parentApi } from "@/lib/api/parent-api";
+import { useAuth } from "@/hooks/use-auth";
+import { UserRole } from "@/types/role";
 
 interface StudentParentsFormProps {
   studentId: number | undefined;
@@ -23,7 +26,10 @@ export default function StudentParentsForm({
   onBack,
 }: StudentParentsFormProps) {
   const { t } = useLanguage();
+  const { user } = useAuth();
+
   const [parents, setParents] = useState<Parent[]>([]);
+
   const {
     register,
     handleSubmit,
@@ -50,7 +56,7 @@ export default function StudentParentsForm({
         password: "Default@123",
         firstName: parentData.firstName,
         lastName: parentData.lastName,
-        role: "PARENT",
+        role: UserRole.PARENT,
         phoneNumber: parentData.phoneNumber,
       });
 
@@ -61,7 +67,7 @@ export default function StudentParentsForm({
       // Then create the parent record linked to the user
       const parentRecord = await parentApi.createParent({
         ...parentData,
-        userId: userResponse.data.id, // Assuming the response includes the user ID
+        schoolId: user?.currentSchool?.id,
       });
 
       return parentRecord;
@@ -71,13 +77,33 @@ export default function StudentParentsForm({
     }
   };
 
+  // const onSubmit = async () => {
+  //   // if (!studentId) return;
+  //   try {
+  //     const updatedStudent = await studentApi.associateParents(studentId!, {
+  //       parentEmails: [],
+  //       newParents: parents,
+  //     });
+  //     onSuccess(updatedStudent);
+  //   } catch (error) {
+  //     console.error("Failed to associate parents:", error);
+  //   }
+  // };
   const onSubmit = async () => {
-    // if (!studentId) return;
+    if (!studentId) return;
+
     try {
+      // Create all parent users first
+      await Promise.all(parents.map((parent) => createParentUser(parent)));
+
+      // Extract the parent IDs
+      // const parentIds = createdParents.map((parent) => parent.id);
+
       const updatedStudent = await studentApi.associateParents(studentId!, {
         parentEmails: [],
         newParents: parents,
       });
+
       onSuccess(updatedStudent);
     } catch (error) {
       console.error("Failed to associate parents:", error);

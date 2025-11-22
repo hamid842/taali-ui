@@ -50,7 +50,8 @@
     "saveChanges": "ذخیره تغییرات",
     "changeClass": "تغییر کلاس",
     "saving": "در حال ذخیره ...",
-    "removing": "در حال حذف ..."
+    "removing": "در حال حذف ...",
+    "notAvailable": "نامشخص"
   },
   "school": {
     "type": {
@@ -899,7 +900,7 @@
       "takeAttendance": "ثبت حضور و غیاب",
       "quickActions": "اقدامات سریع",
       "students": "دانش‌آموز",
-      "completed":"خاتمه یافته",
+      "completed": "خاتمه یافته",
       "inProgress": "در حال برگزاری",
       "inMinutes": "در {minutes} دقیقه",
       "inHours": "در {hours} ساعت",
@@ -955,6 +956,23 @@
     },
     "messages": {
       "send": "ارسال پیام"
+    }
+  },
+  "parent": {
+    "children": {
+      "title": "فرزندان من",
+      "subtitle": "مدیریت {{count}} فرزند",
+      "subtitle_plural": "مدیریت {{count}} فرزند",
+      "noChildren": "فرزندی ثبت نشده است",
+      "noChildrenFound": "فرزندی یافت نشد",
+      "noChildrenDescription": "شما هنوز هیچ فرزندی در حساب خود ثبت نکرده اید. لطفاً با مدیر مدرسه خود تماس بگیرید تا فرزندان را به حساب شما اضافه کند.",
+      "attendance": "حضور و غیاب",
+      "averageGrade": "معدل",
+      "teacher": "معلم",
+      "viewFullProfile": "مشاهده پروفایل کامل",
+      "contactSchool": "تماس با مدرسه",
+      "grades": "نمرات",
+      "errorLoading": "خطا در بارگذاری اطلاعات فرزندان"
     }
   },
   "education": {

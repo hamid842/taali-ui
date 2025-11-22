@@ -50,7 +50,8 @@
     "saveChanges": "Save Changes",
     "changeClass": "Change Class",
     "saving": "Saving...",
-    "removing": "Removing..."
+    "removing": "Removing...",
+    "notAvailable": "N/A"
   },
   "school": {
     "type": {
@@ -947,6 +948,23 @@
     "assignments": {},
     "messages": {
       "send": "Send Message"
+    }
+  },
+  "parent":{
+    "children": {
+      "title": "My Children",
+      "subtitle": "Managing {{count}} child",
+      "subtitle_plural": "Managing {{count}} children",
+      "noChildren": "No children registered",
+      "noChildrenFound": "No Children Found",
+      "noChildrenDescription": "You don't have any children registered to your account yet. Please contact your school administrator to add children to your account.",
+      "attendance": "Attendance",
+      "averageGrade": "Average Grade",
+      "teacher": "Teacher",
+      "viewFullProfile": "View Full Profile",
+      "contactSchool": "Contact School",
+      "grades": "Grades",
+      "errorLoading": "Failed to load children data"
     }
   },
   "education": {

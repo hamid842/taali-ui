@@ -7,7 +7,6 @@ import { Users, BookOpen, FileText, MessageSquare } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type {
   TeacherDashboardStats,
-  TeacherClassDetail,
   UpcomingClass,
   TeacherActivity,
   TeacherClass,
