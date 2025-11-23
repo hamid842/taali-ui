@@ -106,7 +106,7 @@ export const studentApi = {
   bulkAssignStudentsToClass: async (
     studentIds: number[],
     classId: number
-  ): Promise<any> => {
+  ): Promise<void> => {
     return apiClient.post(apiConfig.endpoints.students.bulkAssign, {
       studentIds,
       classId,

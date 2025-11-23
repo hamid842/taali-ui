@@ -1,4 +1,5 @@
 import type { LoginResponse, User } from "@/types/auth";
+import type { SchoolSummary } from "@/types/class";
 import type { MenuItemDto } from "@/types/menu";
 import type { UserRoleType } from "@/types/role";
 import { createContext } from "react";
@@ -26,6 +27,7 @@ export interface AuthContextType {
   refetchMenu: () => Promise<unknown>;
   updateSchoolContext: (schoolId: number, role?: UserRoleType) => void;
   resetRoleContext: () => void;
+  setCurrentSchool: (school:SchoolSummary) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);

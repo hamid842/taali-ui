@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { LayoutDashboard } from "lucide-react";
 import { UserRole } from "@/types/role";
 import { cn } from "@/lib/utils";
+import ParentChildrenHeader from "./school-switcher/parent-children-header";
 
 export default function AppSidebar() {
   const { t, dir } = useLanguage();
@@ -141,11 +142,15 @@ export default function AppSidebar() {
       collapsible="icon"
     >
       <SidebarHeader>
-        {user?.role === "OWNER" ? (
-          <SchoolSwitcher />
-        ) : (
-          <SchoolTitle school={user?.currentSchool} />
-        )}
+        <SidebarHeader>
+          {user?.role === "OWNER" ? (
+            <SchoolSwitcher />
+          ) : user?.role === "PARENT" ? (
+            <ParentChildrenHeader />
+          ) : (
+            <SchoolTitle school={user?.currentSchool} />
+          )}
+        </SidebarHeader>
       </SidebarHeader>
       <SidebarSeparator />
       <SidebarContent>

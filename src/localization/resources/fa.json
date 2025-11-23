@@ -396,7 +396,7 @@
   "owner": {
     "dashboard": {
       "title": "داشبورد ",
-      "description": "خوش آمدید، {{name}}! اینجا نمای کلی شماست.",
+      "description": "خوش آمدید، {name}! اینجا نمای کلی شماست.",
       "error": {
         "title": "بارگذاری داشبورد ممکن نیست",
         "loading": "بارگذاری اطلاعات داشبورد ناموفق بود"
@@ -414,7 +414,7 @@
         "totalStudents": "مجموع دانش آموزان",
         "totalTeachers": "مجموع معلمان",
         "totalClasses": "مجموع کلاس‌ها",
-        "activeSchools": "{{count}} فعال",
+        "activeSchools": "{count} فعال",
         "acrossAllSchools": "در تمام مدارس",
         "activeClasses": "کلاس‌های فعال",
         "avgStudentsPerSchool": "میانگین دانش‌آموز در هر مدرسه",
@@ -432,12 +432,12 @@
       "quickActions": "اقدامات سریع",
       "noActivity": "هیچ فعالیتی ثبت نشده",
       "activity": {
-        "schoolCreated": "مدرسه جدید ایجاد شد: {{school}}",
-        "userAdded": "کاربر جدید اضافه شد: {{user}}",
-        "schoolUpdated": "مدرسه به‌روزرسانی شد: {{school}}",
-        "studentRegistered": "دانش‌آموز جدید ثبت‌نام کرد: {{student}} در {{school}}",
-        "teacherAdded": "معلم جدید اضافه شد: {{teacher}} در {{school}}",
-        "classCreated": "کلاس جدید ایجاد شد: {{class}} در {{school}}"
+        "schoolCreated": "مدرسه جدید ایجاد شد: {school}",
+        "userAdded": "کاربر جدید اضافه شد: {user}",
+        "schoolUpdated": "مدرسه به‌روزرسانی شد: {school}",
+        "studentRegistered": "دانش‌آموز جدید ثبت‌نام کرد: {student} در {school}",
+        "teacherAdded": "معلم جدید اضافه شد: {teacher} در {school}",
+        "classCreated": "کلاس جدید ایجاد شد: {class} در {school}"
       },
       "topSchools": "مدارس برتر",
       "recentRegistrations": "ثبت‌نام‌های اخیر",
@@ -586,7 +586,7 @@
   "manager": {
     "dashboard": {
       "title": "داشبورد مدرسه",
-      "description": "خوش آمدید، {{name}}! در حال مدیریت {{school}}.",
+      "description": "خوش آمدید، {name}! در حال مدیریت {school}.",
       "upcomingClasses": "کلاس‌های پیش‌رو",
       "upcomingClassesDescription": "برنامه کلاس‌های امروز",
       "noUpcomingClasses": "کلاسی در پیش نیست",
@@ -816,7 +816,7 @@
       "noClass": "بدون کلاس (حذف از کلاس فعلی)",
       "classInfo": "اطلاعات کلاس",
       "notAssigned": "اختصاص داده نشده",
-      "yearsOld": "سال سن",
+      "yearsOld": "ساله",
       "success": {
         "assignToClass": "دانش‌آموز با موفقیت به کلاس اختصاص یافت",
         "removeFromClass": "دانش‌آموز با موفقیت از کلاس حذف شد"
@@ -959,10 +959,26 @@
     }
   },
   "parent": {
+    "selectSchool": "انتخاب مدرسه",
+    "selectChild": "انتخاب فرزند",
+    "unknownSchool": "مدرسه نامشخص",
+    "schools": "مدرسه",
+    "dashboard": {
+      "welcome": "خوش آمدید، {name}!",
+      "subtitle": "در اینجا آنچه امروز برای فرزندان شما اتفاق می‌افتد مشاهده می‌کنید.",
+      "alerts": "هشدارها",
+      "payments": "پرداخت‌ها",
+      "quickActions": "اقدامات سریع",
+      "attendanceDescription": "مشاهده سوابق حضور و غیاب",
+      "gradesDescription": "بررسی عملکرد تحصیلی",
+      "paymentsDescription": "مدیریت پرداخت‌های شهریه",
+      "notifications": "اعلان‌ها",
+      "notificationsDescription": "مشاهده هشدارهای مدرسه"
+    },
     "children": {
       "title": "فرزندان من",
-      "subtitle": "مدیریت {{count}} فرزند",
-      "subtitle_plural": "مدیریت {{count}} فرزند",
+      "subtitle": "مدیریت {count} فرزند",
+      "subtitle_plural": "مدیریت {count} فرزند",
       "noChildren": "فرزندی ثبت نشده است",
       "noChildrenFound": "فرزندی یافت نشد",
       "noChildrenDescription": "شما هنوز هیچ فرزندی در حساب خود ثبت نکرده اید. لطفاً با مدیر مدرسه خود تماس بگیرید تا فرزندان را به حساب شما اضافه کند.",

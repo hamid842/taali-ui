@@ -7,12 +7,17 @@ import type { Student } from "@/types/student";
 import { BookOpen, Calendar, Mail, Phone, User } from "lucide-react";
 import AssignClassModal from "../manager/assign-to-class-dialog";
 import { useState } from "react";
+import { calculateAge } from "@/lib/utils/calculate-age";
 
 type StudentItemProps = {
   student: Student;
+  onStudentUpdated?: () => void;
 };
 
-export default function StudentItem({ student }: StudentItemProps) {
+export default function StudentItem({
+  student,
+  onStudentUpdated,
+}: StudentItemProps) {
   const { t } = useLanguage();
   const [openClassModal, setOpenClassModal] = useState(false);
 
@@ -25,19 +30,14 @@ export default function StudentItem({ student }: StudentItemProps) {
     return new Date(dateString).toLocaleDateString();
   };
 
-  const calculateAge = (birthDate?: string) => {
-    if (!birthDate) return "";
-    const today = new Date();
-    const birth = new Date(birthDate);
-    let age = today.getFullYear() - birth.getFullYear();
-    const monthDiff = today.getMonth() - birth.getMonth();
-    if (
-      monthDiff < 0 ||
-      (monthDiff === 0 && today.getDate() < birth.getDate())
-    ) {
-      age--;
+  // Handle class assignment success
+  const handleAssignSuccess = () => {
+    setOpenClassModal(false);
+
+    // Notify parent to refetch students list
+    if (onStudentUpdated) {
+      onStudentUpdated();
     }
-    return age;
   };
 
   return (
@@ -76,7 +76,7 @@ export default function StudentItem({ student }: StudentItemProps) {
             <CardTitle className="text-lg font-semibold line-clamp-1">
               {student.userFirstName} {student.userLastName}
             </CardTitle>
-            <div className="flex items-center text-sm text-muted-foreground mt-1">
+            <div className="flex gap-1 items-center text-sm text-muted-foreground mt-1">
               <Mail className="h-3 w-3 mr-1" />
               <span className="truncate">{student.userEmail}</span>
             </div>
@@ -104,7 +104,7 @@ export default function StudentItem({ student }: StudentItemProps) {
                 {calculateAge(student.birthDate.toString()) && (
                   <span className="ml-1">
                     ({calculateAge(student.birthDate.toString())}{" "}
-                    {t("students.yearsOld")})
+                    {t("manager.students.yearsOld")})
                   </span>
                 )}
               </span>
@@ -144,11 +144,12 @@ export default function StudentItem({ student }: StudentItemProps) {
           </Button>
         </div>
       </CardContent>
+
       <AssignClassModal
         student={student}
         isOpen={openClassModal}
         onClose={() => setOpenClassModal(false)}
-        onSuccess={() => console.log}
+        onSuccess={handleAssignSuccess}
       />
     </Card>
   );

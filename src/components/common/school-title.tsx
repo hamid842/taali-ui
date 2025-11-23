@@ -3,9 +3,10 @@ import SchoolImage from "../layout/main-layout/school-switcher/school-image";
 import { School } from "lucide-react";
 import type { ISchool } from "@/types/school";
 import { useSidebar } from "../ui/sidebar";
+import type { SchoolSummary } from "@/types/class";
 
 type SchoolTitleProps = {
-  school: ISchool | undefined;
+  school: ISchool | SchoolSummary | undefined;
 };
 
 export default function SchoolTitle({ school }: SchoolTitleProps) {
@@ -22,8 +23,8 @@ export default function SchoolTitle({ school }: SchoolTitleProps) {
     <div className="flex w-full items-center justify-between gap-4 px-2">
       <div className="flex items-center gap-3">
         <div className="flex size-6 items-center justify-center rounded-md border">
-          {school?.image ? (
-            <SchoolImage school={school} />
+          {(school as ISchool)?.image ? (
+            <SchoolImage school={school as ISchool} />
           ) : (
             <SchoolLogo className="size-3.5 shrink-0" />
           )}

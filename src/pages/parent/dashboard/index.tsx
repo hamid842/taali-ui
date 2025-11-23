@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   Users,
@@ -14,12 +13,15 @@ import {
 } from "lucide-react";
 import { useParentDashboard } from "@/hooks/use-parent-dashboard";
 import { useAuth } from "@/hooks/use-auth";
+import { useLanguage } from "@/hooks/use-language";
 import { useNavigate } from "react-router-dom";
 import type { Child } from "@/types/parent";
+import ParentDashboardSkeleton from "@/components/skeleton/dashboard/parent-dashboard-skeleton";
 
 export default function ParentDashboard() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t } = useLanguage();
   const { dashboardStats, myChildren, refreshAll, isLoading, error } =
     useParentDashboard();
 
@@ -32,17 +34,18 @@ export default function ParentDashboard() {
   };
 
   if (isLoading) {
-    return <DashboardSkeleton />;
+    return <ParentDashboardSkeleton />;
   }
 
   if (error) {
     return (
       <Alert variant="destructive" className="mb-6">
         <AlertDescription className="flex items-center justify-between">
-          <span>Failed to load dashboard data</span>
+          <span>{t("parent.children.errorLoading")}</span>{" "}
+          {/* Use translation */}
           <Button variant="outline" size="sm" onClick={refreshAll}>
             <RefreshCw className="h-4 w-4 mr-2" />
-            Retry
+            {t("common.retry")} {/* You might need to add this to common */}
           </Button>
         </AlertDescription>
       </Alert>
@@ -57,38 +60,39 @@ export default function ParentDashboard() {
       {/* Header */}
       <div className="space-y-2">
         <h1 className="text-3xl font-bold tracking-tight">
-          Welcome back, {user?.firstName}!
+          {t("parent.dashboard.welcome", { name: user?.firstName })}{" "}
+          {/* Add this translation */}
         </h1>
         <p className="text-muted-foreground">
-          Here&apos;s what&apos;s happening with your children today.
+          {t("parent.dashboard.subtitle")} {/* Add this translation */}
         </p>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
-          title="Children"
+          title={t("parent.children.title")} // Use existing translation
           value={stats?.totalChildren || 0}
           icon={Users}
           color="blue"
           onClick={() => navigateToScreen("my-children")}
         />
         <StatCard
-          title="Alerts"
+          title={t("parent.dashboard.alerts")} // Add this translation
           value={stats?.unreadNotifications || 0}
           icon={Bell}
           color="orange"
           onClick={() => navigateToScreen("notifications")}
         />
         <StatCard
-          title="Attendance"
+          title={t("parent.children.attendance")} // Use existing translation
           value={`${stats?.overallAttendanceRate || 0}%`}
           icon={TrendingUp}
           color="green"
           onClick={() => navigateToScreen("children-attendance")}
         />
         <StatCard
-          title="Payments"
+          title={t("parent.dashboard.payments")} // Add this translation
           value={stats?.pendingPayments || 0}
           icon={CreditCard}
           color="red"
@@ -100,14 +104,17 @@ export default function ParentDashboard() {
         {/* My Children Section */}
         <Card className="lg:col-span-2">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-            <CardTitle className="text-xl font-semibold">My Children</CardTitle>
+            <CardTitle className="text-xl font-semibold">
+              {t("parent.children.title")} {/* Use existing translation */}
+            </CardTitle>
             {children.length > 0 && (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => navigateToScreen("my-children")}
               >
-                View All
+                {t("common.viewAll")}{" "}
+                {/* You might need to add this to common */}
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             )}
@@ -117,9 +124,13 @@ export default function ParentDashboard() {
               <div className="text-center py-8 space-y-4">
                 <Users className="h-12 w-12 text-muted-foreground mx-auto" />
                 <div className="space-y-2">
-                  <p className="font-medium">No children registered</p>
+                  <p className="font-medium">
+                    {t("parent.children.noChildren")}
+                  </p>{" "}
+                  {/* Use existing translation */}
                   <p className="text-sm text-muted-foreground">
-                    Contact your school to add children to your account
+                    {t("parent.children.noChildrenDescription")}{" "}
+                    {/* Use existing translation */}
                   </p>
                 </div>
               </div>
@@ -141,35 +152,35 @@ export default function ParentDashboard() {
         <Card>
           <CardHeader>
             <CardTitle className="text-xl font-semibold">
-              Quick Actions
+              {t("parent.dashboard.quickActions")} {/* Add this translation */}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <QuickActionButton
               icon={ClipboardCheck}
-              label="Attendance"
-              description="View attendance records"
+              label={t("parent.children.attendance")} // Use existing translation
+              description={t("parent.dashboard.attendanceDescription")} // Add this translation
               onClick={() => navigateToScreen("children-attendance")}
               color="blue"
             />
             <QuickActionButton
               icon={Award}
-              label="Grades"
-              description="Check academic performance"
+              label={t("parent.children.grades")} // Use existing translation
+              description={t("parent.dashboard.gradesDescription")} // Add this translation
               onClick={() => navigateToScreen("children-grades")}
               color="yellow"
             />
             <QuickActionButton
               icon={CreditCard}
-              label="Payments"
-              description="Manage fee payments"
+              label={t("parent.dashboard.payments")} // Add this translation
+              description={t("parent.dashboard.paymentsDescription")} // Add this translation
               onClick={() => navigateToScreen("payments")}
               color="green"
             />
             <QuickActionButton
               icon={Bell}
-              label="Notifications"
-              description="View school alerts"
+              label={t("parent.dashboard.notifications")} // Add this translation
+              description={t("parent.dashboard.notificationsDescription")} // Add this translation
               onClick={() => navigateToScreen("notifications")}
               color="purple"
             />
@@ -303,67 +314,5 @@ function QuickActionButton({
         <div className="text-sm opacity-70">{description}</div>
       </div>
     </Button>
-  );
-}
-
-// Skeleton Loader
-function DashboardSkeleton() {
-  return (
-    <div className="space-y-6">
-      {/* Header Skeleton */}
-      <div className="space-y-2">
-        <Skeleton className="h-8 w-64" />
-        <Skeleton className="h-4 w-96" />
-      </div>
-
-      {/* Stats Grid Skeleton */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <Card key={i}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <Skeleton className="h-12 w-12 rounded-lg" />
-                <div className="text-right space-y-2">
-                  <Skeleton className="h-7 w-12" />
-                  <Skeleton className="h-4 w-16" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Content Skeleton */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <Skeleton className="h-6 w-32" />
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="flex items-center space-x-4">
-                <Skeleton className="h-12 w-12 rounded-full" />
-                <div className="space-y-2 flex-1">
-                  <Skeleton className="h-4 w-32" />
-                  <Skeleton className="h-3 w-24" />
-                </div>
-                <Skeleton className="h-6 w-16" />
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <Skeleton className="h-6 w-32" />
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <Skeleton key={i} className="h-16 w-full rounded-lg" />
-            ))}
-          </CardContent>
-        </Card>
-      </div>
-    </div>
   );
 }

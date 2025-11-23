@@ -1,4 +1,10 @@
-import type { Child, ChildDetail, CreateParentRequest, DashboardStats, Parent } from "@/types/parent";
+import type {
+  Child,
+  ChildDetail,
+  CreateParentRequest,
+  DashboardStats,
+  Parent,
+} from "@/types/parent";
 import { apiClient, apiConfig } from "./api-config";
 import type { Student } from "@/types/student";
 
@@ -15,10 +21,6 @@ export const parentApi = {
       apiConfig.endpoints.parents.associateWithStudent(studentId),
       parentIds
     );
-  },
-
-  getParentsByStudent: async (studentId: number): Promise<Parent[]> => {
-    return apiClient.get(apiConfig.endpoints.parents.getByStudent(studentId));
   },
 
   getParentsByStudent: async (studentId: number): Promise<Parent[]> => {

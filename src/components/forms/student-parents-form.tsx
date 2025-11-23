@@ -7,12 +7,11 @@ import type { Student } from "@/types/student";
 import type { Parent } from "@/types/parent";
 import { AppTextField } from "../common/app-text-field";
 import { AppTextArea } from "../common/app-text-area";
-import { studentApi } from "@/lib/api/student-api";
 import { InternationalPhoneInput } from "../common/phone-input";
 import { authService } from "@/services/auth-service";
 import { parentApi } from "@/lib/api/parent-api";
-import { useAuth } from "@/hooks/use-auth";
 import { UserRole } from "@/types/role";
+import type { RegisterResponse } from "@/types/auth";
 
 interface StudentParentsFormProps {
   studentId: number | undefined;
@@ -26,9 +25,9 @@ export default function StudentParentsForm({
   onBack,
 }: StudentParentsFormProps) {
   const { t } = useLanguage();
-  const { user } = useAuth();
 
   const [parents, setParents] = useState<Parent[]>([]);
+  const [createdParentIds, setCreatedParentIds] = useState<number[]>([]);
 
   const {
     register,
@@ -48,9 +47,10 @@ export default function StudentParentsForm({
     setParents(parents.filter((_, i) => i !== index));
   };
 
-  const createParentUser = async (parentData: Parent): Promise<Parent> => {
+  const createParentUser = async (
+    parentData: Parent
+  ): Promise<RegisterResponse> => {
     try {
-      // First, create a user with PARENT role
       const userResponse = await authService.register({
         email: parentData.email,
         password: "Default@123",
@@ -64,45 +64,34 @@ export default function StudentParentsForm({
         throw new Error(userResponse.message || "Failed to create user");
       }
 
-      // Then create the parent record linked to the user
-      const parentRecord = await parentApi.createParent({
-        ...parentData,
-        schoolId: user?.currentSchool?.id,
-      });
-
-      return parentRecord;
+      return userResponse;
     } catch (error) {
       console.error("Failed to create parent user:", error);
       throw error;
     }
   };
 
-  // const onSubmit = async () => {
-  //   // if (!studentId) return;
-  //   try {
-  //     const updatedStudent = await studentApi.associateParents(studentId!, {
-  //       parentEmails: [],
-  //       newParents: parents,
-  //     });
-  //     onSuccess(updatedStudent);
-  //   } catch (error) {
-  //     console.error("Failed to associate parents:", error);
-  //   }
-  // };
   const onSubmit = async () => {
     if (!studentId) return;
 
     try {
-      // Create all parent users first
-      await Promise.all(parents.map((parent) => createParentUser(parent)));
+      // Create all parent users first and store their IDs
+      const createdParents = await Promise.all(
+        parents.map((parent) => createParentUser(parent))
+      );
 
-      // Extract the parent IDs
-      // const parentIds = createdParents.map((parent) => parent.id);
+      // Extract the parent IDs from created parents
+      const parentIds = createdParents.map((parent) => parent.id!);
+      console.log("Created Parent IDs", parentIds);
+      // Store the created parent IDs for potential future use
+      setCreatedParentIds(parentIds);
 
-      const updatedStudent = await studentApi.associateParents(studentId!, {
-        parentEmails: [],
-        newParents: parents,
-      });
+      // Now associate parents with student using parent IDs
+      const updatedStudent = await parentApi.associateParentsWithStudent(
+        studentId,
+        parentIds
+      );
+      console.log("updatedStudent", updatedStudent);
 
       onSuccess(updatedStudent);
     } catch (error) {
@@ -204,6 +193,11 @@ export default function StudentParentsForm({
                   )}
                 </div>
               </div>
+              {createdParentIds[index] && (
+                <div className="text-xs text-green-600 mt-1">
+                  Parent ID: {createdParentIds[index]}
+                </div>
+              )}
               <Button
                 type="button"
                 variant="outline"

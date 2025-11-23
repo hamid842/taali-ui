@@ -5,6 +5,7 @@ import { apiClient, apiConfig } from "@/lib/api/api-config";
 import type { MenuItemDto } from "@/types/menu";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { LoginResponse, User } from "@/types/auth";
+import type { ISchool } from "@/types/school";
 
 // Mock permissions for each role (you can expand this)
 const rolePermissions = {
@@ -18,7 +19,7 @@ const rolePermissions = {
   FINANCE_TEAM: ["manage_fees", "view_payments", "financial_reports"],
 };
 
-// Menu API (keep this since it's state-related)
+// Menu API
 const menuApi = {
   fetchUserMenu: async (
     role: string,
@@ -71,10 +72,11 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
           // Prefetch menu when user is authenticated
           if (parsedUser.role) {
+            // For parents, we can fetch menu without school ID initially
+            const schoolId = parsedUser.currentSchool?.id;
             queryClient.prefetchQuery({
-              queryKey: ["menu", parsedUser.role, parsedUser.schoolId],
-              queryFn: () =>
-                menuApi.fetchUserMenu(parsedUser.role, parsedUser.schoolId),
+              queryKey: ["menu", parsedUser.role, schoolId],
+              queryFn: () => menuApi.fetchUserMenu(parsedUser.role, schoolId),
             });
           }
         } catch (parseError) {
@@ -96,21 +98,31 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     checkAuthStatus();
   }, [checkAuthStatus]);
 
-  // React Query for menu (state-related, so it stays)
+  // React Query for menu - updated to handle parent case
   const menuQuery = useQuery({
-    queryKey: ["menu", currentRoleContext || user?.role, user?.currentSchool?.id],
+    queryKey: [
+      "menu",
+      currentRoleContext || user?.role,
+      user?.currentSchool?.id,
+    ],
     queryFn: () => {
       const roleToUse = currentRoleContext || user?.role;
-      return roleToUse
-        ? menuApi.fetchUserMenu(roleToUse, user?.currentSchool?.id)
-        : [];
+      const schoolId = user?.currentSchool?.id;
+
+      // For parents, allow fetching menu without school ID
+      // Backend should handle this and return appropriate menu
+      return roleToUse ? menuApi.fetchUserMenu(roleToUse, schoolId) : [];
     },
     enabled: !!(currentRoleContext || user?.role),
     staleTime: 5 * 60 * 1000,
   });
 
   // State setters only - no API calls!
-  const login = (token: string, userData: LoginResponse, refreshToken?: string) => {
+  const login = (
+    token: string,
+    userData: LoginResponse,
+    refreshToken?: string
+  ) => {
     // Store auth data
     localStorage.setItem("auth_token", token);
     localStorage.setItem("user_data", JSON.stringify(userData));
@@ -123,7 +135,9 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
     // Invalidate and refetch menu
     if (userData.role) {
-      queryClient.invalidateQueries({ queryKey: ["menu", userData.role] });
+      queryClient.invalidateQueries({
+        queryKey: ["menu", userData.role, userData.currentSchool?.id],
+      });
     }
   };
 
@@ -134,6 +148,32 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem("user_data", JSON.stringify(updatedUser));
     }
   };
+
+  // NEW: Function to set current school for parents
+  const setCurrentSchool = useCallback(
+    (school: ISchool) => {
+      if (user) {
+        const updatedUser = {
+          ...user,
+          currentSchool: school,
+          // Also update availableSchools if this is a new school
+          availableSchools: user.availableSchools?.some(
+            (s) => s.id === school.id
+          )
+            ? user.availableSchools
+            : [...(user.availableSchools || []), school],
+        };
+        setUser(updatedUser);
+        localStorage.setItem("user_data", JSON.stringify(updatedUser));
+
+        // Refetch menu with new school context
+        queryClient.invalidateQueries({
+          queryKey: ["menu", user.role, school.id],
+        });
+      }
+    },
+    [user, queryClient]
+  );
 
   const checkPermission = (permission: string): boolean => {
     if (!user) return false;
@@ -153,7 +193,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  // Update the updateSchoolContext function to handle role switching
+  // Update the updateSchoolContext function to handle parent case
   const updateSchoolContext = useCallback(
     (schoolId: number, roleContext?: string) => {
       if (user) {
@@ -186,7 +226,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const value: AuthContextType = {
     user,
     currentRoleContext: currentRoleContext || user?.role,
-    isLoading: menuQuery.isLoading, // Only menu loading now
+    isLoading: menuQuery.isLoading,
     isAuthenticated: !!user,
     isInitialized,
     menuItems: menuQuery.data || [],
@@ -199,6 +239,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     refetchMenu,
     updateSchoolContext,
     resetRoleContext,
+    setCurrentSchool, 
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

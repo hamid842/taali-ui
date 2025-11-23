@@ -67,6 +67,7 @@ export interface LoginResponse {
 }
 
 export interface RegisterResponse {
+  id: number;
   success: boolean;
   message: string;
   userId?: string;

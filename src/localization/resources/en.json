@@ -382,7 +382,7 @@
   "owner": {
     "dashboard": {
       "title": "Owner Dashboard",
-      "description": "Welcome back, {{name}}! Here's your overview.",
+      "description": "Welcome back, {name}! Here's your overview.",
       "error": {
         "title": "Unable to load dashboard",
         "loading": "Failed to load dashboard data"
@@ -400,7 +400,7 @@
         "totalStudents": "Total Students",
         "totalTeachers": "Total Teachers",
         "totalClasses": "Total Classes",
-        "activeSchools": "{{count}} active",
+        "activeSchools": "{count} active",
         "acrossAllSchools": "Across all schools",
         "activeClasses": "Active classes",
         "avgStudentsPerSchool": "Avg Students/School",
@@ -418,12 +418,12 @@
       "quickActions": "Quick Actions",
       "noActivity": "No recent activity",
       "activity": {
-        "schoolCreated": "New school created: {{school}}",
-        "userAdded": "New user added: {{user}}",
-        "schoolUpdated": "School updated: {{school}}",
-        "studentRegistered": "New student registered: {{student}} at {{school}}",
-        "teacherAdded": "New teacher added: {{teacher}} at {{school}}",
-        "classCreated": "New class created: {{class}} at {{school}}"
+        "schoolCreated": "New school created: {school}",
+        "userAdded": "New user added: {user}",
+        "schoolUpdated": "School updated: {school}",
+        "studentRegistered": "New student registered: {student} at {school}",
+        "teacherAdded": "New teacher added: {teacher} at {school}",
+        "classCreated": "New class created: {class} at {school}"
       },
       "topSchools": "Top Schools",
       "recentRegistrations": "Recent Registrations",
@@ -577,7 +577,7 @@
   "manager": {
     "dashboard": {
       "title": "School Dashboard",
-      "description": "Welcome back, {{name}}! Managing {{school}}.",
+      "description": "Welcome back, {name}! Managing {school}.",
       "upcomingClasses": "Upcoming Classes",
       "upcomingClassesDescription": "Today's class schedule",
       "noUpcomingClasses": "No upcoming classes",
@@ -951,10 +951,23 @@
     }
   },
   "parent":{
+    "dashboard": {
+      "welcome": "Welcome, {name}!",
+      "subtitle": "Here you can see what is happening with your children today.",
+      "alerts": "Alerts",
+      "payments": "Payments",
+      "quickActions": "Quick Actions",
+      "attendanceDescription": "View attendance records",
+      "gradesDescription": "Check academic performance",
+      "paymentsDescription": "Manage tuition payments",
+      "notifications": "Notifications",
+      "notificationsDescription": "View school alerts"
+    },
+
     "children": {
       "title": "My Children",
-      "subtitle": "Managing {{count}} child",
-      "subtitle_plural": "Managing {{count}} children",
+      "subtitle": "Managing {count} child",
+      "subtitle_plural": "Managing {count} children",
       "noChildren": "No children registered",
       "noChildrenFound": "No Children Found",
       "noChildrenDescription": "You don't have any children registered to your account yet. Please contact your school administrator to add children to your account.",

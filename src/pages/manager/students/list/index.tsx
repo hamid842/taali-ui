@@ -1,6 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useLanguage } from "@/hooks/use-language";
-import { studentApi } from "@/lib/api/student-api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,78 +11,73 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Search, Filter, RefreshCw } from "lucide-react";
-import type { Student } from "@/types/student";
 import StudentItemSkeleton from "@/components/skeleton/dashboard/student-item-skeleton";
 import StudentItem from "@/components/dashboard/students/student-item";
 import EmptyData from "@/components/common/empty-data";
 import { useAuth } from "@/hooks/use-auth";
+import { useStudentApi } from "@/hooks/use-student";
 
 export default function StudentsList() {
   const { t } = useLanguage();
   const { user } = useAuth();
-  const [students, setStudents] = useState<Student[]>([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    useGetStudentsBySchool,
+    useGetGradeLevels,
+    useGetClasses,
+    prefetchStudentsBySchool,
+  } = useStudentApi();
+
   const [filters, setFilters] = useState({
     search: "",
     gradeLevel: "",
     classId: "",
   });
-  const [pagination, setPagination] = useState({
-    page: 0,
-    size: 12,
-    totalElements: 0,
-    totalPages: 0,
-    hasNext: false,
-    hasPrevious: false,
-  });
+  const [page, setPage] = useState(0);
+  const size = 12;
 
-  const [gradeLevels, setGradeLevels] = useState<string[]>([]);
-
-  const fetchStudents = useCallback(
-    async (page = 0) => {
-      if (!user?.currentSchool) return;
-      setLoading(true);
-      try {
-        const response = await studentApi.getBySchool(user?.currentSchool!.id, {
-          page,
-          size: pagination.size,
-          ...filters,
-        });
-
-        setStudents(response.items);
-        setPagination(response.pagination);
-      } catch (error) {
-        console.error("Failed to fetch students:", error);
-      } finally {
-        setLoading(false);
-      }
+  // Fetch students with React Query
+  const {
+    data: studentsResponse,
+    isLoading,
+    error,
+    refetch,
+  } = useGetStudentsBySchool(
+    Number(user?.currentSchool?.id),
+    {
+      page,
+      size,
+      ...filters,
     },
-    [filters, pagination.size, user?.currentSchool]
+    {
+      enabled: !!user?.currentSchool?.id,
+    }
   );
 
-  const fetchGradeLevels = useCallback(async () => {
-    if (!user?.currentSchool) return;
-    try {
-      const levels = await studentApi.getGradeLevels(user?.currentSchool!.id);
-      setGradeLevels(levels);
-    } catch (error) {
-      console.error("Failed to fetch grade levels:", error);
+  // Fetch grade levels
+  const { data: gradeLevels = [] } = useGetGradeLevels(
+    Number(user?.currentSchool?.id),
+    {
+      enabled: !!user?.currentSchool?.id,
     }
-  }, [user?.currentSchool]);
+  );
 
-  useEffect(() => {
-    fetchStudents(0);
-    fetchGradeLevels();
-  }, [fetchGradeLevels, fetchStudents, user?.currentSchool]);
+  // Fetch classes
+  const { data: classes = [] } = useGetClasses(user?.currentSchool?.id, {
+    enabled: !!user?.currentSchool?.id,
+  });
 
+  // Debounce search
   useEffect(() => {
-    // Debounce search
     const timer = setTimeout(() => {
-      fetchStudents(0);
+      if (page !== 0) {
+        setPage(0); // Reset to first page when filters change
+      } else {
+        refetch();
+      }
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [fetchStudents, filters]);
+  }, [filters, page, refetch]);
 
   const handleFilterChange = (key: string, value: string) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -91,10 +85,48 @@ export default function StudentsList() {
 
   const clearFilters = () => {
     setFilters({ search: "", gradeLevel: "", classId: "" });
+    setPage(0);
   };
 
   const handlePageChange = (newPage: number) => {
-    fetchStudents(newPage);
+    setPage(newPage);
+    // Prefetch next page for better UX
+    if (newPage < (studentsResponse?.pagination.totalPages || 0) - 1) {
+      prefetchStudentsBySchool(user?.currentSchool?.id, {
+        page: newPage + 1,
+        size,
+        ...filters,
+      });
+    }
+  };
+
+  const handleRefresh = () => {
+    refetch();
+  };
+
+  const handleStudentUpdated = () => {
+    refetch(); // Refetch students when a student is updated (e.g., class assigned)
+  };
+
+  if (error) {
+    return (
+      <div className="min-h-screen p-6 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-xl font-bold mb-2">Error loading students</h2>
+          <Button onClick={handleRefresh}>Try Again</Button>
+        </div>
+      </div>
+    );
+  }
+
+  const students = studentsResponse?.items || [];
+  const pagination = studentsResponse?.pagination || {
+    page: 0,
+    size: 12,
+    totalElements: 0,
+    totalPages: 0,
+    hasNext: false,
+    hasPrevious: false,
   };
 
   return (
@@ -168,9 +200,14 @@ export default function StudentsList() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">{t("common.all")}</SelectItem>
-                    <SelectItem value="1">Class 1A</SelectItem>
-                    <SelectItem value="2">Class 1B</SelectItem>
-                    <SelectItem value="3">Class 2A</SelectItem>
+                    {classes.map((classItem) => (
+                      <SelectItem
+                        key={classItem.id}
+                        value={classItem.id.toString()}
+                      >
+                        {classItem.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -181,15 +218,21 @@ export default function StudentsList() {
                   variant="outline"
                   onClick={clearFilters}
                   className="flex items-center"
+                  disabled={isLoading}
                 >
                   <Filter className="h-4 w-4 mr-2" />
                   {t("common.clear")}
                 </Button>
                 <Button
-                  onClick={() => fetchStudents(0)}
+                  onClick={handleRefresh}
                   className="flex items-center"
+                  disabled={isLoading}
                 >
-                  <RefreshCw className="h-4 w-4 mr-2" />
+                  <RefreshCw
+                    className={`h-4 w-4 mr-2 ${
+                      isLoading ? "animate-spin" : ""
+                    }`}
+                  />
                   {t("common.refresh")}
                 </Button>
               </div>
@@ -198,7 +241,7 @@ export default function StudentsList() {
         </Card>
 
         {/* Students Grid */}
-        {loading ? (
+        {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {Array.from({ length: 8 }).map((_, i) => (
               <StudentItemSkeleton key={i} />
@@ -213,7 +256,11 @@ export default function StudentsList() {
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
               {students.map((student) => (
-                <StudentItem key={student.id} student={student} />
+                <StudentItem
+                  key={student.id}
+                  student={student}
+                  onStudentUpdated={handleStudentUpdated}
+                />
               ))}
             </div>
 
@@ -232,7 +279,7 @@ export default function StudentsList() {
                       <Button
                         variant="outline"
                         size="sm"
-                        disabled={!pagination.hasPrevious}
+                        disabled={!pagination.hasPrevious || isLoading}
                         onClick={() => handlePageChange(pagination.page - 1)}
                       >
                         {t("common.previous")}
@@ -254,6 +301,7 @@ export default function StudentsList() {
                                 size="sm"
                                 onClick={() => handlePageChange(pageNum)}
                                 className="w-8 h-8 p-0"
+                                disabled={isLoading}
                               >
                                 {pageNum + 1}
                               </Button>
@@ -265,7 +313,7 @@ export default function StudentsList() {
                       <Button
                         variant="outline"
                         size="sm"
-                        disabled={!pagination.hasNext}
+                        disabled={!pagination.hasNext || isLoading}
                         onClick={() => handlePageChange(pagination.page + 1)}
                       >
                         {t("common.next")}

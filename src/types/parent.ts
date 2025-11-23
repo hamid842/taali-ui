@@ -1,3 +1,4 @@
+import type { SchoolSummary } from "./class";
 import type { UserRoleType } from "./role";
 
 export interface Parent {
@@ -24,7 +25,6 @@ export interface CreateParentRequest {
   role?: UserRoleType;
 }
 
-
 export interface DashboardStats {
   totalChildren: number;
   unreadNotifications: number;
@@ -43,6 +43,7 @@ export interface Child {
   averageGrade?: string;
   teacherName: string;
   profileImage?: string;
+  school?: SchoolSummary;
 }
 
 export interface ChildDetail extends Child {
@@ -51,4 +52,3 @@ export interface ChildDetail extends Child {
   medicalNotes?: string;
   enrollmentDate: string;
 }
-
