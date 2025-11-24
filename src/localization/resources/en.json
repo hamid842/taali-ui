@@ -831,7 +831,7 @@
       "selectSubject": "Select subject",
       "startTime": "Start Time",
       "endTime": "End Time",
-      "endTimeHelperText":"End time is automatically set based on the selected start time",
+      "endTimeHelperText": "End time is automatically set based on the selected start time",
       "teacher": "Teacher",
       "selectTeacher": "Select teacher",
       "room": "Room",
@@ -894,7 +894,7 @@
       "takeAttendance": "Take Attendance",
       "quickActions": "Quick Actions",
       "students": "students",
-      "completed":"Class Completed",
+      "completed": "Class Completed",
       "inProgress": "In progress",
       "inMinutes": "in {minutes}m",
       "inHours": "in {hours}h",
@@ -950,7 +950,7 @@
       "send": "Send Message"
     }
   },
-  "parent":{
+  "parent": {
     "dashboard": {
       "welcome": "Welcome, {name}!",
       "subtitle": "Here you can see what is happening with your children today.",
@@ -992,6 +992,58 @@
   },
   "loading": {
     "checkAuth": "Checking authentication..."
+  },
+  "messages": {
+    "title": "Messages",
+    "subtitle": "Manage your conversations",
+    "subtitleWithUnread": "{{count}} unread messages",
+    "newMessage": "New Message",
+    "search": {
+      "placeholder": "Search conversations..."
+    },
+    "filter": "Filter",
+    "filters": {
+      "unread": "Unread Only",
+      "starred": "Starred",
+      "archived": "Archived"
+    },
+    "tabs": {
+      "all": "All",
+      "unread": "Unread",
+      "starred": "Starred",
+      "archived": "Archived"
+    },
+    "categories": {
+      "absence": "Absence",
+      "academic": "Academic",
+      "behavior": "Behavior",
+      "general": "General"
+    },
+    "time": {
+      "minutesAgo": "{count}m ago",
+      "hoursAgo": "{count}h ago",
+      "yesterday": "Yesterday",
+      "daysAgo": "{count}d ago"
+    },
+    "empty": {
+      "title": "No conversations yet",
+      "description": "Start a conversation with teachers or parents to get started",
+      "filtered": {
+        "title": "No matching conversations",
+        "description": "Try adjusting your search or filter criteria"
+      }
+    },
+    "error": {
+      "title": "Failed to load messages",
+      "description": "There was an error loading your conversations",
+      "retry": "Try Again"
+    },
+    "grade": "Grade",
+    "noMessages": "No messages yet",
+    "actions": {
+      "star": "Star conversation",
+      "archive": "Archive conversation"
+    }
   },
   "upload": {
     "chooseImage": "Choose Image",

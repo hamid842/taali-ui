@@ -56,6 +56,12 @@ export const apiConfig = {
       updateStatus: (id: string) => `${API_BASE_URL}/users/${id}/status`,
       delete: (id: string) => `${API_BASE_URL}/users/${id}`,
       search: `${API_BASE_URL}/users/search`,
+      // Get teachers for parent
+      getTeachers: `${API_BASE_URL}/users/teachers`,
+      // Get parents for teacher
+      getParents: `${API_BASE_URL}/users/parents`,
+      // Get students for parent
+      getStudents: `${API_BASE_URL}/users/students`,
     },
     classes: {
       create: `${API_BASE_URL}/school-classes`,
@@ -144,6 +150,8 @@ export const apiConfig = {
       removeFromClass: (studentId: number) =>
         `${API_BASE_URL}/students/${studentId}/class`,
       bulkAssign: `${API_BASE_URL}/students/bulk-assign-class`,
+      getTeachers: (studentId: number) =>
+        `${API_BASE_URL}/students/${studentId}/teachers`,
     },
     parents: {
       create: `${API_BASE_URL}/parents`,
@@ -162,6 +170,27 @@ export const apiConfig = {
         `${API_BASE_URL}/parents/children/${childId}/attendance`,
       childGrades: (childId: number) =>
         `${API_BASE_URL}/parents/children/${childId}/grades`,
+    },
+    // Message and Conversation endpoints
+    conversations: {
+      // Get all conversations for current user
+      list: `${API_BASE_URL}/conversations`,
+      // Create new conversation
+      create: `${API_BASE_URL}/conversations`,
+      // Get specific conversation
+      getById: (conversationId: number) =>
+        `${API_BASE_URL}/conversations/${conversationId}`,
+      // Send message in conversation
+      sendMessage: (conversationId: number) =>
+        `${API_BASE_URL}/conversations/${conversationId}/messages`,
+      // Mark conversation as read
+      markAsRead: (conversationId: number) =>
+        `${API_BASE_URL}/conversations/${conversationId}/read`,
+      // Close conversation
+      closeConversation: (conversationId: number) =>
+        `${API_BASE_URL}/conversations/${conversationId}/close`,
+      // Get unread count
+      unreadCount: `${API_BASE_URL}/conversations/unread/count`,
     },
   },
   headers: {
@@ -260,7 +289,7 @@ export const apiClient = {
 
   async put<T>(
     url: string,
-    data: unknown,
+    data?: unknown,
     options?: {
       language?: string;
       headers?: Record<string, string>;

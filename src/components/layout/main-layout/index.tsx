@@ -7,14 +7,13 @@ import AppSidebar from "./app-sidebar";
 import { Outlet } from "react-router-dom";
 import { LanguageSwitcher } from "../language-switcher";
 import ThemeToggler from "../theme-toggler";
-import Settings from "./settings";
+// import Settings from "./settings";
 import LocalizedDate from "@/components/common/localized-date";
-import { useLanguage } from "@/hooks/use-language";
 import HeaderBreadcrumb from "./header-breadcrumb";
 import Logout from "./logout";
+import MessagesIconWithBadge from "./messages";
 
 export default function MainLayout() {
-  const { language } = useLanguage();
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -27,10 +26,11 @@ export default function MainLayout() {
             <HeaderBreadcrumb />
           </div>
           <div className="flex items-center gap-2">
-            <LocalizedDate locale={language} />
+            <LocalizedDate />
             <LanguageSwitcher />
             <ThemeToggler />
-            <Settings />
+            {/* <Settings /> */}
+            <MessagesIconWithBadge />
             <Logout />
           </div>
         </header>

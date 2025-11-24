@@ -5,6 +5,8 @@ import type {
 } from "@/types/student";
 import { apiClient, apiConfig } from "./api-config";
 import type { ClassResponse } from "@/types/class";
+import type { ApiResponse } from "@/types/api-response";
+import type { Teacher } from "@/types/teacher";
 
 export const studentApi = {
   /** 🔹 Get all students by school ID */
@@ -48,6 +50,16 @@ export const studentApi = {
     return apiClient.get<ClassResponse[]>(
       apiConfig.endpoints.students.getClasses(schoolId)
     );
+  },
+
+  /** 🔹 Get teachers for a specific student*/
+  getStudentTeachers: async (
+    studentId: number
+  ): Promise<ApiResponse<Teacher[]>> => {
+    const response = await apiClient.get<ApiResponse<Teacher[]>>(
+      apiConfig.endpoints.students.getTeachers(studentId)
+    );
+    return response;
   },
 
   /** 🔹 Get single student by ID */

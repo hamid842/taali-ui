@@ -1004,6 +1004,58 @@
   "loading": {
     "checkAuth": "بررسی احراز هویت..."
   },
+  "messages": {
+    "title": "پیام‌ها",
+    "subtitle": "مدیریت گفتگوهای شما",
+    "subtitleWithUnread": "{{count}} پیام خوانده نشده",
+    "newMessage": "پیام جدید",
+    "search": {
+      "placeholder": "جستجو در گفتگوها..."
+    },
+    "filter": "فیلتر",
+    "filters": {
+      "unread": "فقط خوانده نشده",
+      "starred": "ستاره‌دار",
+      "archived": "آرشیو شده"
+    },
+    "tabs": {
+      "all": "همه",
+      "unread": "خوانده نشده",
+      "starred": "ستاره‌دار",
+      "archived": "آرشیو"
+    },
+    "categories": {
+      "absence": "غیبت",
+      "academic": "درسی",
+      "behavior": "رفتاری",
+      "general": "عمومی"
+    },
+    "time": {
+      "minutesAgo": "{count} دقیقه پیش",
+      "hoursAgo": "{count} ساعت پیش",
+      "yesterday": "دیروز",
+      "daysAgo": "{count} روز پیش"
+    },
+    "empty": {
+      "title": "هنوز گفتگویی وجود ندارد",
+      "description": "برای شروع، گفتگویی با معلمان یا والدین شروع کنید",
+      "filtered": {
+        "title": "هیچ گفتگوی مطابقی یافت نشد",
+        "description": "شرایط جستجو یا فیلتر خود را تغییر دهید"
+      }
+    },
+    "error": {
+      "title": "خطا در بارگذاری پیام‌ها",
+      "description": "خطایی در بارگذاری گفتگوهای شما رخ داده است",
+      "retry": "تلاش مجدد"
+    },
+    "grade": "پایه",
+    "noMessages": "هنوز پیامی وجود ندارد",
+    "actions": {
+      "star": "ستاره‌دار کردن گفتگو",
+      "archive": "آرشیو گفتگو"
+    }
+  },
   "upload": {
     "chooseImage": "انتخاب تصویر",
     "schoolLogoHint": "JPG, PNG, WebP یا GIF. حداکثر ۵ مگابایت.",
